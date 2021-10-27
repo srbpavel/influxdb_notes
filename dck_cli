@@ -13,7 +13,8 @@ Error: Get "https://172.18.0.2:8086/api/v2/authorizations": x509: cannot validat
 Error: Get "https://172.18.0.2:8086/api/v2/setup": x509: cannot validate certificate for 172.18.0.2 because it doesn't contain any IP SANs.
 See 'influx auth list -h' for help
 
-conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"ds_test") |> range(start:-1d) |> filter(fn: (r) => r["_measurement"]=="da\
+
+$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"ds_test") |> range(start:-1d) |> filter(fn: (r) => r["_measurement"]=="da\
 llas") |> sort(columns:["_time"], desc:true) |> drop(columns:["_start", "_stop","_measurement", "_field", "host", "DsCarrier", "DsValid"]) |> limit(n:3)' --skip-verify
 Result: _result
 Table: keys: [DsId, DsPin, Machine]
@@ -48,7 +49,7 @@ Table: keys: [DsId, DsPin, Machine]
            96928329000                      14                  mrazak  2021-10-25T12:35:07.737000000Z                            19
 
 
-conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx bucket ls --skip-verify
+$ docker container exec -i -t dck_influxdb influx bucket ls --skip-verify
 
 ID                      Name            Retention       Organization ID
 9ad8415a403b95c7        _monitoring     168h0m0s        8dde90f5a16c4519
@@ -66,18 +67,16 @@ b4b550097fd4f671        battery         0s              8dde90f5a16c4519
 47f238e44b8a9444        modrin          0s              8dde90f5a16c4519
 
 
-conan@ruth:~/soft/docker$ /usr/bin/docker container exec dck_influxdb influx config create -n jozefina -u http://192.168.0.105:8086 -o foookin_paavel -t ...
+$ /usr/bin/docker container exec dck_influxdb influx config create -n jozefina -u http://192.168.0.105:8086 -o foookin_paavel -t ...
 Active  Name            URL                             Org
         jozefina        http://192.168.0.105:8086       foookin_paavel
 
 
-conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx config lsActive  Name            URL                             Org
+$ docker container exec -i -t dck_influxdb influx config lsActive  Name            URL                             Org
 *       default         https://172.18.0.2:8086         foookin_paavel
         jozefina        http://192.168.0.105:8086       foookin_paavel
 
-conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx query -c jozefina -t TOKEN 'from(bucket:"backup_ds_test") |> range(start:-1d) |> filter(fn: (\
-r) => r["_measurement"]=="dallas") |> sort(columns:["_time"], desc:true) |> drop(columns:["_start", "_stop","_measurement", "_field", "host", "DsCarrier", "DsValid"]) \
-|> limit(n:3)' --skip-verify
+$ docker container exec -i -t dck_influxdb influx query -c jozefina -t TOKEN 'from(bucket:"backup_ds_test") |> range(start:-1d) |> filter(fn: (r) => r["_measurement"]=="dallas") |> sort(columns:["_time"], desc:true) |> drop(columns:["_start", "_stop","_measurement", "_field", "host", "DsCarrier", "DsValid"])|> limit(n:3)' --skip-verify
 Result: _result
 Table: keys: [DsId, DsPin, Machine]
            DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
@@ -109,4 +108,166 @@ Table: keys: [DsId, DsPin, Machine]
            96928329000                      14                  mrazak  2021-10-25T12:55:07.409000000Z                        18.875
            96928329000                      14                  mrazak  2021-10-25T12:50:07.737000000Z                        18.875
            96928329000                      14                  mrazak  2021-10-25T12:45:07.074000000Z                       18.9375
+
+###EXPORT --> IMPORT###
+
+#LIST RUTH buckets
+docker container exec -i -t dck_influxdb influx bucket ls --skip-verify
+
+#LIST RUTH _measurements from bucket
+docker container exec -i -t dck_influxdb influx query 'import "influxdata/influxdb/schema" schema.measurements(bucket: "hemichromis")' --skip-verify --raw
+#group,false,false,false
+#datatype,string,long,string
+#default,_result,,
+,result,table,_value
+,,0,battery_adc
+,,0,humidity
+,,0,scale
+,,0,temperature_external
+,,0,temperature_internal
+,,0,ttn_2_machines
+
+
+#EXPORT from RUTH
+conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"ds_test") |> range(start:-1y)' --skip-verify --raw > ruth_ds_test_1y.csv
+
+#COPY TO DCK_VOLUME
+conan@ruth:~/soft/docker$ ls -la ruth_ds_test_1y.csv
+-rw-r--r-- 1 conan conan 5964693 Oct 25 15:08 ruth_ds_test_1y.csv
+
+conan@ruth:~/soft/docker$ cp ruth_ds_test_1y.csv /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/
+
+conan@ruth:~/soft/docker$ ls -la /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ruth_ds_test_1y.csv 
+-rw-r--r-- 1 conan conan 5964693 Oct 25 15:09 /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ruth_ds_test_1y.csv
+
+#IMPORT to JOZEFINA  !!! watch BUCKET
+conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx write -c jozefina -t TOKEN --skip-verify --skipRowOnError --format csv -f /var/lib/influxdb2/ruth_ds_test_1y.csv -b backup_ds_test
+2021-10-25T13:10:22.392455Z     info    line 37049: column '_measurement': no measurement supplied
+
+#DELETE to fix error
+docker container exec -i -t dck_influxdb influx delete -c jozefina --org foookin_paavel -t TOKEN --skip-verify --bucket host_ds_test --start '1970-01-01T00:00:00Z' --stop '2021-10-25T23:00:00Z' --predicate '_measurement="dallas"'
+
+
+#PROBLEM ? import does not contain HOST !!!
+#
+#^M^M endline
+#
+
+#DELETE bucket/_measurement DATA via START+STOP date range / JOZEFINA
+docker container exec -i -t dck_influxdb influx delete -c jozefina --org foookin_paavel -t TOKEN --skip-verify --bucket host_ds_test --start '1970-01-01T00:00:00Z' --stop '2021-10-25T23:00:00Z' --predicate '_measurement="dallas"'
+
+
+#EXPORT ruth / DOCKER
+docker container exec -i -t dck_influxdb influx query 'from(bucket:"ds_test") |> range(start:-1y) |> drop(columns: ["_start", "_stop"])' --skip-verify --raw > ruth_ds_test_1y_filter.csv
+
+
+#EDIT #######################################################################################################################
+#^M^M -> ^M / cat -v ... 
+dos2unix -n mmm.csv eee.csv
+
+
+conan@ruth:~/soft/docker$ cat -v mmm.csv |head
+#group,false,false,false,false,true,true,true,true,true,true,true,true^M^M
+#datatype,string,long,dateTime:RFC3339,double,string,string,string,string,string,string,string,string^M^M
+#default,_result,,,,,,,,,,,^M^M
+,result,table,_time,_value,DsCarrier,DsId,DsPin,DsValid,Machine,_field,_measurement,host^M^M
+,,0,2021-10-03T15:44:33.613Z,22.5625,labjack,1052176647976,14,true,mrazak,DsDecimal,dallas,ruth^M^M
+
+
+conan@ruth:~/soft/docker$ cat -v eee.csv |head
+#group,false,false,false,false,true,true,true,true,true,true,true,true^M
+#datatype,string,long,dateTime:RFC3339,double,string,string,string,string,string,string,string,string^M
+#default,_result,,,,,,,,,,,^M
+,result,table,_time,_value,DsCarrier,DsId,DsPin,DsValid,Machine,_field,_measurement,host^M
+,,0,2021-10-03T15:44:33.613Z,22.5625,labjack,1052176647976,14,true,mrazak,DsDecimal,dallas,ruth^M
+
+
+#CP to docker volume
+cp ruth_ds_test_1y_filter_endline.csv /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/
+
+
+#IMPORT backup_JOZEFINA / DEBIAN
+docker container exec -i -t dck_influxdb influx write -c jozefina -t TOKEN --skip-verify --skipRowOnError --format csv -f /var/lib/influxdb2/ruth_ds_test_1y_filter_endline.csv --bucket backup_ds_test
+
+
+#EXPORT verify backup_JOZEFINA
+docker container exec -i -t dck_influxdb influx -c jozefina query 'from(bucket:"backup_ds_test") |> range(start:-1y) |> drop(columns: ["_start", "_stop"])' --skip-verify --raw -t TOKEN > jozefina_ds_test_1y.csv
+
+
+#BUCKET export/delete prepare
+docker container exec -i -t dck_influxdb influx query 'from(bucket: "modrin") |> range(start: -3y) |> drop(columns: ["_start", "_stop"])' --skip-verify --raw > bucket_modrin_3y.csv
+
+wc -l bucket_modrin_3y.csv 
+
+#pozor toto najde sice TEMPERATURE_EXTERNAL ale INTERNAL je dole
+egrep -i '_measurement' -A2 bucket_modrin_3y.csv|less 
+
+
+#LIST JOZEFINA bucket via query when CLI error due retencion period
+docker container exec -i -t dck_influxdb influx -c jozefina query 'buckets() |> filter(fn: (r) => r.name !~ /^_/) |> rename(columns: {name: "_value"}) |> keep(columns: ["_value"])' --skip-verify --raw -t jbD0MXwVzetW6r6TFSQ5xIAzSFxwl3rD8tJVvzWr_Ax7ZNBJH1A0LHu38PR8WFWEpy0SuDlYpMyjYBB52riFrA==
+
+#group,false,false,false
+#datatype,string,long,string
+#default,_result,,
+,result,table,_value
+,,0,backup_bat_test
+,,0,backup_ds_test
+,,0,backup_hemichromis
+,,0,backup_jozefina
+,,0,backup_modrin
+,,0,lord
+
+
+#LIST JOZEFINA _measurement for single bucket
+docker container exec -i -t dck_influxdb influx -c jozefina query 'import "influxdata/influxdb/schema" schema.measurements(bucket: "backup_jozefina")' --skip-verify --raw -t jbD0MXwVzetW6r6TFSQ5xIAzSFxwl3rD8tJVvzWr_Ax7ZNBJH1A0LHu38PR8WFWEpy0SuDlYpMyjYBB52riFrA==
+#group,false,false,false
+#datatype,string,long,string
+#default,_result,,
+,result,table,_value
+,,0,temperature
+,,0,temperature_external
+,,0,voltage_sensor
+,,0,voltage_unit
+,,0,weight
+
+
+#PROTOZE explore neumi ukazat -1y tak to delam v terminalu, group + sort + limit
+#
+# bucket + range + measurement + group + sort + limit
+#
+docker container exec -i -t dck_influxdb influx -c jozefina query 'from(bucket: "backup_jozefina") |> range(start: -3y) |> filter(fn: (r) => r["_measurement"] == "voltage_unit") |> drop(columns: ["_start", "_stop"]) |> group() |> sort(columns: ["_time"], desc:true) |> limit(n: 5)' --skip-verify --raw -t jbD0MXwVzetW6r6TFSQ5xIAzSFxwl3rD8tJVvzWr_Ax7ZNBJH1A0LHu38PR8WFWEpy0SuDlYpMyjYBB52riFrA==
+#group,false,false,false,false,false,false,false,false,false
+#datatype,string,long,dateTime:RFC3339,double,string,string,string,string,string
+#default,_result,,,,,,,,
+,result,table,_time,_value,VoltSenKey,VoltUlId,_field,_measurement,host
+,,0,2021-06-21T08:05:38Z,718237,627,482,VoltKey,voltage_unit,probee_srbp
+,,0,2021-06-21T08:05:38Z,6.523,627,482,VoltDecimal,voltage_unit,probee_srbp
+,,0,2021-06-21T08:05:38Z,93,627,482,VoltPerCent,voltage_unit,probee_srbp
+,,0,2021-06-21T07:35:38Z,718209,627,482,VoltKey,voltage_unit,probee_srbp
+,,0,2021-06-21T07:35:38Z,99,627,482,VoltPerCent,voltage_unit,probee_srbp
+
+
+conan@ruth:~/soft/docker/filter$ docker container exec -i -t dck_influxdb influx -c jozefina query 'from(bucket: "backup_jozefina") |> range(start: -3y) |> filter(fn: (r) => r["_measurement"] == "voltage_unit") |> drop(columns: ["_start", "_stop"]) |> group() |> sort(columns: ["_time"], desc:false) |> limit(n: 5)' --skip-verify --raw -t jbD0MXwVzetW6r6TFSQ5xIAzSFxwl3rD8tJVvzWr_Ax7ZNBJH1A0LHu38PR8WFWEpy0SuDlYpMyjYBB52riFrA==
+#group,false,false,false,false,false,false,false,false,false
+#datatype,string,long,dateTime:RFC3339,double,string,string,string,string,string
+#default,_result,,,,,,,,
+,result,table,_time,_value,VoltSenKey,VoltUlId,_field,_measurement,host
+,,0,2020-04-24T22:10:32Z,83,627,482,VoltPerCent,voltage_unit,probee_srbp
+,,0,2020-04-24T22:10:32Z,6.408,627,482,VoltDecimal,voltage_unit,probee_srbp
+,,0,2020-04-24T22:10:32Z,363125,627,482,VoltKey,voltage_unit,probee_srbp
+,,0,2020-04-24T22:40:32Z,84,627,482,VoltPerCent,voltage_unit,probee_srbp
+,,0,2020-04-24T22:40:32Z,6.418,627,482,VoltDecimal,voltage_unit,probee_srbp
+
+#PAK UZ JEDU dashboard a script_editor
+#
+# ale spis pouziju hotovy flux query-> RUTH dashboards -> export JSON -> JOZEFINA dashboards -> import dashboard
+#
+from(bucket: "backup_jozefina") 
+ //|> range(start: -3y) 
+ |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+ |> filter(fn: (r) => r["_measurement"] == "voltage_sensor") 
+ |> filter(fn: (r) => r["_field"] == "VoltDecimal") 
+ |> filter(fn: (r) => r["_value"] >= 5.5) 
+ |> drop(columns: ["_start", "_stop"]) 
+
 

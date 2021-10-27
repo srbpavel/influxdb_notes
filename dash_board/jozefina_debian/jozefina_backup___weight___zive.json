@@ -1,0 +1,1091 @@
+{
+ "meta": {
+  "version": "1",
+  "type": "dashboard",
+  "name": "jozefina BACKUP / weight / ZIVE-Template",
+  "description": "template created from dashboard: jozefina BACKUP / weight / ZIVE"
+ },
+ "content": {
+  "data": {
+   "type": "dashboard",
+   "attributes": {
+    "name": "jozefina BACKUP / weight / ZIVE",
+    "description": "weight"
+   },
+   "relationships": {
+    "label": {
+     "data": []
+    },
+    "cell": {
+     "data": [
+      {
+       "type": "cell",
+       "id": "085b091f634af000"
+      },
+      {
+       "type": "cell",
+       "id": "085b091f64caf000"
+      },
+      {
+       "type": "cell",
+       "id": "085b091f654af000"
+      },
+      {
+       "type": "cell",
+       "id": "085b091f65caf000"
+      },
+      {
+       "type": "cell",
+       "id": "085b091f664af000"
+      },
+      {
+       "type": "cell",
+       "id": "085b091f668af000"
+      },
+      {
+       "type": "cell",
+       "id": "085b091f66caf000"
+      },
+      {
+       "type": "cell",
+       "id": "085b091f674af000"
+      },
+      {
+       "type": "cell",
+       "id": "085b091f678af000"
+      }
+     ]
+    },
+    "variable": {
+     "data": []
+    }
+   }
+  },
+  "included": [
+   {
+    "id": "085b091f634af000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 9,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f634af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "085b091f64caf000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 9,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f64caf000"
+      }
+     }
+    }
+   },
+   {
+    "id": "085b091f654af000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 6,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f654af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "085b091f65caf000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 2,
+     "w": 6,
+     "h": 2
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f65caf000"
+      }
+     }
+    }
+   },
+   {
+    "id": "085b091f664af000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 3,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f664af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "085b091f668af000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 0,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f668af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "085b091f66caf000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 0,
+     "w": 6,
+     "h": 2
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f66caf000"
+      }
+     }
+    }
+   },
+   {
+    "id": "085b091f674af000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 4,
+     "w": 6,
+     "h": 2
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f674af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "085b091f678af000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 6,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "085b091f678af000"
+      }
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f634af000",
+    "attributes": {
+     "name": "b / ZOKEJ",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6547\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "6885b756-be35-463a-9e1e-aede5f10a8b6",
+        "type": "scale",
+        "hex": "#8F8AF4",
+        "name": "Do Androids Dream of Electric Sheep?",
+        "value": 0
+       },
+       {
+        "id": "b9310c12-8388-4a61-b6f8-840bb6515a5b",
+        "type": "scale",
+        "hex": "#A51414",
+        "name": "Do Androids Dream of Electric Sheep?",
+        "value": 0
+       },
+       {
+        "id": "32340496-eca2-4b2b-b072-37ae4d0715fc",
+        "type": "scale",
+        "hex": "#F4CF31",
+        "name": "Do Androids Dream of Electric Sheep?",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f64caf000",
+    "attributes": {
+     "name": "d",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6972\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "05f41c9b-0638-413e-8fe0-bf7b0a8ad979",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "08acae16-dbcb-44af-97de-837849ca7741",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "2667c29d-f12a-4bd6-9980-bb69ccc85b8d",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f654af000",
+    "attributes": {
+     "name": "c1",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6963\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "a696591b-d3b0-4f0c-a585-80ca8b8d11a2",
+        "type": "scale",
+        "hex": "#FD7A5D",
+        "name": "Delorean",
+        "value": 0
+       },
+       {
+        "id": "26d2e977-e6bc-4607-892d-d7dd4abff5ab",
+        "type": "scale",
+        "hex": "#5F1CF2",
+        "name": "Delorean",
+        "value": 0
+       },
+       {
+        "id": "3b99b3f5-bfb6-4136-8f34-6b5f6a4cd5cb",
+        "type": "scale",
+        "hex": "#4CE09A",
+        "name": "Delorean",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f65caf000",
+    "attributes": {
+     "name": "d / points /table / CHATA",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6972\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> sort(columns: [\"_time\"], desc:true)\n|> limit(n:3)\n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#4591ED",
+        "name": "ocean",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_start",
+        "displayName": "_start",
+        "visible": false
+       },
+       {
+        "internalName": "_stop",
+        "displayName": "_stop",
+        "visible": false
+       },
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "WeiSenKey",
+        "displayName": "WeiSenKey",
+        "visible": false
+       },
+       {
+        "internalName": "WeiUlId",
+        "displayName": "WeiUlId",
+        "visible": false
+       },
+       {
+        "internalName": "_field",
+        "displayName": "_field",
+        "visible": false
+       },
+       {
+        "internalName": "_measurement",
+        "displayName": "_measurement",
+        "visible": false
+       },
+       {
+        "internalName": "host",
+        "displayName": "host",
+        "visible": false
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f664af000",
+    "attributes": {
+     "name": "d / points / CHATA",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "scatter",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6972\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//\n|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       "#74D495",
+       "#3F3FBA",
+       "#FF4D9E"
+      ],
+      "fillColumns": [
+       "WeiSenKey",
+       "WeiUlId"
+      ],
+      "symbolColumns": [
+       "WeiSenKey",
+       "WeiUlId"
+      ],
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "xAxisLabel": "",
+      "yAxisLabel": "",
+      "xPrefix": "",
+      "xSuffix": "",
+      "yPrefix": "",
+      "ySuffix": "",
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "timeFormat": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f668af000",
+    "attributes": {
+     "name": "b / points / ZOKEJ",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "scatter",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6547\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//\n|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       "#31C0F6",
+       "#A500A5",
+       "#FF7E27"
+      ],
+      "fillColumns": [
+       "WeiSenKey",
+       "WeiUlId"
+      ],
+      "symbolColumns": [
+       "WeiSenKey",
+       "WeiUlId"
+      ],
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "xAxisLabel": "",
+      "yAxisLabel": "",
+      "xPrefix": "",
+      "xSuffix": "",
+      "yPrefix": "",
+      "ySuffix": "",
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "timeFormat": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f66caf000",
+    "attributes": {
+     "name": "b / table / ZOKEJ",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6547\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> sort(columns: [\"_time\"], desc:true)\n|> limit(n:3)\n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#4591ED",
+        "name": "ocean",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_start",
+        "displayName": "_start",
+        "visible": false
+       },
+       {
+        "internalName": "_stop",
+        "displayName": "_stop",
+        "visible": false
+       },
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "WeiSenKey",
+        "displayName": "WeiSenKey",
+        "visible": false
+       },
+       {
+        "internalName": "WeiUlId",
+        "displayName": "WeiUlId",
+        "visible": false
+       },
+       {
+        "internalName": "_field",
+        "displayName": "_field",
+        "visible": false
+       },
+       {
+        "internalName": "_measurement",
+        "displayName": "_measurement",
+        "visible": false
+       },
+       {
+        "internalName": "host",
+        "displayName": "host",
+        "visible": false
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f674af000",
+    "attributes": {
+     "name": "c1 / klicek / table",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6963\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> sort(columns: [\"_time\"], desc:true)\n|> limit(n:3)\n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_start",
+        "displayName": "_start",
+        "visible": false
+       },
+       {
+        "internalName": "_stop",
+        "displayName": "_stop",
+        "visible": false
+       },
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "WeiSenKey",
+        "displayName": "WeiSenKey",
+        "visible": false
+       },
+       {
+        "internalName": "WeiUlId",
+        "displayName": "WeiUlId",
+        "visible": false
+       },
+       {
+        "internalName": "_field",
+        "displayName": "_field",
+        "visible": false
+       },
+       {
+        "internalName": "_measurement",
+        "displayName": "_measurement",
+        "visible": false
+       },
+       {
+        "internalName": "host",
+        "displayName": "host",
+        "visible": false
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "085b091f678af000",
+    "attributes": {
+     "name": "c1 / points",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "scatter",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_jozefina\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"weight\")\n|> filter(fn: (r) => r.WeiUlId == \"6963\")\n|> group(columns: [\"WeiUlId\", \"WeiSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n|> filter(fn: (r) => r[\"_field\"] == \"WeiDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] < 100)\n|> filter(fn: (r) => r[\"_value\"] > 30)\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//\n|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> yield(name: \"WeiUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       "#FDC44F",
+       "#007C76",
+       "#8983FF"
+      ],
+      "fillColumns": [
+       "WeiSenKey",
+       "WeiUlId"
+      ],
+      "symbolColumns": [
+       "WeiSenKey",
+       "WeiUlId"
+      ],
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "xAxisLabel": "",
+      "yAxisLabel": "",
+      "xPrefix": "",
+      "xSuffix": "",
+      "yPrefix": "",
+      "ySuffix": "",
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "timeFormat": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   }
+  ]
+ },
+ "labels": []
+}

@@ -1,0 +1,2807 @@
+{
+ "meta": {
+  "version": "1",
+  "type": "dashboard",
+  "name": "hemichormis / table-Template",
+  "description": "template created from dashboard: hemichormis / table"
+ },
+ "content": {
+  "data": {
+   "type": "dashboard",
+   "attributes": {
+    "name": "hemichormis / table",
+    "description": "h"
+   },
+   "relationships": {
+    "label": {
+     "data": []
+    },
+    "cell": {
+     "data": [
+      {
+       "type": "cell",
+       "id": "0780386528c62000"
+      },
+      {
+       "type": "cell",
+       "id": "078038652a462000"
+      },
+      {
+       "type": "cell",
+       "id": "078038652a862000"
+      },
+      {
+       "type": "cell",
+       "id": "078038652ac62000"
+      },
+      {
+       "type": "cell",
+       "id": "078038652b862000"
+      },
+      {
+       "type": "cell",
+       "id": "07803899bf862000"
+      },
+      {
+       "type": "cell",
+       "id": "078038a5a2862000"
+      },
+      {
+       "type": "cell",
+       "id": "0782ceeea0062000"
+      },
+      {
+       "type": "cell",
+       "id": "078a7c646e062000"
+      },
+      {
+       "type": "cell",
+       "id": "078aca212ac62000"
+      },
+      {
+       "type": "cell",
+       "id": "078af773db062000"
+      },
+      {
+       "type": "cell",
+       "id": "078bbaaa9ec62000"
+      },
+      {
+       "type": "cell",
+       "id": "078d2e9e3a062000"
+      },
+      {
+       "type": "cell",
+       "id": "07979a9f9e062000"
+      },
+      {
+       "type": "cell",
+       "id": "0798ac4422862000"
+      },
+      {
+       "type": "cell",
+       "id": "0798ac7693462000"
+      },
+      {
+       "type": "cell",
+       "id": "079b1eea89462000"
+      },
+      {
+       "type": "cell",
+       "id": "07a0b1c82ac62000"
+      },
+      {
+       "type": "cell",
+       "id": "07a0b1cda6462000"
+      },
+      {
+       "type": "cell",
+       "id": "07b0e6e005062000"
+      },
+      {
+       "type": "cell",
+       "id": "08476f9e02d04000"
+      },
+      {
+       "type": "cell",
+       "id": "0847769367904000"
+      },
+      {
+       "type": "cell",
+       "id": "0847b492b7104000"
+      }
+     ]
+    },
+    "variable": {
+     "data": [
+      {
+       "type": "variable",
+       "id": "07868cd3d691b000"
+      }
+     ]
+    }
+   }
+  },
+  "included": [
+   {
+    "id": "0780386528c62000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 3,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0780386528c62000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078038652a462000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 15,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078038652a462000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078038652a862000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 9,
+     "w": 5,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078038652a862000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078038652ac62000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 0,
+     "w": 6,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078038652ac62000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078038652b862000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 6,
+     "w": 5,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078038652b862000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07803899bf862000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 4,
+     "w": 3,
+     "h": 2
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07803899bf862000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078038a5a2862000",
+    "type": "cell",
+    "attributes": {
+     "x": 3,
+     "y": 4,
+     "w": 3,
+     "h": 2
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078038a5a2862000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0782ceeea0062000",
+    "type": "cell",
+    "attributes": {
+     "x": 5,
+     "y": 30,
+     "w": 7,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0782ceeea0062000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078a7c646e062000",
+    "type": "cell",
+    "attributes": {
+     "x": 5,
+     "y": 26,
+     "w": 7,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078a7c646e062000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078aca212ac62000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 12,
+     "w": 5,
+     "h": 5
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078aca212ac62000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078af773db062000",
+    "type": "cell",
+    "attributes": {
+     "x": 5,
+     "y": 23,
+     "w": 7,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078af773db062000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078bbaaa9ec62000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 17,
+     "w": 5,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078bbaaa9ec62000"
+      }
+     }
+    }
+   },
+   {
+    "id": "078d2e9e3a062000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 0,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "078d2e9e3a062000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07979a9f9e062000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 21,
+     "w": 5,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07979a9f9e062000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0798ac4422862000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 25,
+     "w": 5,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0798ac4422862000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0798ac7693462000",
+    "type": "cell",
+    "attributes": {
+     "x": 5,
+     "y": 34,
+     "w": 7,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0798ac7693462000"
+      }
+     }
+    }
+   },
+   {
+    "id": "079b1eea89462000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 18,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "079b1eea89462000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07a0b1c82ac62000",
+    "type": "cell",
+    "attributes": {
+     "x": 5,
+     "y": 38,
+     "w": 7,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07a0b1c82ac62000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07a0b1cda6462000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 29,
+     "w": 5,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07a0b1cda6462000"
+      }
+     }
+    }
+   },
+   {
+    "id": "07b0e6e005062000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 21,
+     "w": 6,
+     "h": 2
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "07b0e6e005062000"
+      }
+     }
+    }
+   },
+   {
+    "id": "08476f9e02d04000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 6,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "08476f9e02d04000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0847769367904000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 9,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0847769367904000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0847b492b7104000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 12,
+     "w": 6,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0847b492b7104000"
+      }
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0780386528c62000",
+    "attributes": {
+     "name": "temperature_external_hemichromis",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\")\n//\n|> group(columns: [\"TempUlId\", \"TempSenKey\"])\n//|> filter(fn: (r) => r.ScaleUlId == \"4c11aef77e7c\") //# roj_u_visne\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"TempKey\")\n\n// |> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.type == \"sensor\" ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  TempUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"TempUlId\"]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, teplomer: r.TempSenKey }))\n|> group(columns: [\"nick_name\", \"teplomer\", \"esp_machine_id\"])\n//|> yield(name: \"nick_name\")\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "ca22774a-8aa2-4a31-a466-d8ffa579cec7",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "81fd7ea6-b47a-42ec-8ec8-029b1da63cbd",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "c3786a25-befe-47ed-adbf-0f30f95f64d4",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": false,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078038652a462000",
+    "attributes": {
+     "name": "temp_external + temp_int / hemichromis",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "temp_ext = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\") \n//|> filter(fn: (r) => r.TempUlId != \"4c11aef77e7c\") //pac jsem v kuchyni a je teplej a rozesira graf\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\")\n//\n|> filter(fn: (r) => r[\"_value\"] != 85 )\n//|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\ntemp_int = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_internal\") \n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\")\n|> filter(fn: (r) => r[\"_value\"] < 34 )\n//|> filter(fn: (r) => r[\"_value\"] < 50 )\n//|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\n//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])\nall_temp =\nunion(tables: [temp_ext, temp_int])\n|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n///|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\"]) \n///|> group(columns: [\"TempUlId\", \"TempSenKey\", \"_measurement\"]) \n///|> yield(name: \"TempUlId\")\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  TempUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: all_temp, d2: ul_id}, on: [\"TempUlId\"]) \n|> drop(columns:[\"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, teplomer: r.TempSenKey, temp_type: r._measurement_d1 }))\n|> group(columns: [\"nick_name\", \"teplomer\", \"temp_type\"])\n|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "ca22774a-8aa2-4a31-a466-d8ffa579cec7",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "81fd7ea6-b47a-42ec-8ec8-029b1da63cbd",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "c3786a25-befe-47ed-adbf-0f30f95f64d4",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": false,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078038652a862000",
+    "attributes": {
+     "name": "scale_hemichromis / 4c11aef78524 + 2462abfcb718 / a_oplodnacek",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"4c11aef78524\") // or r.ScaleUlId == \"2462abfcb718\") //# panda / oplodnacek\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n//|> filter(fn: (r) => r[\"_value\"] > 15 )\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"\n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2}))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> sort(columns: [\"_time\"]) //pokud mam vice hostu \n//|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "e457b6e3-7686-47e8-9059-c8066cc5166c",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "308ea9e0-9c13-4624-85d1-0fc9367a9600",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "69a91d4e-d286-4e5c-887b-a005115c2c4a",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078038652ac62000",
+    "attributes": {
+     "name": "battery_hemichromis / single+double cell combo",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "b_low = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low) //#mel jsem jako promeny naore, ale sralo se to, nemelo by\n //|> filter(fn: (r) => r[\"_value\"] > high)\n //|> filter(fn: (r) => r[\"_value\"] > 4.5)\n|> filter(fn: (r) => r[\"_value\"] < 4.5 )//and r.BatUlId != \"2462abfcb718\") //#red_sonya\n|> map(fn: (r) => ({r with _value: r._value * 2.0 }))\n //|> group(columns: [\"BatUlId\", \"BatSenKey\"]) //#pozor na group a agregate obcas ti to zamaskuje neco co chces videt\n //|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\nb_high = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low)\n //|> filter(fn: (r) => r[\"_value\"] > high)\n|> filter(fn: (r) => r[\"_value\"] > 4.5)// and r.BatUlId != \"2462abfcb718\")\n //|> filter(fn: (r) => r[\"_value\"] < 4.5)\n //|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n //|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\nsensor_id = \nunion(tables: [b_low, b_high])\n//|> yield(name: \"BatUlId\") //#nez jsem pridal nickname\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\")\n//|> filter(fn: (r) => r.active == \"false\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //#skoda ze tohle me odstani to hezky vybarveni krivky \n//|> filter(fn: (r) => r._value =~ /gps/ )  //#vymyslet jak udelat abych nemel dva zaznamy pro ESP kdyz gps i senzor, asi FLAG__ACTIVE = True / False\n|> map(fn: (r) => ({ r with  BatUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"BatUlId\"]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\", \"active\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, baterka: r.BatSenKey, active: r.active, type: r.type, carrier: r.BatCarrier}))\n//\n|> group(columns: [\"nick_name\", \"baterka\", \"esp_machine_id\", \"type\"]) //\"carrier\"\n//\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false) //#at me to ukazuje lip tabulku popisovou grafickou\n//|> yield(name: \"nick_name\")\n//|> last()\n//|> max()\n//|> min()\n\n\n\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "bca46017-8dae-43af-893a-095060294d27",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "21f44327-463e-4ed3-8aca-5375dde628f3",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "fafd5d2e-8eae-4828-a64a-b17b17cb97d7",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "YYYY/MM/DD HH:mm:ss",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078038652b862000",
+    "attributes": {
+     "name": "scale_hemichromis / 4c11aef77e7c / roj_u_visne / a_roj_u_visne",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"4c11aef77e7c\") //# roj_u_visne\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"\n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n//\n//|> aggregateWindow(every: 5m, fn: min, createEmpty: false) //#presne se doucit\n|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "004965e0-db63-4121-89ef-397f1f21185a",
+        "type": "scale",
+        "hex": "#FD7A5D",
+        "name": "Delorean",
+        "value": 0
+       },
+       {
+        "id": "899b2165-fa4b-4f82-8e6b-a1e8d00d355b",
+        "type": "scale",
+        "hex": "#5F1CF2",
+        "name": "Delorean",
+        "value": 0
+       },
+       {
+        "id": "31f8bb51-9f8b-4c30-8e89-af972c58cc41",
+        "type": "scale",
+        "hex": "#4CE09A",
+        "name": "Delorean",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07803899bf862000",
+    "attributes": {
+     "name": "4c11aef77e7c / a_roj_u_visne",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "sen_key = from(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> filter(fn: (r) => r.ScaleUlId == \"4c11aef77e7c\") //oplodnacek\n|> filter(fn: (r) => r._field == \"ScaleKey\")\n\ndecimal = from(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> filter(fn: (r) => r.ScaleUlId == \"4c11aef77e7c\") //oplodnacek\n|> filter(fn: (r) => r._field == \"ScaleDecimal\")\n\njoin(tables: {d1: sen_key, d2: decimal}, on: [\"_time\"])\n|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\",\n    \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \n    \"host_d1\", \"host_d2\",]) \n|> map(fn: (r) => ({_time: r._time, \n                    _value: r._value_d2, \n                    id_inkrement: r._value_d1,\n                    ul: r.BatUlId_d2, \n                    sensor: r.BatSenKey_d2, \n                    }))\n|> group(columns: [\"ul\", \"sensor\"])\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> sort(columns: [\"_time\"], desc:true)\n|> limit(n:3)\n|> yield(name: \"ScaleUlId\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "ScaleSenKey",
+        "displayName": "ScaleSenKey",
+        "visible": false
+       },
+       {
+        "internalName": "ScaleUlId",
+        "displayName": "ScaleUlId",
+        "visible": false
+       },
+       {
+        "internalName": "id_inkrement",
+        "displayName": "id_inkrement",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078038a5a2862000",
+    "attributes": {
+     "name": "2462abfcb718 / a_oplodnacek",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "sen_key = from(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> filter(fn: (r) => r.ScaleUlId == \"4c11aef78524\") //oplodnacek\n|> filter(fn: (r) => r._field == \"ScaleKey\")\n\ndecimal = from(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> filter(fn: (r) => r.ScaleUlId == \"4c11aef78524\") //oplodnacek\n|> filter(fn: (r) => r._field == \"ScaleDecimal\")\n\njoin(tables: {d1: sen_key, d2: decimal}, on: [\"_time\"])\n|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\",\n    \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \n    \"host_d1\", \"host_d2\",]) \n|> map(fn: (r) => ({_time: r._time, \n                    _value: r._value_d2, \n                    id_inkrement: r._value_d1,\n                    ul: r.BatUlId_d2, \n                    sensor: r.BatSenKey_d2, \n                    }))\n|> group(columns: [\"ul\", \"sensor\"])\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> sort(columns: [\"_time\"], desc:true)\n|> limit(n:3)\n|> yield(name: \"ScaleUlId\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "ScaleSenKey",
+        "displayName": "ScaleSenKey",
+        "visible": false
+       },
+       {
+        "internalName": "ScaleUlId",
+        "displayName": "ScaleUlId",
+        "visible": false
+       },
+       {
+        "internalName": "id_inkrement",
+        "displayName": "id_inkrement",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0782ceeea0062000",
+    "attributes": {
+     "name": "scale_hemichromis /  101_tagifugu / 50x29196abf8",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"50x29196abf8\") //# red_sonya / ...\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> drop(columns:[\"host\"])\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"\n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> sort(columns: [\"_time\"]) //pokud mam vice hostu \n//|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "9702984a-64c6-4f62-ab70-d630b5100e93",
+        "type": "scale",
+        "hex": "#DA6FF1",
+        "name": "Ectoplasm",
+        "value": 0
+       },
+       {
+        "id": "0eb07e68-5284-4c08-8022-ae932a64bb5a",
+        "type": "scale",
+        "hex": "#00717A",
+        "name": "Ectoplasm",
+        "value": 0
+       },
+       {
+        "id": "053f3b87-bb37-493b-bd20-4cba236d3f3d",
+        "type": "scale",
+        "hex": "#ACFF76",
+        "name": "Ectoplasm",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078a7c646e062000",
+    "attributes": {
+     "name": "scale_hemichromis /  002_dvojka / 98f4ab6f6370",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"98f4ab6f6370\") //# 002_dvojka / 98f4ab6f6370\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n|> filter(fn: (r) => r[\"_value\"] > 15 )\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"\n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> sort(columns: [\"_time\"], desc: true)\n|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "14d82d78-200b-47df-a2a3-29152740712a",
+        "type": "scale",
+        "hex": "#74D495",
+        "name": "Atlantis",
+        "value": 0
+       },
+       {
+        "id": "4a94cba4-20f3-4d2a-8a2e-cc199c2d4d36",
+        "type": "scale",
+        "hex": "#3F3FBA",
+        "name": "Atlantis",
+        "value": 0
+       },
+       {
+        "id": "99569bab-7861-455c-89f5-44e682e7b78b",
+        "type": "scale",
+        "hex": "#FF4D9E",
+        "name": "Atlantis",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078aca212ac62000",
+    "attributes": {
+     "name": "temp_external + temp_int / variable UL_NICK_NAME / v.ul_nick_name",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "temp_ext = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\") \n//|> filter(fn: (r) => r.TempUlId != \"4c11aef77e7c\") //pac jsem v kuchyni a je teplej a rozesira graf\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\")\n//\n|> filter(fn: (r) => r[\"_value\"] != 85 )\n//|> filter(fn: (r) => r.TempUlId == v.ul_nick_name)\n//|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\ntemp_int = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_internal\") \n//|> filter(fn: (r) => r.TempUlId == v.ul_nick_name)\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\")\n|> filter(fn: (r) => r[\"_value\"] < 34 )\n//|> filter(fn: (r) => r[\"_value\"] < 50 )\n//|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\n//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])\nall_temp =\nunion(tables: [temp_ext, temp_int])\n|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n///|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\"]) \n///|> group(columns: [\"TempUlId\", \"TempSenKey\", \"_measurement\"]) \n///|> yield(name: \"TempUlId\")\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> filter(fn: (r) => r[\"_value\"] == v.ul_nick_name)\n|> map(fn: (r) => ({ r with  TempUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: all_temp, d2: ul_id}, on: [\"TempUlId\"]) \n|> drop(columns:[\"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, teplomer: r.TempSenKey, temp_type: r._measurement_d1 }))\n|> group(columns: [\"nick_name\", \"teplomer\", \"temp_type\"])\n|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "ca22774a-8aa2-4a31-a466-d8ffa579cec7",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "81fd7ea6-b47a-42ec-8ec8-029b1da63cbd",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "c3786a25-befe-47ed-adbf-0f30f95f64d4",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": false,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078af773db062000",
+    "attributes": {
+     "name": "battery_hemichromis / single+double cell combo / VARIABLE",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "b_low = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low) //#mel jsem jako promeny naore, ale sralo se to, nemelo by\n //|> filter(fn: (r) => r[\"_value\"] > high)\n //|> filter(fn: (r) => r[\"_value\"] > 4.5)\n|> filter(fn: (r) => r[\"_value\"] < 4.5)\n|> map(fn: (r) => ({r with _value: r._value * 2.0 }))\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) //#pozor na group a agregate obcas ti to zamaskuje neco co chces videt\n//|> group(columns: [\"BatCarrier\"])\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//\n|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n//|> drop(columns:[\"BatValid\"]) \n\nb_high = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low)\n //|> filter(fn: (r) => r[\"_value\"] > high)\n|> filter(fn: (r) => r[\"_value\"] > 4.5)\n //|> filter(fn: (r) => r[\"_value\"] < 4.5)\n //|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n//|> group(columns: [\"BatCarrier\"])\n //|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//\n|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\n\nsensor_id = \nunion(tables: [b_low, b_high])\n//|> yield(name: \"BatUlId\") //#nez jsem pridal nickname\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\")\n|> filter(fn: (r) => r[\"_value\"] == v.ul_nick_name)\n//|> filter(fn: (r) => r.active == \"false\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //#skoda ze tohle me odstani to hezky vybarveni krivky \n//|> filter(fn: (r) => r._value =~ /gps/ )  //#vymyslet jak udelat abych nemel dva zaznamy pro ESP kdyz gps i senzor, asi FLAG__ACTIVE = True / False\n|> map(fn: (r) => ({ r with  BatUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"BatUlId\"]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, baterka: r.BatSenKey, active: r.active }))\n|> group(columns: [\"nick_name\", \"baterka\", \"esp_machine_id\"])\n//\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false) //#at me to ukazuje lip tabulku popisovou grafickou\n|> yield(name: \"nick_name\")\n\n\n\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "bca46017-8dae-43af-893a-095060294d27",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "21f44327-463e-4ed3-8aca-5375dde628f3",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "fafd5d2e-8eae-4828-a64a-b17b17cb97d7",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "YYYY/MM/DD HH:mm:ss",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078bbaaa9ec62000",
+    "attributes": {
+     "name": "scale_hemichromis /  002_dvojka / 98f4ab6f6370 (Clone)",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"98f4ab6f6370\") //# 002_dvojka / 98f4ab6f6370\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"\n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> sort(columns: [\"_time\"], desc: true)\n|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": false
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": false
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "078d2e9e3a062000",
+    "attributes": {
+     "name": "battery_hemichromis / single+double cell combo TABLE",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "b_low = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low) //#mel jsem jako pr>omeny naore, ale sralo se to, nemelo by\n //|> filter(fn: (r) => r[\"_value\"] > high)\n //|> filter(fn: (r) => r[\"_value\"] > 4.5)\n|> filter(fn: (r) => r[\"_value\"] < 4.5 and r.BatUlId != \"2462abfcb718\") //#red_sonya\n|> map(fn: (r) => ({r with _value: r._value * 2.0 }))\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) //#pozor na group a agregate obcas ti to zamaskuje neco co chces videt\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\nb_high = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low)\n //|> filter(fn: (r) => r[\"_value\"] > high)\n|> filter(fn: (r) => r[\"_value\"] > 4.5 and r.BatUlId != \"2462abfcb718\")\n //|> filter(fn: (r) => r[\"_value\"] < 4.5)\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\nsensor_id = \nunion(tables: [b_low, b_high])\n//|> yield(name: \"BatUlId\") //#nez jsem pridal nickname\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\")\n//|> filter(fn: (r) => r.active == \"false\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //#skoda ze tohle me odstani to hezky vybarveni krivky \n//|> filter(fn: (r) => r._value =~ /gps/ )  //#vymyslet jak udelat abych nemel dva zaznamy pro ESP kdyz gps i senzor, asi FLAG__ACTIVE = True / False\n|> map(fn: (r) => ({ r with  BatUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"BatUlId\"]) \n|> filter(fn: (r) => r.BatCarrier == \"ttn\" )\n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, baterka: r.BatSenKey, active: r.active, type: r.type, carrier: r.BatCarrier}))\n|> group(columns: [\"nick_name\", \"baterka\", \"esp_machine_id\", \"carrier\"])\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false) //#at me to ukazuje lip tabulku popisovou grafickou\n//|> yield(name: \"nick_name\")\n|> sort(columns: [\"_time\"], desc: true)\n|> limit(n: 1)\n//\n|>group()\n//|> sort(columns: [\"type\", \"_value\"], desc: true)\n|> sort(columns: [\"_value\"], desc: true)\n\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "active",
+        "displayName": "active",
+        "visible": false
+       },
+       {
+        "internalName": "baterka",
+        "displayName": "baterka",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": true
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": true
+       },
+       {
+        "internalName": "type",
+        "displayName": "type",
+        "visible": true
+       },
+       {
+        "internalName": "carrier",
+        "displayName": "carrier",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07979a9f9e062000",
+    "attributes": {
+     "name": "scale_hemichromis /  101_tagifugu / 50x29196abf8 TABLE",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"50x29196abf8\") //# red_sonya / ...\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"\n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> sort(columns: [\"_time\"], desc: true)\n|> limit(n:9)\n//|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": true
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0798ac4422862000",
+    "attributes": {
+     "name": "scale_hemichromis /  103_loituma / 50x29196a858",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"50x29196a858\") //# red_sonya / ...\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"\n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> sort(columns: [\"_time\"], desc: true)\n|> limit(n:9)\n//|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": true
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0798ac7693462000",
+    "attributes": {
+     "name": "scale_hemichromis /  103_loituma / 50x29196a858",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"50x29196a858\") //# red_sonya / ...\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\",\n                \n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "1628dc79-c4d9-43a2-9b50-3cdd70915c08",
+        "type": "scale",
+        "hex": "#FD7A5D",
+        "name": "Delorean",
+        "value": 0
+       },
+       {
+        "id": "cd2b803b-d6c4-4327-b3e9-1f29832df1a9",
+        "type": "scale",
+        "hex": "#5F1CF2",
+        "name": "Delorean",
+        "value": 0
+       },
+       {
+        "id": "3a17c4fd-3e21-4a67-8f21-50700406c32f",
+        "type": "scale",
+        "hex": "#4CE09A",
+        "name": "Delorean",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "079b1eea89462000",
+    "attributes": {
+     "name": "battery_hemichromis / single+double cell combo TABLE / CRA",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "b_low = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low) //#mel jsem jako pr>omeny naore, ale sralo se to, nemelo by\n //|> filter(fn: (r) => r[\"_value\"] > high)\n //|> filter(fn: (r) => r[\"_value\"] > 4.5)\n|> filter(fn: (r) => r[\"_value\"] < 4.5 and r.BatUlId != \"2462abfcb718\") //#red_sonya\n|> map(fn: (r) => ({r with _value: r._value * 2.0 }))\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) //#pozor na group a agregate obcas ti to zamaskuje neco co chces videt\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\nb_high = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low)\n //|> filter(fn: (r) => r[\"_value\"] > high)\n|> filter(fn: (r) => r[\"_value\"] > 4.5 and r.BatUlId != \"2462abfcb718\")\n //|> filter(fn: (r) => r[\"_value\"] < 4.5)\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\nsensor_id = \nunion(tables: [b_low, b_high])\n//|> yield(name: \"BatUlId\") //#nez jsem pridal nickname\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\")\n//|> filter(fn: (r) => r.active == \"false\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //#skoda ze tohle me odstani to hezky vybarveni krivky \n//|> filter(fn: (r) => r._value =~ /gps/ )  //#vymyslet jak udelat abych nemel dva zaznamy pro ESP kdyz gps i senzor, asi FLAG__ACTIVE = True / False\n|> map(fn: (r) => ({ r with  BatUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"BatUlId\"]) \n|> filter(fn: (r) => r.BatCarrier == \"cra\" )\n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, baterka: r.BatSenKey, active: r.active, type: r.type, carrier: r.BatCarrier}))\n|> group(columns: [\"nick_name\", \"baterka\", \"esp_machine_id\", \"carrier\"])\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false) //#at me to ukazuje lip tabulku popisovou grafickou\n//|> yield(name: \"nick_name\")\n|> sort(columns: [\"_time\"], desc: true)\n|> limit(n: 1)\n//\n|>group()\n//|> sort(columns: [\"type\", \"_value\"], desc: true)\n|> sort(columns: [\"_value\"], desc: true)\n\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "active",
+        "displayName": "active",
+        "visible": false
+       },
+       {
+        "internalName": "baterka",
+        "displayName": "baterka",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": true
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": true
+       },
+       {
+        "internalName": "type",
+        "displayName": "type",
+        "visible": true
+       },
+       {
+        "internalName": "carrier",
+        "displayName": "carrier",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07a0b1c82ac62000",
+    "attributes": {
+     "name": "scale_hemichromis /  102_namazu / 50x29196a980",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"50x29196a980\") //# red_sonya / ...\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\",\n                \n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "25e44250-6773-4f64-a602-7f3cd452c51a",
+        "type": "scale",
+        "hex": "#F6F6F8",
+        "name": "T-Max 400 Film",
+        "value": 0
+       },
+       {
+        "id": "79300428-d9c9-4ba6-be7c-d8502cb0fdb0",
+        "type": "scale",
+        "hex": "#A4A8B6",
+        "name": "T-Max 400 Film",
+        "value": 0
+       },
+       {
+        "id": "313f6ad2-425e-4ddc-a82a-d58aa3fcb9a5",
+        "type": "scale",
+        "hex": "#545667",
+        "name": "T-Max 400 Film",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07a0b1cda6462000",
+    "attributes": {
+     "name": "scale_hemichromis /  102_namazu / 50x29196a980",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])\n|> filter(fn: (r) => r.ScaleUlId == \"50x29196a980\") //# red_sonya / ...\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"ScaleUlId\"]) \n//|> drop(columns:[\"ScaleSenKey_d1\", \"ScaleUlId_d1\", \"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\",]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \n                \"_start_d1\", \"_start_d2\", \n                \"_stop_d1\", \"_stop_d2\", \n                \"host_d1\", \"host_d2\",\n                \"_time_d2\", \"host\", \n                \"_field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"\n                ]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))\n|> group(columns: [\"nick_name\", \"esp_machine_id\"])\n|> sort(columns: [\"_time\"], desc: true)\n|> limit(n:9)\n//|> yield(name: \"nick_name\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": true
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "07b0e6e005062000",
+    "attributes": {
+     "name": "battery_hemichromis / single+double cell combo TABLE / v3",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "b_low = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low) //#mel jsem jako pr>omeny naore, ale sralo se to, nemelo by\n //|> filter(fn: (r) => r[\"_value\"] > high)\n //|> filter(fn: (r) => r[\"_value\"] > 4.5)\n|> filter(fn: (r) => r[\"_value\"] < 4.5 and r.BatUlId != \"2462abfcb718\") //#red_sonya\n|> map(fn: (r) => ({r with _value: r._value * 2.0 }))\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) //#pozor na group a agregate obcas ti to zamaskuje neco co chces videt\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\nb_high = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n //|> filter(fn: (r) => r[\"_value\"] < low)\n //|> filter(fn: (r) => r[\"_value\"] > high)\n|> filter(fn: (r) => r[\"_value\"] > 4.5 and r.BatUlId != \"2462abfcb718\")\n //|> filter(fn: (r) => r[\"_value\"] < 4.5)\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"BatCarrier\", \"BatValid\"]) \n\nsensor_id = \nunion(tables: [b_low, b_high])\n//|> yield(name: \"BatUlId\") //#nez jsem pridal nickname\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n|> filter(fn: (r) => r.active == \"true\")\n//|> filter(fn: (r) => r.active == \"false\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //#skoda ze tohle me odstani to hezky vybarveni krivky \n//|> filter(fn: (r) => r._value =~ /gps/ )  //#vymyslet jak udelat abych nemel dva zaznamy pro ESP kdyz gps i senzor, asi FLAG__ACTIVE = True / False\n|> map(fn: (r) => ({ r with  BatUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"BatUlId\"]) \n|> filter(fn: (r) => r.BatCarrier == \"v3\" ) //nezpomen pridat stroj do ttn_2_machines\n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, baterka: r.BatSenKey, active: r.active, type: r.type, carrier: r.BatCarrier}))\n|> group(columns: [\"nick_name\", \"baterka\", \"esp_machine_id\", \"carrier\"])\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false) //#at me to ukazuje lip tabulku popisovou grafickou\n//|> yield(name: \"nick_name\")\n|> sort(columns: [\"_time\"], desc: true)\n|> limit(n: 1)\n//\n|>group()\n//|> sort(columns: [\"type\", \"_value\"], desc: true)\n|> sort(columns: [\"_value\"], desc: true)\n\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "active",
+        "displayName": "active",
+        "visible": false
+       },
+       {
+        "internalName": "baterka",
+        "displayName": "baterka",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": true
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": true
+       },
+       {
+        "internalName": "type",
+        "displayName": "type",
+        "visible": true
+       },
+       {
+        "internalName": "carrier",
+        "displayName": "carrier",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "08476f9e02d04000",
+    "attributes": {
+     "name": "LOW temperature external / FIXED 48h",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n\n//|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> range(start: -48h)\n\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\")\n//\n|> group(columns: [\"TempUlId\", \"TempSenKey\"])\n//|> filter(fn: (r) => r.ScaleUlId == \"4c11aef77e7c\") //# roj_u_visne\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"TempKey\")\n\n// |> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.type == \"sensor\" ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  TempUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"TempUlId\"]) \n|> drop(columns:[\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, teplomer: r.TempSenKey }))\n//|> group(columns: [\"nick_name\", \"teplomer\", \"esp_machine_id\"])\n\n//posledni min/max hodnota per sensor\n|> group(columns: [\"teplomer\"])\n|> drop(columns:[\"esp_machine_id\"])\n|> sort(columns: [\"_value\"], desc: false)\n|> limit(n: 1)\n|> group()\n|> sort(columns: [\"_value\"], desc: true)\n//|> yield(name: \"nick_name\")\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": true
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": true
+       },
+       {
+        "internalName": "teplomer",
+        "displayName": "teplomer",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0847769367904000",
+    "attributes": {
+     "name": "HIGH temperature external FIXED 48h",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n\n//|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> range(start: -48h)\n\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\")\n//\n|> group(columns: [\"TempUlId\", \"TempSenKey\"])\n//|> filter(fn: (r) => r.ScaleUlId == \"4c11aef77e7c\") //# roj_u_visne\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"TempKey\")\n\n// |> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.type == \"sensor\" ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  TempUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"TempUlId\"]) \n|> drop(columns: [\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, teplomer: r.TempSenKey }))\n//|> group(columns: [\"nick_name\", \"teplomer\", \"esp_machine_id\"])\n\n|> group(columns: [\"teplomer\"])\n|> drop(columns: [\"esp_machine_id\"])\n|> sort(columns: [\"_value\"], desc: true)\n|> limit(n: 1)\n|> group()\n|> sort(columns: [\"_value\"], desc: true)\n//|> yield(name: \"nick_name\")\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "esp_machine_id",
+        "displayName": "esp_machine_id",
+        "visible": true
+       },
+       {
+        "internalName": "nick_name",
+        "displayName": "nick_name",
+        "visible": true
+       },
+       {
+        "internalName": "teplomer",
+        "displayName": "teplomer",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0847b492b7104000",
+    "attributes": {
+     "name": "LAST temperature external",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "histogram",
+      "queries": [
+       {
+        "text": "sensor_id =\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\")\n//\n|> group(columns: [\"TempUlId\", \"TempSenKey\"])\n//|> filter(fn: (r) => r.ScaleUlId == \"4c11aef77e7c\") //# roj_u_visne\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r[\"_field\"] == \"TempKey\")\n\n// |> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\nul_id = \nfrom(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n//|> filter(fn: (r) => r._value =~ /sensor/ ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.type == \"sensor\" ) //skoda ze tohle me odstani to hezky vybarveni krivky \n|> filter(fn: (r) => r.active == \"true\") //#divny je ze poukud nevyberu tak to hodi range error\n|> map(fn: (r) => ({ r with  TempUlId: r.esp_machine_id, NickName: r._value}))\n\njoin(tables: {d1: sensor_id, d2: ul_id}, on: [\"TempUlId\"]) \n|> drop(columns: [\"_measurement_d1\", \"_measurement_d2\", \"_start_d1\", \"_start_d2\", \"_stop_d1\", \"_stop_d2\", \"host_d1\", \"host_d2\", \"_time_d2\", \"host\", \"field_d1\", \"_field_d2\", \"ttn_dev_addr\", \"ttn_dev_eui\"]) \n|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2, teplomer: r.TempSenKey }))\n//|> group(columns: [\"nick_name\", \"teplomer\", \"esp_machine_id\"])\n\n|> group(columns: [\"teplomer\"])\n|> drop(columns: [\"esp_machine_id\"])\n//|> sort(columns: [\"_time\"], desc: true)\n//|> limit(n: 1)\n//|> group()\n//|> sort(columns: [\"_value\"], desc: true)\n//|> yield(name: \"nick_name\")\n//|> window(every: v.windowPeriod)\n\n|> filter(fn: (r) => r.nick_name == v.ul_nick_name)\n\n|> aggregateWindow(every: 24h, fn: min, createEmpty: false)\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "f3af3f6e-e3cd-41fe-a74e-a61afbcbe28c",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "b4269693-7967-4777-98c2-3cab6609b244",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "08ddd231-e2a2-4546-887e-c6420ab44f71",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "xColumn": "_value",
+      "fillColumns": [
+       "teplomer",
+       "_start",
+       "_stop"
+      ],
+      "xAxisLabel": "",
+      "position": "stacked",
+      "binCount": 30,
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "id": "07868cd3d691b000",
+    "type": "variable",
+    "attributes": {
+     "name": "ul_nick_name",
+     "arguments": {
+      "type": "query",
+      "values": {
+       "query": "from(bucket: \"hemichromis\") \n|> range(start: -1y) \n|> filter(fn: (r) => r[\"_measurement\"] == \"ttn_2_machines\")\n//|> map(fn:(r) => ({ r with _value: r.esp_machine_id }))\n|> filter(fn: (r) => r.active == \"true\")\n|> drop(columns:[\"_measurement\", \"_start\", \"_stop\"])//, \"host\"]) \n|> group(columns: [\"host\"])",
+       "language": "flux"
+      }
+     },
+     "selected": []
+    },
+    "relationships": {
+     "label": {
+      "data": []
+     }
+    }
+   }
+  ]
+ },
+ "labels": []
+}

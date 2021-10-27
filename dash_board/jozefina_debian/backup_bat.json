@@ -1,0 +1,570 @@
+{
+ "meta": {
+  "version": "1",
+  "type": "dashboard",
+  "name": "backup_BAT-Template",
+  "description": "template created from dashboard: backup_BAT"
+ },
+ "content": {
+  "data": {
+   "type": "dashboard",
+   "attributes": {
+    "name": "backup_BAT",
+    "description": ""
+   },
+   "relationships": {
+    "label": {
+     "data": []
+    },
+    "cell": {
+     "data": [
+      {
+       "type": "cell",
+       "id": "0859ce19fd0af000"
+      },
+      {
+       "type": "cell",
+       "id": "0859ce4bca8af000"
+      },
+      {
+       "type": "cell",
+       "id": "0859cf1d1b8af000"
+      },
+      {
+       "type": "cell",
+       "id": "0859cf58fbcaf000"
+      }
+     ]
+    },
+    "variable": {
+     "data": []
+    }
+   }
+  },
+  "included": [
+   {
+    "id": "0859ce19fd0af000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 8,
+     "w": 12,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0859ce19fd0af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0859ce4bca8af000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 0,
+     "w": 6,
+     "h": 5
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0859ce4bca8af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0859cf1d1b8af000",
+    "type": "cell",
+    "attributes": {
+     "x": 6,
+     "y": 0,
+     "w": 6,
+     "h": 5
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0859cf1d1b8af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0859cf58fbcaf000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 5,
+     "w": 12,
+     "h": 3
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0859cf58fbcaf000"
+      }
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0859ce19fd0af000",
+    "attributes": {
+     "name": "last: 6",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_bat_test\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n\n|> filter(fn: (r) => r[\"_measurement\"] == \"rpi\")\n\n//|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"BatAddress\")\n\n//|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\" and r[\"_value\"] < 8)\n//|> filter(fn: (r) => r[\"_value\"] > 3)\n\n//|> group(columns: [\"Machine\"])\n\n//\n|> drop(columns: [\"_start\", \"_stop\", \"BatCarrier\", \"BatValid\", \"_measurement\", \"_field\", \"BatSenKey\"]) //\"host\",\n//|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"host\", \"BatValid\"])\n\n//|> drop(columns: [\"host\"])\n\n|> sort(columns: [\"_time\"], desc:true)\n|>limit(n:8)\n|> yield(name: \"min\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_start",
+        "displayName": "_start",
+        "visible": true
+       },
+       {
+        "internalName": "_stop",
+        "displayName": "_stop",
+        "visible": true
+       },
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "BatAddress",
+        "displayName": "BatAddress",
+        "visible": true
+       },
+       {
+        "internalName": "BatCarrier",
+        "displayName": "BatCarrier",
+        "visible": true
+       },
+       {
+        "internalName": "BatId",
+        "displayName": "BatId",
+        "visible": true
+       },
+       {
+        "internalName": "BatValid",
+        "displayName": "BatValid",
+        "visible": true
+       },
+       {
+        "internalName": "Machine",
+        "displayName": "Machine",
+        "visible": true
+       },
+       {
+        "internalName": "_field",
+        "displayName": "_field",
+        "visible": true
+       },
+       {
+        "internalName": "_measurement",
+        "displayName": "_measurement",
+        "visible": true
+       },
+       {
+        "internalName": "host",
+        "displayName": "host",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0859ce4bca8af000",
+    "attributes": {
+     "name": "Name this Cell",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_bat_test\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n\n|> filter(fn: (r) => r[\"_measurement\"] == \"rpi\")\n\n//\n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"BatAddress\")\n\n//|> filter(fn: (r) => r[\"_value\"] > 5.5)\n//|> filter(fn: (r) => r[\"_value\"] < 3)\n\n|> filter(fn: (r) => r[\"Machine\"] != \"single_cell_18650\")\n\n//|> group(columns: [\"Machine\"])\n//|> group(columns: [\"BatId\"])\n\n//|> drop(columns: [\"_start\", \"_stop\", \"BatCarrier\", \"BatValid\", \"_measurement\", \"_field\", \"host\", \"BatSenKey\"])\n\n//DROP host to JOIN curve\n//|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"host\", \"BatValid\"])\n\n//PER host curve\n//\n|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"BatValid\"])\n\n//|> sort(columns: [\"_time\"], desc:true)\n\n//|> group(columns: [\"Machine\", \"BatId\"]) //je to hnusny\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false) //VYHLADI ale ztracis detaily\n\n//|> yield(name: \"min\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "96672804-05f1-4e61-acb5-0df01fdef608",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "32aa97cd-1867-452a-959e-a8262245145f",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "8e4b536d-e38e-4a2f-a518-cbbb28d9121a",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": [],
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": [],
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": false,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": true,
+      "legendOpacity": 1,
+      "legendOrientationThreshold": 100000000
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0859cf1d1b8af000",
+    "attributes": {
+     "name": "Name this Cell",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_bat_test\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n\n|> filter(fn: (r) => r[\"_measurement\"] == \"rpi\")\n\n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"BatAddress\")\n\n//|> filter(fn: (r) => r[\"_value\"] < 5.5)\n//|> filter(fn: (r) => r[\"_value\"] > 3)\n\n\n|> filter(fn: (r) => r[\"Machine\"] == \"single_cell_18650\")\n\n//|> group(columns: [\"Machine\"])\n\n//|> drop(columns: [\"_start\", \"_stop\", \"BatCarrier\", \"BatValid\", \"_measurement\", \"_field\", \"host\", \"BatSenKey\"])\n\n//DROP host to JOIN curve\n//|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"host\", \"BatValid\"])\n\n//PER host curve\n//\n|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"BatValid\"])\n\n|> sort(columns: [\"_time\"], desc:true)\n\n|> yield(name: \"min\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "96672804-05f1-4e61-acb5-0df01fdef608",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "32aa97cd-1867-452a-959e-a8262245145f",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "8e4b536d-e38e-4a2f-a518-cbbb28d9121a",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": [],
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": [],
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": false,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": true,
+      "legendOpacity": 1,
+      "legendOrientationThreshold": 100000000
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0859cf58fbcaf000",
+    "attributes": {
+     "name": "Name this Cell",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_bat_test\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"rpi\")\n\n//|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"DsValid\"])\n|> drop(columns: [\"_start\", \"_stop\"])\n\n//|> group(columns: [\"Machine\", \"DsId\"])\n|> group(columns: [\"Machine\"])\n\n|> sort(columns: [\"_time\"], desc:true)\n\n|>limit(n: 1)\n\n|>group()\n|> sort(columns: [\"_value\"], desc: true)\n\n//|> yield(name: \"min\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "BatAddress",
+        "displayName": "BatAddress",
+        "visible": true
+       },
+       {
+        "internalName": "BatCarrier",
+        "displayName": "BatCarrier",
+        "visible": true
+       },
+       {
+        "internalName": "BatId",
+        "displayName": "BatId",
+        "visible": true
+       },
+       {
+        "internalName": "BatValid",
+        "displayName": "BatValid",
+        "visible": true
+       },
+       {
+        "internalName": "Machine",
+        "displayName": "Machine",
+        "visible": true
+       },
+       {
+        "internalName": "_field",
+        "displayName": "_field",
+        "visible": true
+       },
+       {
+        "internalName": "_measurement",
+        "displayName": "_measurement",
+        "visible": true
+       },
+       {
+        "internalName": "host",
+        "displayName": "host",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   }
+  ]
+ },
+ "labels": []
+}

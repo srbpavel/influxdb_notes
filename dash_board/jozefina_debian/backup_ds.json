@@ -1,0 +1,448 @@
+{
+ "meta": {
+  "version": "1",
+  "type": "dashboard",
+  "name": "backup_DS-Template",
+  "description": "template created from dashboard: backup_DS"
+ },
+ "content": {
+  "data": {
+   "type": "dashboard",
+   "attributes": {
+    "name": "backup_DS",
+    "description": ""
+   },
+   "relationships": {
+    "label": {
+     "data": []
+    },
+    "cell": {
+     "data": [
+      {
+       "type": "cell",
+       "id": "0859b4cd010af000"
+      },
+      {
+       "type": "cell",
+       "id": "0859b5b1a04af000"
+      },
+      {
+       "type": "cell",
+       "id": "0859b614ce0af000"
+      }
+     ]
+    },
+    "variable": {
+     "data": []
+    }
+   }
+  },
+  "included": [
+   {
+    "id": "0859b4cd010af000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 8,
+     "w": 12,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0859b4cd010af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0859b5b1a04af000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 0,
+     "w": 12,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0859b5b1a04af000"
+      }
+     }
+    }
+   },
+   {
+    "id": "0859b614ce0af000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 4,
+     "w": 12,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "0859b614ce0af000"
+      }
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0859b4cd010af000",
+    "attributes": {
+     "name": "LAST: 6",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_ds_test\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"dallas\")\n//|> filter(fn: (r) => r[\"DsCarrier\"] == \"labjack\")\n//|> filter(fn: (r) => r[\"DsId\"] == \"841704586024\")\n//|> filter(fn: (r) => r[\"DsPin\"] == \"8\")\n\n//|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"DsValid\"])\n|> drop(columns: [\"_start\", \"_stop\"]) //, \"_measurement\", \"DsValid\"])\n\n//|> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n\n//\n|> sort(columns: [\"_time\"], desc:true)\n\n|>limit(n: 6)\n\n|> yield(name: \"min\")",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "DsCarrier",
+        "displayName": "DsCarrier",
+        "visible": true
+       },
+       {
+        "internalName": "DsId",
+        "displayName": "DsId",
+        "visible": true
+       },
+       {
+        "internalName": "DsPin",
+        "displayName": "DsPin",
+        "visible": true
+       },
+       {
+        "internalName": "DsValid",
+        "displayName": "DsValid",
+        "visible": true
+       },
+       {
+        "internalName": "Machine",
+        "displayName": "Machine",
+        "visible": true
+       },
+       {
+        "internalName": "_field",
+        "displayName": "_field",
+        "visible": true
+       },
+       {
+        "internalName": "_measurement",
+        "displayName": "_measurement",
+        "visible": true
+       },
+       {
+        "internalName": "host",
+        "displayName": "host",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0859b5b1a04af000",
+    "attributes": {
+     "name": "hrnecek + mrazak",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "from(bucket: \"backup_ds_test\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"dallas\")\n//|> filter(fn: (r) => r[\"DsCarrier\"] == \"labjack\")\n//|> filter(fn: (r) => r[\"DsId\"] == \"841704586024\")\n//|> filter(fn: (r) => r[\"DsPin\"] == \"8\")\n\n//|> filter(fn: (r) => r[\"_value\"] < 30) //debug errory -> smazat\n//|> filter(fn: (r) => r[\"_value\"] > 10)\n\n//|> filter(fn: (r) => r[\"_value\"] != 85)\n\n//|> filter(fn: (r) => r[\"_value\"] < 2) //SMAZAT data\n//|> filter(fn: (r) => r[\"_value\"] > -2) //SMAZAT data\n\n//|> filter(fn: (r) => r[\"DsId\"] != \"236134354984\")\n\n//|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"DsValid\"])\n|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"DsValid\"])\n\n//|> aggregateWindow(every: v.windowPeriod, fn: mean, createEmpty: false)\n\n//|> sort(columns: [\"_time\"], desc:true)\n\n|> yield(name: \"min\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "5a00d29e-b509-49f4-946b-90e2a12420f7",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "e5e4f48c-4cf3-40fa-ab1c-f0994cc9457c",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "692959e2-b3bc-47d7-981a-ddd367b40e50",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": [],
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": [],
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": false,
+      "position": "overlaid",
+      "timeFormat": "YYYY-MM-DD HH:mm:ss ZZ",
+      "hoverDimension": "auto",
+      "legendColorizeRows": true,
+      "legendOpacity": 1,
+      "legendOrientationThreshold": 100000000
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "0859b614ce0af000",
+    "attributes": {
+     "name": "last_values",
+     "properties": {
+      "shape": "chronograf-v2",
+      "type": "table",
+      "queries": [
+       {
+        "text": "import \"contrib/bonitoo-io/hex\" //https://docs.influxdata.com/flux/v0.x/stdlib/contrib/bonitoo-io/hex/string/\n\nfunc_multi_ten = (n) => n * 10.0\n\nfrom(bucket: \"backup_ds_test\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"dallas\")\n\n|> map(fn: (r) => ({r with hex_str: hex.string(v: int(v: r.DsId))}))\n\n//|> map(fn: (r) => ({r with test_ten: func_multi_ten(n:float(v: r[\"_value\"])) }))\n\n//|> drop(columns: [\"_start\", \"_stop\", \"_measurement\", \"DsValid\"])\n|> drop(columns: [\"_start\", \"_stop\"])\n|> group(columns: [\"Machine\", \"DsId\"])\n\n|> sort(columns: [\"_time\"], desc:true)\n|>limit(n: 1)\n\n|>group()\n|> sort(columns: [\"_value\"], desc: true)\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "colors": [
+       {
+        "id": "base",
+        "type": "text",
+        "hex": "#ffffff",
+        "name": "white",
+        "value": 0
+       }
+      ],
+      "tableOptions": {
+       "verticalTimeAxis": true,
+       "sortBy": {
+        "internalName": "",
+        "displayName": "",
+        "visible": false
+       },
+       "wrapping": "",
+       "fixFirstColumn": false
+      },
+      "fieldOptions": [
+       {
+        "internalName": "_time",
+        "displayName": "_time",
+        "visible": true
+       },
+       {
+        "internalName": "_value",
+        "displayName": "_value",
+        "visible": true
+       },
+       {
+        "internalName": "DsCarrier",
+        "displayName": "DsCarrier",
+        "visible": true
+       },
+       {
+        "internalName": "DsId",
+        "displayName": "DsId",
+        "visible": true
+       },
+       {
+        "internalName": "DsPin",
+        "displayName": "DsPin",
+        "visible": true
+       },
+       {
+        "internalName": "DsValid",
+        "displayName": "DsValid",
+        "visible": true
+       },
+       {
+        "internalName": "Machine",
+        "displayName": "Machine",
+        "visible": true
+       },
+       {
+        "internalName": "_field",
+        "displayName": "_field",
+        "visible": true
+       },
+       {
+        "internalName": "_measurement",
+        "displayName": "_measurement",
+        "visible": true
+       },
+       {
+        "internalName": "host",
+        "displayName": "host",
+        "visible": true
+       },
+       {
+        "internalName": "hex_str",
+        "displayName": "hex_str",
+        "visible": true
+       },
+       {
+        "internalName": "test_str",
+        "displayName": "test_str",
+        "visible": true
+       },
+       {
+        "internalName": "test_ten",
+        "displayName": "test_ten",
+        "visible": true
+       }
+      ],
+      "timeFormat": "YYYY-MM-DD HH:mm:ss",
+      "decimalPlaces": {
+       "isEnforced": false,
+       "digits": 2
+      },
+      "note": "",
+      "showNoteWhenEmpty": false
+     }
+    }
+   }
+  ]
+ },
+ "labels": []
+}

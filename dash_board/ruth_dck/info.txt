@@ -1,0 +1,8 @@
+dck_influx_2
+
+- hemichromis 2021
+- jozefina / dck_1 -> dck_2
+- modrin / kurnicek
+
+- bat_test / labjack
+- ds_test / labjack

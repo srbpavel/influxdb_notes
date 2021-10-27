@@ -1,0 +1,87 @@
+https://github.com/influxdata/influx-cli/releases
+
+$ wget -c https://dl.influxdata.com/influxdb/releases/influxdb2-client-2.1.1-linux-amd64.tar.gz
+
+$ ln -s /home/conan/soft/influx_cli/influxdb2-client-2.1.0-linux-amd64/influx /home/conan/bin/influx_cli
+
+
+$ influx_cli config ls
+Active  Name            URL                             Org
+*       jozefina        http://192.168.0.105:8086       foookin_paavel
+
+
+#NO AUTH as wrong TOKEN
+$ influx_cli auth ls
+ID      Description     Token   User Name       User ID Permissions
+
+$ influx_cli user list
+ID                      Name
+
+
+#BUCKET LS
+$ influx_cli bucket ls -c jozefina
+ID                      Name                    Retention       Shard group duration    Organization ID         Schema Type
+8e2d53529e104c25        backup_bat_test         infinite        168h0m0s                53e3f95de8109e43        implicit
+aa3b146ca3852d23        backup_ds_test          infinite        168h0m0s                53e3f95de8109e43        implicit
+2d61084c4ca104fd        backup_hemichromis      infinite        168h0m0s                53e3f95de8109e43        implicit
+13dcffcda89bcede        backup_jozefina         infinite        168h0m0s                53e3f95de8109e43        implicit
+75b977424aa6943e        backup_modrin           infinite        168h0m0s                53e3f95de8109e43        implicit
+b404c0c6f68f7ec1        lord                    infinite        168h0m0s                53e3f95de8109e43        implici
+
+
+$ influx_cli config create --config-name ruth --host-url http://192.168.0.106:8086 --org foookin_paavel --token TOKEN
+Active  Name    URL                             Org
+        ruth    http://192.168.0.106:8086       foookin_paavel
+
+
+$ influx_cli config ls
+Active  Name            URL                             Org
+*       jozefina        http://192.168.0.105:8086       foookin_paavel
+        ruth            http://192.168.0.106:8086       foookin_paavel
+
+
+$ influx_cli query -c jozefina 'buckets() |> filter(fn: (r) => r.name !~ /^_/) |> rename(columns: {name: "_value"}) |> keep(columns:["_value"])' --skip-verify --raw
+#group,false,false,false
+#datatype,string,long,string
+#default,_result,,
+,result,table,_value
+,,0,backup_bat_test
+,,0,backup_ds_test
+,,0,backup_hemichromis
+,,0,backup_jozefina
+,,0,backup_modrin
+,,0,lord
+
+$ influx_cli user list --token TOKEN
+ID                      Name
+0859aed8378cb000        admin
+0859b18e23ccb000        srbp
+
+
+#WRONG TOKEN in CONFIG: only for read/write bucket but no admin access
+$ influx_cli config ls --json
+{
+        "jozefina": {
+                "url": "http://192.168.0.105:8086",
+                "token": "RW_TOKEN",
+                "org": "foookin_paavel",
+                "active": true
+        },
+        "ruth": {
+                "url": "http://192.168.0.106:8086",
+                "token": "TOKEN"
+                "org": "foookin_paavel"
+        }
+}
+
+#CONFIG UDPATE
+$ influx_cli config update -n jozefina -t ADMIN_TOKEN
+Active  Name            URL                             Org
+*       jozefina        http://192.168.0.105:8086       foookin_paavel
+
+
+$ influx_cli auth ls 
+ID                      Description     Token   User Name       User ID     Permissions
+0859aed8614cb000        admin's Token   .       admin           0859aed8378cb000     
+0859b244550cb000        srbp_rw_token   .       admin           0859aed8378cb000     
+085b62efe3ccb000        read_only       ...     admin           0859aed8378cb000

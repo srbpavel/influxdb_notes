@@ -1,0 +1,53 @@
+$ influx auth ls
+Error: Unauthorized access.
+Error: The instance at "http://localhost:8086" has not been setup. Please run `influx setup` before issuing any additional commands.
+See 'influx auth list -h' for help
+
+
+$ influx setup
+> Welcome to InfluxDB 2.0!
+? Please type your primary username admin
+? Please type your password 
+? Please type your password again 
+? Please type your primary organization name foookin_paavel
+? Please type your primary bucket name lord
+? Please type your retention period in hours, or 0 for infinite 0
+? Setup with these parameters?
+  Username:          admin
+  Organization:      foookin_paavel
+  Bucket:            lord
+  Retention Period:  infinite
+ Yes
+> Config default has been stored in /home/conan/.influxdbv2/configs.
+User    Organization    Bucket
+admin   foookin_paavel  lord
+
+
+#CONFIG was set by $influx setup
+$ influx config ls
+Active  Name    URL                     Org
+*       default http://localhost:8086   foookin_paavel
+
+#JSON show token
+$ influx config ls --json
+{
+        "default": {
+                "url": "http://localhost:8086",
+                "token": "TOKEN",
+                "org": "foookin_paavel",
+                "active": true
+        }
+}
+
+
+$ influx user create -n srbp -o foookin_paavel -t TOKEN
+ID                      Name
+0859b18e23ccb000        srbp
+
+
+$ influx user password -n srbp
+$ influx auth ls
+ID                      Description     Token   User Name       User ID        Permissions
+0859aed8614cb000        admin's Token           admin           
+0859b244550cb000        srbp_rw_token           admin
+

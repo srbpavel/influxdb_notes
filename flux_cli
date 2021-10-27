@@ -1,0 +1,27 @@
+#LIST BUCKETS via query
+$ influx bucket ls
+ID                      Name                    Retention       Shard group duration    Organization ID
+a978145d6a216104        _monitoring             168h0m0s        24h0m0s                 53e3f95de8109e43
+c697cd722ea1361b        _tasks                  72h0m0s         24h0m0s                 53e3f95de8109e43
+8e2d53529e104c25        backup_bat_test         infinite        168h0m0s                53e3f95de8109e43
+aa3b146ca3852d23        backup_ds_test          infinite        168h0m0s                53e3f95de8109e43
+2d61084c4ca104fd        backup_hemichromis      infinite        168h0m0s                53e3f95de8109e43
+13dcffcda89bcede        backup_jozefina         infinite        168h0m0s                53e3f95de8109e43
+75b977424aa6943e        backup_modrin           infinite        168h0m0s                53e3f95de8109e43
+b404c0c6f68f7ec1        lord                    infinite        168h0m0s                53e3f95de8109e43
+b94599d244c63289        terminal_test           infinite        168h0m0s                53e3f95de8109e43
+
+
+#LIST BUCKETS via query
+$ influx query 'buckets() |> filter(fn: (r) => r.name !~ /^_/) |> rename(columns: {name: "_value"}) |> keep(columns: ["_value"])' --skip-verify --raw -t TOKEN
+#group,false,false,false
+#datatype,string,long,string
+#default,_result,,
+,result,table,_value
+,,0,backup_bat_test
+,,0,backup_ds_test
+,,0,backup_hemichromis
+,,0,backup_jozefina
+,,0,backup_modrin
+,,0,lord
+,,0,terminal_test

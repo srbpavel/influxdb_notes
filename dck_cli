@@ -1,0 +1,112 @@
+$ /usr/bin/docker container exec dck_influxdb influx config create -n default -u https://172.18.0.2:8086 -o foookin_paavel -t ...
+Active  Name    URL                     Org
+        default https://172.18.0.2:8086 foookin_paavel
+
+
+$ docker container exec -i -t dck_influxdb influx config default
+Active  Name    URL                     Org
+*       default https://172.18.0.2:8086 foookin_paavel
+
+
+$ docker container exec -i -t dck_influxdb influx auth -c default ls
+Error: Get "https://172.18.0.2:8086/api/v2/authorizations": x509: cannot validate certificate for 172.18.0.2 because it doesn't contain any IP SANs.
+Error: Get "https://172.18.0.2:8086/api/v2/setup": x509: cannot validate certificate for 172.18.0.2 because it doesn't contain any IP SANs.
+See 'influx auth list -h' for help
+
+conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"ds_test") |> range(start:-1d) |> filter(fn: (r) => r["_measurement"]=="da\
+llas") |> sort(columns:["_time"], desc:true) |> drop(columns:["_start", "_stop","_measurement", "_field", "host", "DsCarrier", "DsValid"]) |> limit(n:3)' --skip-verify
+Result: _result
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+         1052176647976                      14                  mrazak  2021-10-25T12:45:08.816000000Z                       18.8125
+         1052176647976                      14                  mrazak  2021-10-25T12:40:09.140000000Z                       18.8125
+         1052176647976                      14                  mrazak  2021-10-25T12:35:09.479000000Z                        18.875
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+          236134354984                       8         hrnecek_s_ledem  2021-10-25T12:45:04.032000000Z                       19.0625
+          236134354984                       8         hrnecek_s_ledem  2021-10-25T12:40:04.364000000Z                        19.125
+          236134354984                       8         hrnecek_s_ledem  2021-10-25T12:35:04.690000000Z                        19.125
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+          841704586024                       8         hrnecek_s_ledem  2021-10-25T12:45:04.940000000Z                       20.0625
+          841704586024                       8         hrnecek_s_ledem  2021-10-25T12:40:05.267000000Z                       20.0625
+          841704586024                       8         hrnecek_s_ledem  2021-10-25T12:35:05.603000000Z                        20.125
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+          910462155048                      14                  mrazak  2021-10-25T12:45:07.945000000Z                         18.75
+          910462155048                      14                  mrazak  2021-10-25T12:40:08.271000000Z                         18.75
+          910462155048                      14                  mrazak  2021-10-25T12:35:08.608000000Z                       18.8125
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+           96928329000                      14                  mrazak  2021-10-25T12:45:07.074000000Z                       18.9375
+           96928329000                      14                  mrazak  2021-10-25T12:40:07.394000000Z                       18.9375
+           96928329000                      14                  mrazak  2021-10-25T12:35:07.737000000Z                            19
+
+
+conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx bucket ls --skip-verify
+
+ID                      Name            Retention       Organization ID
+9ad8415a403b95c7        _monitoring     168h0m0s        8dde90f5a16c4519
+2a87ac13d6553fb0        _tasks          72h0m0s         8dde90f5a16c4519
+6fb6291b1700d066        aaa             0s              8dde90f5a16c4519
+97ba1427f55752cb        acestridium     0s              8dde90f5a16c4519
+9286c2544f33b09b        backup_ds_test  0s              8dde90f5a16c4519
+ed8ab55de285ab22        bat_test        0s              8dde90f5a16c4519
+b4b550097fd4f671        battery         0s              8dde90f5a16c4519
+82fbaf2893536d5f        ccc             0s              8dde90f5a16c4519
+6fcd4b3ab14db5e7        ds_test         0s              8dde90f5a16c4519
+5d9f6d539c5eb9be        hemichromis     0s              8dde90f5a16c4519
+91da7c80c225f882        hhh             0s              8dde90f5a16c4519
+3beaaa8f4d67603b        jozefina        0s              8dde90f5a16c4519
+47f238e44b8a9444        modrin          0s              8dde90f5a16c4519
+
+
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec dck_influxdb influx config create -n jozefina -u http://192.168.0.105:8086 -o foookin_paavel -t ...
+Active  Name            URL                             Org
+        jozefina        http://192.168.0.105:8086       foookin_paavel
+
+
+conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx config lsActive  Name            URL                             Org
+*       default         https://172.18.0.2:8086         foookin_paavel
+        jozefina        http://192.168.0.105:8086       foookin_paavel
+
+conan@ruth:~/soft/docker$ docker container exec -i -t dck_influxdb influx query -c jozefina -t TOKEN 'from(bucket:"backup_ds_test") |> range(start:-1d) |> filter(fn: (\
+r) => r["_measurement"]=="dallas") |> sort(columns:["_time"], desc:true) |> drop(columns:["_start", "_stop","_measurement", "_field", "host", "DsCarrier", "DsValid"]) \
+|> limit(n:3)' --skip-verify
+Result: _result
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+         1052176647976                      14                  mrazak  2021-10-25T12:55:09.152000000Z                         18.75
+         1052176647976                      14                  mrazak  2021-10-25T12:50:09.480000000Z                         18.75
+         1052176647976                      14                  mrazak  2021-10-25T12:45:08.816000000Z                       18.8125
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+          236134354984                       8         hrnecek_s_ledem  2021-10-25T12:55:04.365000000Z                            19
+          236134354984                       8         hrnecek_s_ledem  2021-10-25T12:50:04.698000000Z                       19.0625
+          236134354984                       8         hrnecek_s_ledem  2021-10-25T12:45:04.032000000Z                       19.0625
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+          841704586024                       8         hrnecek_s_ledem  2021-10-25T12:55:05.238000000Z                            20
+          841704586024                       8         hrnecek_s_ledem  2021-10-25T12:50:05.586000000Z                            20
+          841704586024                       8         hrnecek_s_ledem  2021-10-25T12:45:04.940000000Z                       20.0625
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+          910462155048                      14                  mrazak  2021-10-25T12:55:08.281000000Z                       18.6875
+          910462155048                      14                  mrazak  2021-10-25T12:50:08.609000000Z                       18.6875
+          910462155048                      14                  mrazak  2021-10-25T12:45:07.945000000Z                         18.75
+Table: keys: [DsId, DsPin, Machine]
+           DsId:string            DsPin:string          Machine:string                      _time:time                  _value:float
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------
+           96928329000                      14                  mrazak  2021-10-25T12:55:07.409000000Z                        18.875
+           96928329000                      14                  mrazak  2021-10-25T12:50:07.737000000Z                        18.875
+           96928329000                      14                  mrazak  2021-10-25T12:45:07.074000000Z                       18.9375
+

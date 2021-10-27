@@ -1,0 +1,15 @@
+# wget -c https://dl.influxdata.com/influxdb/releases/influxdb2-2.0.9-amd64.deb
+
+# dpkg -i influxdb2-2.0.9-amd64.deb
+
+#set /etc/systemd/journald.conf persistent
+[Journal]
+#Storage=auto
+Storage=persistent
+
+# systemctl enable influxd
+# systemctl status influxd.service
+# journalctl -u influxdb.service
+
+# netstat -npa|egrep 8086
+tcp6       0      0 :::8086                 :::*                    LISTEN      16687/influxd

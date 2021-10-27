@@ -1,0 +1,7 @@
+#group,false,false,false,false,true,true,true,true,true,true,true
+#datatype,string,long,dateTime:RFC3339,double,string,string,string,string,string,string,string
+#default,_result,,,,,,,,,,
+,result,table,_time,_value,BatCarrier,BatSenKey,BatUlId,BatValid,_field,_measurement,host
+,,0,2021-05-23T11:40:08.406Z,6.87,ttn,17,50x29196a858,true,BatDecimal,battery_adc,spongebob
+,,1,2021-05-23T11:40:08.406Z,19651,ttn,17,50x29196a858,true,BatKey,battery_adc,spongebob
+

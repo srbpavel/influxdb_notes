@@ -1,4 +1,4 @@
-#COPY BACKUP LP 
+#if DCK -> COPY BACKUP LP 
 conan@ruth:~/soft/labjack_switch_board$cp lp/*lp /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/
 
 
@@ -21,7 +21,10 @@ dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=236134354984,DsCarrier=labjack,DsV
 
 
 #DRYRUN just to see, as WRITE is foookin quite
+# dryrun is not listed in --help
 # --debug does not help
+#
+# if DCK -> cannot use wildcard /var/lib/influxdb2/2021_11_01_ds_sensor_*.lp
 #
 conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx write dryrun --precision ms -b ccc --skip-verify --format lp -f /var/lib/influxdb2/2021_11_01_ds_sensor_8.lp|head -n5|cat -n
      1  dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=236134354984,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=20.25 1635789124067

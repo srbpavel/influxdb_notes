@@ -2,6 +2,7 @@
 
 
 - config https://docs.influxdata.com/influxdb/v2.0/reference/config-options/?t=TOML
+- git issues UI https://github.com/influxdata/ui/issues
 - forum https://community.influxdata.com/
 - blog https://www.influxdata.com/blog/
 - flux git https://github.com/influxdata/flux

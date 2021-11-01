@@ -1,0 +1,62 @@
+#COPY BACKUP LP 
+conan@ruth:~/soft/labjack_switch_board$cp lp/*lp /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/
+
+
+#VERIFY IT IS IN PLACE
+conan@ruth:~/soft/labjack_switch_board$ head -n3 /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/*lp
+==> /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/2021_11_01_ds_sensor_14.lp <==
+dallas,host=ruth,Machine=mrazak,DsId=96928329000,DsCarrier=labjack,DsValid=true,DsPin=14 DsDecimal=20.0 1635789063155
+dallas,host=ruth,Machine=mrazak,DsId=910462155048,DsCarrier=labjack,DsValid=true,DsPin=14 DsDecimal=19.875 1635789064025
+dallas,host=ruth,Machine=mrazak,DsId=1052176647976,DsCarrier=labjack,DsValid=true,DsPin=14 DsDecimal=19.9375 1635789064897
+
+==> /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/2021_11_01_ds_sensor_8.lp <==
+dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=236134354984,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=20.25 1635789124067
+dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=841704586024,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=21.875 1635789124945
+dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=236134354984,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=20.25 1635789377704
+
+
+#
+#DO NOT FORGET TO create BUCKET 
+#
+
+
+#DRYRUN just to see, as WRITE is foookin quite
+# --debug does not help
+#
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx write dryrun --precision ms -b ccc --skip-verify --format lp -f /var/lib/influxdb2/2021_11_01_ds_sensor_8.lp|head -n5|cat -n
+     1  dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=236134354984,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=20.25 1635789124067
+     2  dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=841704586024,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=21.875 1635789124945
+     3  dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=236134354984,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=20.25 1635789377704
+     4  dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=841704586024,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=21.875 1635789378574
+     5  dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=236134354984,DsCarrier=labjack,DsValid=true,DsPin=8 DsDecimal=20.25 1635789608292
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx write dryrun --precision ms -b ccc --skip-verify --format lp -f /var/lib/influxdb2/2021_11_01_ds_sensor_14.lp|head -n5|cat -n
+     1  dallas,host=ruth,Machine=mrazak,DsId=96928329000,DsCarrier=labjack,DsValid=true,DsPin=14 DsDecimal=20.0 1635789063155
+     2  dallas,host=ruth,Machine=mrazak,DsId=910462155048,DsCarrier=labjack,DsValid=true,DsPin=14 DsDecimal=19.875 1635789064025
+     3  dallas,host=ruth,Machine=mrazak,DsId=1052176647976,DsCarrier=labjack,DsValid=true,DsPin=14 DsDecimal=19.9375 1635789064897
+     4  dallas,host=ruth,Machine=mrazak,DsId=96928329000,DsCarrier=labjack,DsValid=true,DsPin=14 DsDecimal=19.9375 1635789371091
+     5  dallas,host=ruth,Machine=mrazak,DsId=910462155048,DsCarrier=labjack,DsValid=true,DsPin=14 DsDecimal=19.875 1635789371960
+
+
+#VERIFY WRITTEN DATA
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"ccc") |> range(start:-1d) |> drop(columns:["_start", "_stop"])' --skip-verify --raw | head -n10
+#group,false,false,false,false,true,true,true,true,true,true,true,true
+#datatype,string,long,dateTime:RFC3339,double,string,string,string,string,string,string,string,string
+#default,_result,,,,,,,,,,,
+,result,table,_time,_value,DsCarrier,DsId,DsPin,DsValid,Machine,_field,_measurement,host
+,,0,2021-11-01T16:55:08.851Z,19.5,labjack,1052176647976,14,true,mrazak,DsDecimal,dallas,ruth
+,,0,2021-11-01T17:51:04.897Z,19.9375,labjack,1052176647976,14,true,mrazak,DsDecimal,dallas,ruth
+,,0,2021-11-01T17:56:12.836Z,19.9375,labjack,1052176647976,14,true,mrazak,DsDecimal,dallas,ruth
+,,0,2021-11-01T18:00:06.051Z,19.875,labjack,1052176647976,14,true,mrazak,DsDecimal,dallas,ruth
+,,0,2021-11-01T18:05:08.917Z,20,labjack,1052176647976,14,true,mrazak,DsDecimal,dallas,ruth
+,,0,2021-11-01T18:10:06.683Z,20.1875,labjack,1052176647976,14,true,mrazak,DsDecimal,dallas,ruth
+
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"ccc") |> range(start:-1d) |> drop(columns:["_start", "_stop"])' --skip-verify --raw | tail -n10
+,,4,2021-11-01T18:00:04.303Z,19.9375,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth
+,,4,2021-11-01T18:05:07.173Z,20,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth
+,,4,2021-11-01T18:10:04.895Z,20.125,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth
+,,4,2021-11-01T18:15:07.829Z,20.3125,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth
+,,4,2021-11-01T18:20:07.531Z,20.4375,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth
+,,4,2021-11-01T18:25:04.223Z,20.5,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth
+,,4,2021-11-01T18:30:08.035Z,20.5,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth
+,,4,2021-11-01T18:30:36.27Z,20.5625,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth
+,,4,2021-11-01T18:35:04.733Z,20.625,labjack,96928329000,14,true,mrazak,DsDecimal,dallas,ruth

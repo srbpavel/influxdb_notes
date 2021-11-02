@@ -5,7 +5,7 @@
 
 #CRONTAB
 #
-*/5 * * * * /bin/bash /home/conan/soft/docker/jozefina_2_ruth.sh 1 > /home/conan/soft/docker/cron_1_joz2ruth.log 2 > /home/conan/soft/docker/cron_2_joz2ruth.log
+*/5 * * * * /bin/bash /home/conan/soft/docker/jozefina_2_ruth.sh 1>/home/conan/soft/docker/cron_1_joz2ruth.log 2>/home/conan/soft/docker/cron_2_joz2ruth.log
 
 
 #SHELL_SCRIPT

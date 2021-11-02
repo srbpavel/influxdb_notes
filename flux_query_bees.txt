@@ -1,0 +1,15 @@
+TODO:
+
+add all flux_query from bees 2020/2021:
+- simple graph
+- union, join
+- ttn_lora_2_esp32_name conversion table
+- variables
+- windows analytics
+- .....
+
+- tests of cardinalities / tag vs field
+- system data via variables
+
+- cron daily backups
+- transfer between servers / 1 -> 2 influx version

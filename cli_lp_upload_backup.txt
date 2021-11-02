@@ -1,4 +1,6 @@
 https://docs.influxdata.com/influxdb/cloud/write-data/developer-tools/line-protocol/
+https://docs.influxdata.com/influxdb/cloud/reference/syntax/line-protocol/#timestamp
+
 
 #if DCK -> COPY BACKUP LP 
 conan@ruth:~/soft/labjack_switch_board$cp lp/*lp /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/

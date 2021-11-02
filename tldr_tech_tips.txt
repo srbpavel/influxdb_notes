@@ -1,0 +1,11 @@
+CREATE BUCKET
+https://www.influxdata.com/blog/tldr-influxdb-tech-tips-creating-buckets-influxdb-api/
+
+CREATE TOKEN
+https://www.influxdata.com/blog/tldr-influxdb-tech-tips-creating-tokens-influxdb-api/
+
+PIVOT
+https://www.influxdata.com/blog/how-to-pivot-data-flux-columnar-data/
+
+YIELD
+https://www.influxdata.com/blog/tldr-influxdb-tech-tips-multiple-aggregations-yield-flux/

@@ -1,0 +1,65 @@
+#SHELL / test docker_compose and set it as service to restart on error or reboot
+#!/bin/sh
+
+docker ps -a
+docker stop dck_influxdb
+docker rm dck_influxdb
+
+docker network create dck_network
+docker network inspect dck_network
+
+docker run -d --name dck_influxdb --net=dck_network -p 8086:8086 -v /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/:/var/lib/influxdb2 -v /home/conan/soft/docker/dck_influxdb_2_0/influxdb-selfsigned.crt:/etc/influxdb2/influxdb-selfsigned.crt -v /home/conan/soft/docker/dck_influxdb_2_0/influxdb-selfsigned.key:/etc/influxdb2/influxdb-selfsigned.key -v /home/conan/soft/docker/dck_influxdb_2_0/config.yml:/etc/influxdb2/config.yml influxdb
+
+docker container exec -i -t dck_influxdb /bin/bash
+
+
+#CONTAINER
+$ docker ps -a
+CONTAINER ID   IMAGE      COMMAND                  CREATED      STATUS      PORTS                                        NAMES
+03ceae236ae6   influxdb   "/entrypoint.sh infl…"   8 days ago   Up 8 days   0.0.0.0:53->53/tcp, 0.0.0.0:8086->8086/tcp   dck_influxdb
+
+
+#NETWORK
+$conan@ruth:~/soft/labjack_switch_board$ docker network inspect dck_network 
+[
+    {
+        "Name": "dck_network",
+        "Id": "7b4e9d12913d209badf2fe6e14e062478a96cccd7c7af2fdb5db2febac4ef2f6",
+        "Created": "2021-03-09T09:48:33.836596582+01:00",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": {},
+            "Config": [
+                {
+                    "Subnet": "172.18.0.0/16",
+                    "Gateway": "172.18.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": false,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "03ceae236ae6b87a5141183cb99c3525267979bb9ed16a633f0afaaa33741f8d": {
+                "Name": "dck_influxdb",
+                "EndpointID": "669fcccec91b581739e1cafbf580b3ff01658f409eea1d7e93a9092cb5856ab1",
+                "MacAddress": "02:42:ac:12:00:02",
+                "IPv4Address": "172.18.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {}
+    }
+]
+
+
+#CONTAINER INFO
+$ docker inspect dck_influxdb

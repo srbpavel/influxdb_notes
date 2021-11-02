@@ -1,0 +1,35 @@
+#UNIQUE ds ROM's
+$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"test_csv_ds") |> range(start:-1y) |> keep(columns:["DsId"])|> limit(n:3) |> unique(column: "DsId") |> group()' --skip-verify
+Result: _result
+Table: keys: []
+           DsId:string  
+----------------------  
+         1052176647976  
+          236134354984  
+          841704586024  
+          910462155048  
+           96928329000
+
+
+#COUNT RESULTS / need group() if more result tables 
+$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"test_csv_ds") |> range(start:-1y) |> keep(columns:["DsId"])|> unique(column: "DsId") |> group() |> count(column: "DsId")' --skip-verify
+Result: _result
+Table: keys: []
+                  DsId:int  
+--------------------------  
+                         5
+
+
+#SIMPLE map() / celsius -> kelvin / jen priklad, realne ti to rozhazi graf
+#lepsi prepsal puvodni _value nez dalsi sloupec kelvin, pokud to teda nemam do tabulky kde spis hlidam cisla
+#
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"test_csv_ds") |> range(start:-1y) |> map(fn: (r) => ({r with kelvin: (r._value + 273.15)})) |> limit(n: 1) |> keep(columns: ["_value", "kelvin"])' --skip-verify
+Result: _result
+Table: keys: []
+                _value:float                  kelvin:float  
+----------------------------  ----------------------------  
+                     19.1875                      292.3375  
+                      19.375                       292.525  
+                     21.0625                      294.2125  
+                     19.1875                      292.3375  
+                       19.25                         292.4 

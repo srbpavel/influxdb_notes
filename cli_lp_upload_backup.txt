@@ -18,11 +18,49 @@ dallas,host=ruth,Machine=hrnecek_s_ledem,DsId=236134354984,DsCarrier=labjack,DsV
 #
 #DO NOT FORGET TO create BUCKET 
 #
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx bucket create --name test_lp_ds --skip-verify
+ID                      Name            Retention       Organization ID
+b69fa400e8c65ac3        test_lp_ds      0s              8dde90f5a16c4519
+
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx bucket list --name test_lp_ds --json --skip-verify
+[
+        {
+                "id": "b69fa400e8c65ac3",
+                "orgID": "8dde90f5a16c4519",
+                "type": 0,
+                "name": "test_lp_ds",
+                "description": "",
+                "retentionPeriod": 0,
+                "createdAt": "2021-11-02T07:19:36.261282944Z",
+                "updatedAt": "2021-11-02T07:19:36.261283119Z"
+        }
+]
 
 
 #DRYRUN just to see, as WRITE is foookin quite
 # dryrun is not listed in --help
-# --debug does not help
+#
+# --debug ->
+2021-11-02T07:26:31.939170Z
+info
+WriteFlags{
+org:{id: name:}
+BucketID:
+Bucket:test_lp_ds
+Precision:ms
+Format:lp Headers:[]
+Files:[/var/lib/influxdb2/lp/2021_11_02_ds_sensor_8.lp]
+URLs:[]
+Debug:true
+SkipRowOnError:false
+SkipHeader:0
+MaxLineLength:16000000
+IgnoreDataTypeInColumnName:false
+Encoding:UTF-8
+ErrorsFile:
+RateLimit:
+}
+args:[]
 #
 # if DCK -> cannot use wildcard /var/lib/influxdb2/2021_11_01_ds_sensor_*.lp
 #

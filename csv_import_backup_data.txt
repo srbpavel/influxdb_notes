@@ -66,3 +66,15 @@ conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb
 ,result,table,_time,_value,DsCarrier,DsId,DsPin,DsValid,Machine,_field,_measurement,host
 ,,0,2021-11-02T13:28:50.661Z,19.5625,labjack,236134354984,8,true,hrnecek_s_ledem,DsDecimal,dallas,ruth
 ,,0,2021-11-02T13:28:50.662Z,19.5625,labjack,236134354984,8,true,hrnecek_s_ledem,DsDecimal,dallas,ruth
+
+
+#NEXT_DAY_TEST
+$cp annotated/*annotated /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/
+
+$head -n5 /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/*
+
+$docker container exec -i -t dck_influxdb influx write --bucket test_csv_ds --precision ms --format csv --file /var/lib/influxdb2/annotated/2021_11_02_ds_sensor_8.annotated --skip-verify
+
+$docker container exec -i -t dck_influxdb influx write --bucket test_csv_ds --precision ms --format csv --file /var/lib/influxdb2/annotated/2021_11_02_ds_sensor_14.annotated --skip-verify
+
+$docker container exec -i -t dck_influxdb influx query 'from(bucket:"test_csv_ds") |> range(start:-1y) |> drop(columns:["_start", "_stop"])' --raw --skip-verify|less

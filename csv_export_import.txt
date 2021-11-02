@@ -2,20 +2,67 @@
 
 https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/
 
-
 https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/extended/
-#If using the number timestamp format and timestamps are not in nanoseconds, use the influx write --precision flag to specify the timestamp precision.
-#write --presicion ms -f /.../data.csv -> #CSV ...,1635840304147 !!! error msg in month ?
-
 
 https://docs.influxdata.com/influxdb/cloud/write-data/developer-tools/csv/
 
-
-#EXPORT
-
-
 #TS
-
+# all my data are in MS 1635840304147 len()=13, DO NOT FORGET write --precision ms and dateTime:number
 https://docs.influxdata.com/influxdb/cloud/reference/glossary/#unix-timestamp
 
 
+#CSV_ANNOTATED
+#
+conan@ruth:~/soft/labjack_switch_board$ cat -n /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/mmm_ts_ano.txt
+     1  #datatype measurement,tag,tag,tag,tag,tag,tag,double,dateTime:number,double
+     2  m,host,Machine,DsId,DsPin,DsCarrier,DsValid,DsDecimal,time,
+     3  dallas,ruth,hrnecek_s_ledem,236134354984,8,labjack,true,19.5625,1635859730661
+
+
+@@@ !!! do not forget to create BUCKET !!!
+
+
+#DRYRUN just to see CSV -> LINE_PROTOCOL
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx write dryrun --bucket test_csv_ds --precision ms --format csv --file /var/lib/influxdb2/mmm_ts_ano.txt --skip-verify
+
+dallas,DsCarrier=labjack,DsId=236134354984,DsPin=8,DsValid=true,Machine=hrnecek_s_ledem,host=ruth DsDecimal=19.5625 1635859730661
+
+
+#WRITE
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx write --bucket test_csv_ds --precision ms --format csv --file /var/lib/influxdb2/mmm_ts_ano.txt --skip-verify
+
+
+#QUERY
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"test_csv_ds") |> range(start:-1y) |> drop(columns:["_start", "_stop"])' --raw --skip-verify
+#group,false,false,false,false,true,true,true,true,true,true,true,true
+#datatype,string,long,dateTime:RFC3339,double,string,string,string,string,string,string,string,string
+#default,_result,,,,,,,,,,,
+,result,table,_time,_value,DsCarrier,DsId,DsPin,DsValid,Machine,_field,_measurement,host
+,,0,2021-11-02T13:28:50.661Z,19.5625,labjack,236134354984,8,true,hrnecek_s_ledem,DsDecimal,dallas,ruth
+
+
+#CSV_NO_HEADER
+#
+conan@ruth:~/soft/labjack_switch_board$ cat -n /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/mmm_ts_no_ano.txt
+     1  dallas,ruth,hrnecek_s_ledem,236134354984,8,labjack,true,19.5625,1635859730662
+
+
+#DRY_RUN
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx write dryrun --bucket test_csv_ds --precision ms --format csv --file /var/lib/influxdb2/mmm_ts_no_ano.txt --skip-verify --header "#datatype measurement,tag,tag,tag,tag,tag,tag,double,dateTime:number,double" --header "m,host,Machine,DsId,DsPin,DsCarrier,DsValid,DsDecimal,time"
+
+dallas,DsCarrier=labjack,DsId=236134354984,DsPin=8,DsValid=true,Machine=hrnecek_s_ledem,host=ruth DsDecimal=19.5625 1635859730662
+
+
+#WRITE + --HEADER 
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx write --bucket test_csv_ds --precision ms --format csv --file /var/lib/influxdb2/mmm_ts_ano.txt --skip-verify --header "#datatype measurement,tag,tag,tag,tag,tag,tag,double,dateTime:number,double" --header "m,host,Machine,DsId,DsPin,DsCarrier,DsValid,DsDecimal,time"
+
+
+#QUERY / #EXPORT
+conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"test_csv_ds") |> range(start:-1y) |> drop(columns:["_start", "_stop"])' --raw --skip-verify
+
+#group,false,false,false,false,true,true,true,true,true,true,true,true
+#datatype,string,long,dateTime:RFC3339,double,string,string,string,string,string,string,string,string
+#default,_result,,,,,,,,,,,
+,result,table,_time,_value,DsCarrier,DsId,DsPin,DsValid,Machine,_field,_measurement,host
+,,0,2021-11-02T13:28:50.661Z,19.5625,labjack,236134354984,8,true,hrnecek_s_ledem,DsDecimal,dallas,ruth
+,,0,2021-11-02T13:28:50.662Z,19.5625,labjack,236134354984,8,true,hrnecek_s_ledem,DsDecimal,dallas,ruth

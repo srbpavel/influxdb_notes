@@ -1,0 +1,21 @@
+#IMPORT
+
+https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/
+
+
+https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/extended/
+#If using the number timestamp format and timestamps are not in nanoseconds, use the influx write --precision flag to specify the timestamp precision.
+#write --presicion ms -f /.../data.csv -> #CSV ...,1635840304147 !!! error msg in month ?
+
+
+https://docs.influxdata.com/influxdb/cloud/write-data/developer-tools/csv/
+
+
+#EXPORT
+
+
+#TS
+
+https://docs.influxdata.com/influxdb/cloud/reference/glossary/#unix-timestamp
+
+

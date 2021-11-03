@@ -69,12 +69,39 @@ conan@ruth:~/soft/labjack_switch_board$ docker container exec -i -t dck_influxdb
 
 
 #NEXT_DAY_TEST
-$cp annotated/*annotated /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/
+$ cp -v annotated/*annotated /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/
+'annotated/2021_11_02_ds_sensor_14.annotated' -> '/home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/2021_11_02_ds_sensor_14.annotated'
+'annotated/2021_11_02_ds_sensor_8.annotated' -> '/home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/2021_11_02_ds_sensor_8.annotated'
+'annotated/2021_11_03_ds_sensor_14.annotated' -> '/home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/2021_11_03_ds_sensor_14.annotated'
+'annotated/2021_11_03_ds_sensor_8.annotated' -> '/home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/2021_11_03_ds_sensor_8.annotated'
 
-$head -n5 /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/annotated/*
+$ head -n5 annotated/2021_11_03_ds_sensor_14.annotated
+#datatype measurement,tag,tag,tag,tag,tag,tag,double,dateTime:number,double
+m,host,Machine,DsId,DsPin,DsCarrier,DsValid,DsDecimal,time
+dallas,ruth,mrazak,96928329000,14,labjack,true,20.75,1635894004427
+dallas,ruth,mrazak,910462155048,14,labjack,true,20.875,1635894005299
+dallas,ruth,mrazak,1052176647976,14,labjack,true,20.875,1635894006174
 
+#IMPORT
 $docker container exec -i -t dck_influxdb influx write --bucket test_csv_ds --precision ms --format csv --file /var/lib/influxdb2/annotated/2021_11_02_ds_sensor_8.annotated --skip-verify
 
 $docker container exec -i -t dck_influxdb influx write --bucket test_csv_ds --precision ms --format csv --file /var/lib/influxdb2/annotated/2021_11_02_ds_sensor_14.annotated --skip-verify
 
+#QUERY
 $docker container exec -i -t dck_influxdb influx query 'from(bucket:"test_csv_ds") |> range(start:-1y) |> drop(columns:["_start", "_stop"])' --raw --skip-verify|less
+
+#COUNT VERIFICATION
+$ docker container exec -i -t dck_influxdb influx query 'from(bucket:"test_csv_ds") |> range(start:-1y) |> drop(columns:["_start", "_stop"]) |> group() |> count()' --skip-verify
+Result: _result
+Table: keys: []
+                _value:int  
+--------------------------  
+                       979
+
+#COUNT SOURCE / more as 4x2 header lines
+$ wc -l annotated/*annotated
+  293 annotated/2021_11_02_ds_sensor_14.annotated
+  200 annotated/2021_11_02_ds_sensor_8.annotated
+  296 annotated/2021_11_03_ds_sensor_14.annotated
+  198 annotated/2021_11_03_ds_sensor_8.annotated
+  987 total

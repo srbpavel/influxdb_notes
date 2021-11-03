@@ -117,3 +117,14 @@ Table: keys: [_measurement]
 
 #ADD SET + MAP to get more performance date
 import "profiler" option profiler.enabledProfilers = ["query", "operator"] from(bucket:"test_csv_ds") |> range(start:-1y) |> set(key: "_measurement",value: "kelvin") |> map(fn: (r) => ({ r with _value: r._value + 273.15}))|> drop(columns:["_start", "_stop"])
+
+#FLUX_VERSION / have to create table via array 
+import "runtime"
+import "experimental/array"
+
+array.from(rows: [
+{_measurement: "flux", _field: "version", _value: runtime.version(), _time: now()}])
+
+v0.104.0
+2021-11-03T18:51:36.108475793Z
+

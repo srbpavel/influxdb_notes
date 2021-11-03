@@ -1,0 +1,67 @@
+https://github.com/influxdata/flux
+
+
+wget -c https://github.com/influxdata/flux/releases/download/v0.139.0/flux_0.139.0_linux_amd64.tar.gz
+tar xfz
+./flux repl
+
+
+https://docs.influxdata.com/influxdb/v2.0/tools/repl/
+
+#https:RUTH -> cannot access due certificate // no chance to set --skip-verify here
+#http:JOZEFINA -> ok
+> import "influxdata/influxdb"
+> data = influxdb.from(bucket:"backup_ds_test", host: "http://192.168.0.105:8086", org: "foookin_paavel", token: "TOKEN")
+
+
+> data |> range(start: -24h) |> group() |> count()
+Result: _result
+Table: keys: []
+                _value:int  
+--------------------------  
+                      1440
+
+
+> data |> range(start: -24h) |> drop(columns:["_start", "_stop", "DsValid", "DsCarrier", "host", "Machine"]) |> filter(fn: (r) => r["DsId"] == "96928329000") |> limit(n: 5)
+Result: _result
+Table: keys: [DsId, DsPin, _field, _measurement]
+           DsId:string            DsPin:string           _field:string     _measurement:string                      _time:time                  _value:float  
+----------------------  ----------------------  ----------------------  ----------------------  ------------------------------  ----------------------------  
+           96928329000                      14               DsDecimal                  dallas  2021-11-02T19:50:07.592000000Z                         21.25  
+           96928329000                      14               DsDecimal                  dallas  2021-11-02T19:55:07.305000000Z                        21.125  
+           96928329000                      14               DsDecimal                  dallas  2021-11-02T20:00:08.069000000Z                        21.125  
+           96928329000                      14               DsDecimal                  dallas  2021-11-02T20:05:07.807000000Z                        21.125  
+           96928329000                      14               DsDecimal                  dallas  2021-11-02T20:10:04.496000000Z                       21.1875  
+ 
+ 
+> import "runtime"
+> runtime.version()
+(devel)
+
+
+https://docs.influxdata.com/influxdb/v2.0/reference/sample-data/#noaa-water-sample-data
+> import "influxdata/influxdb/sample"
+
+
+https://docs.influxdata.com/flux/v0.x/stdlib/influxdata/influxdb/sample/
+> sample.list()
+Result: _result
+Table: keys: []
+           name:string                                                                                                                                                             description:string                                                                            url:string             size:string             type:string  
+----------------------  -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------  ------------------------------------------------------------------------------------  ----------------------  ----------------------  
+             airSensor                                    Simulated office building air sensor data with temperature, humidity, and carbon monoxide metrics. Data is updated approximately every 15m.                https://influx-testdata.s3.amazonaws.com/air-sensor-data-annotated.csv                 ~600 KB                    live  
+         birdMigration                                    2019 African bird migration data from the "Movebank: Animal Tracking" dataset. Contains geotemporal data between 2019-01-01 and 2019-12-31.                           https://influx-testdata.s3.amazonaws.com/bird-migration.csv                 ~1.2 MB                  static  
+               bitcoin                          Bitcoin price data from the last 30 days – Powered by CoinDesk – https://www.coindesk.com/price/bitcoin. Data is updated approximately every 15m.             https://influx-testdata.s3.amazonaws.com/bitcoin-historical-annotated.csv                 ~700 KB                    live  
+     machineProduction                                                   States and metrics reported from four automated grinding wheel stations on a production line. Contains data from 2021-08-01.                       https://influx-testdata.s3.amazonaws.com/machine-production.csv                ~11.9 MB                  static  
+                  noaa  Latest observations from the NOAA National Data Buoy Center (NDBC). Contains only the most recent observations (no historical data). Data is updated approximately every 15m.  https://influx-testdata.s3.amazonaws.com/noaa-ndbc-latest-observations-annotated.csv                 ~1.3 MB                    live  
+             noaaWater   Water level observations from two stations reported by the NOAA Center for Operational Oceanographic Products and Services. Contains data between 2019-08-17 and 2019-09-17.                                     https://influx-testdata.s3.amazonaws.com/noaa.csv                ~10.3 MB                  static  
+                  usgs              USGS earthquake data from the last week. Contains geotemporal data collected from USGS seismic sensors around the world. Data is updated approximately every 15m.       https://influx-testdata.s3.amazonaws.com/usgs-earthquake-all-week-annotated.csv                   ~6 MB                    live  
+> 
+
+
+> water = sample.data(set: "noaaWater")
+
+#IMPORT do JOZEFINY
+#output each record/write to stdout !!! 
+#
+> water |> influxdb.to(bucket:"noaa_flux", host: "http://192.168.0.105:8086", org: "foookin_paavel", token: "TOKEN")

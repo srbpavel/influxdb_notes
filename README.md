@@ -21,6 +21,7 @@
 - timestamp https://community.influxdata.com/
 - assignment https://docs.influxdata.com/flux/v0.x/spec/assignment-scope/
 - 5 hurdle https://dganais.medium.com/are-you-new-to-influxdb-v2-0-33c11f47099c
+- 5 intermediate https://www.influxdata.com/blog/top-5-hurdles-for-intermediate-flux-users-and-resources-for-optimizing-flux/
 
 - additional data stored outside https://docs.influxdata.com/influxdb/v2.0/query-data/flux/sql/
 -  purchase date, manufacture, warranty ...

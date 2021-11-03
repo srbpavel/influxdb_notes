@@ -1,0 +1,58 @@
+https://docs.influxdata.com/influxdb/v2.0/reference/sample-data/#noaa-water-sample-data
+https://docs.influxdata.com/flux/v0.x/stdlib/csv/from/
+
+
+#IMPORT: download data from ONLINE_CSV to BUCKET
+
+#URL
+import "experimental/csv"
+csv.from(url: "https://influx-testdata.s3.amazonaws.com/noaa.csv")
+  |> to(bucket: "noaa", org: "foookin_paavel")
+
+#FILE // tohle me zatim nedre, ikdyz podle dokumentace by melo ?
+#//ERROR failed to initialize execute state: filesystem service uninitialized in dependencies
+import "csv"
+csv.from(file: "/home/conan/soft/influxdb_notes/noaa.csv") ,mode: "annotations")
+  |> to(bucket: "noaa_file", org: "foookin_paavel")
+
+
+#EXPLORE / +- start: 2019-08-17T00:00:00Z stop: 2019-09-17T21:42:00Z
+# |> range(start: 0) / infinite range
+#
+from(bucket:"noaa") |> range(start:-3y) |> drop(columns:["_start", "_stop"]) |> count()
+
+#
+from(bucket:"noaa") |> range(start: 0) |> drop(columns:["_start", "_stop"])
+// |> count()
+|> filter(fn: (r) => r["_measurement"] == "average_temperature")
+|> limit(n: 5)
+//|> yield(name: "avg_temp") //pokud toto nedam je defaultne nazvana _result
+
+
+#EXPLORE ii. 
+//nekde maji spatna vstupni data pac nekde je _value str a ne int/float !!!
+
+from(bucket:"noaa_file") 
+|> range(start: -3y) 
+|> drop(columns:["_start", "_stop"])
+//from(bucket:"noaa") |> range(start: -3y) |> drop(columns:["_start", "_stop"])
+
+|> filter(fn: (r) => r["_measurement"] == "average_temperature")
+|> filter(fn: (r) => r["_field"] == "degrees")
+|> filter(fn: (r) => r["location"] == "coyote_creek" or r["location"] == "santa_monica")
+
+//|> filter(fn: (r) => r._value > 80) //|> filter(fn: (r) => r._value >= float(v: 80))
+
+//|> filter(fn: (r) => if r["location"] == "coyote_creek" then r._value > 80.0 else r._value < 80.0)
+
+//|> sort(columns: ["_time"], desc: true) // false) //
+
+|> limit(n: 5)
+
+//|> group(columns:["_measurement", "_field"]) //|> group(columns:["_measurement", "_field", "location"])
+//|> group()
+
+//|> yield(name: "avg_temp") //pokud toto nedam je defaultne nazvana _result
+//|> yield(name: "xxx")
+
+// |> count()

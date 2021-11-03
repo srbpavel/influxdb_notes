@@ -33,3 +33,23 @@ Table: keys: []
                      21.0625                      294.2125  
                      19.1875                      292.3375  
                        19.25                         292.4 
+
+
+#MAP new column STATUS via if/else / HEMICHROMIS -> battery_hemichromis / single+double cell combo
+
+voltage_limit = 6.85 //VOLTAGE
+
+join(tables: {d1: sensor_id, d2: ul_id}, on: ["BatUlId"]) 
+
+|> map(fn: (r) => ({
+_time: r._time_d1,
+_value: r._value_d1,
+esp_machine_id: r.esp_machine_id,
+nick_name: r._value_d2,
+baterka: r.BatSenKey,
+active: r.active,
+type: r.type,
+carrier: r.BatCarrier, 
+valid: if r._value_d1 < voltage_limit then "low" else "high"
+}))
+

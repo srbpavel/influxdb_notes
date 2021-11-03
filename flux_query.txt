@@ -53,3 +53,27 @@ carrier: r.BatCarrier,
 valid: if r._value_d1 < voltage_limit then "low" else "high"
 }))
 
+
+#SOMEBODY NEEDED TO SEE LINES AS VISUAL BOARDES / my array solution + time_range
+#can inject to ploted data, let's say DS temperature
+#
+import "experimental/array"
+import "experimental"
+
+limit = 20.0
+offset = 1.0
+
+upper_limit = limit + offset
+lower_limit = limit - offset
+
+upper = array.from(rows: [
+{_measurement: "line", _field: "DsDecimal", _value: upper_limit, _time: now()},
+{_measurement: "line", _field: "DsDecimal", _value: upper_limit, _time: experimental.addDuration(d: v.timeRangeStart, to: now(),)}
+])
+|>yield(name: "line_up")
+
+lower = array.from(rows: [
+{_measurement: "dallas", _field: "DsDecimal", _value: lower_limit, _time: now()},
+{_measurement: "dallas", _field: "DsDecimal", _value: lower_limit, _time: experimental.addDuration(d: v.timeRangeStart, to: now(),)}
+])
+|>yield(name: "line_down")

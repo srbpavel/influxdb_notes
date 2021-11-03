@@ -6,6 +6,10 @@ https://docs.influxdata.com/influxdb/cloud/reference/syntax/annotated-csv/extend
 
 https://docs.influxdata.com/influxdb/cloud/write-data/developer-tools/csv/
 
+https://www.influxdata.com/blog/tldr-tech-tips-how-to-interpret-an-annotated-csv/
+https://www.influxdata.com/blog/tldr-tech-tips-add-temporary-data-with-flux/
+
+
 #TS
 # all my data are in MS 1635840304147 len()=13, DO NOT FORGET write --precision ms and dateTime:number
 https://docs.influxdata.com/influxdb/cloud/reference/glossary/#unix-timestamp

@@ -20,6 +20,10 @@
 - pivot https://www.influxdata.com/blog/how-to-pivot-data-flux-columnar-data/
 - timestamp https://community.influxdata.com/
 - assignment https://docs.influxdata.com/flux/v0.x/spec/assignment-scope/
+- 5 hurdle https://dganais.medium.com/are-you-new-to-influxdb-v2-0-33c11f47099c
+
+- additional data stored outside https://docs.influxdata.com/influxdb/v2.0/query-data/flux/sql/
+-  purchase date, manufacture, warranty ...
 
 *bees*
 ![bees](pic/jozefina_dck_hemichromis.png) 

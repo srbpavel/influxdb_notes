@@ -77,3 +77,43 @@ lower = array.from(rows: [
 {_measurement: "dallas", _field: "DsDecimal", _value: lower_limit, _time: experimental.addDuration(d: v.timeRangeStart, to: now(),)}
 ])
 |>yield(name: "line_down")
+
+#PROFILER / performance info
+https://docs.influxdata.com/flux/v0.x/stdlib/profiler/
+https://dganais.medium.com/tl-dr-influxdb-tech-tips-optimizing-flux-performance-in-influxdb-cloud-21de08fc50c9
+
+#FLUX
+import "profiler"
+option profiler.enabledProfilers = ["query", "operator"]
+
+#CLI
+$ docker container exec -i -t dck_influxdb influx query 'import "profiler" option profiler.enabledProfilers = ["query", "operator"] from(bucket:"test_csv_ds") |> range(start:-1y) |> drop(columns:["_start", "_stop"]) |> group() |> count()' --skip-verify      
+
+Result: _profiler
+Table: keys: [_measurement]
+   _measurement:string             Concurrency:int         CompileDuration:int           QueueDuration:int            PlanDuration:int         RequeueDuration:int         ExecuteDuration:int           TotalDuration:int            MaxAllocated:int          TotalAllocated:int    RuntimeErrors:string                                                                                                                                          flux/query-plan:string  influxdb/scanned-bytes:int  influxdb/scanned-values:int  
+----------------------  --------------------------  --------------------------  --------------------------  --------------------------  --------------------------  --------------------------  --------------------------  --------------------------  --------------------------  ----------------------  --------------------------------------------------------------------------------------------------------------------------------------------------------------  --------------------------  ---------------------------  
+        profiler/query                           0                      288000                       18118                           0                           0                     9081229                     9412366                       49280                           0                          digraph {
+  ReadRange5
+  drop2
+  group3
+  count4
+  generated_yield
+
+  ReadRange5 -> drop2
+  drop2 -> group3
+  group3 -> count4
+  count4 -> generated_yield
+}
+
+                           0                            0  
+Table: keys: [_measurement]
+   _measurement:string                             Type:string            Label:string                   Count:int             MinDuration:int             MaxDuration:int             DurationSum:int            MeanDuration:float  
+----------------------  --------------------------------------  ----------------------  --------------------------  --------------------------  --------------------------  --------------------------  ----------------------------  
+     profiler/operator              *influxdb.readFilterSource              ReadRange5                           1                     1054024                     1054024                     1054024                       1054024  
+     profiler/operator           *universe.groupTransformation                  group3                           5                        3542                        9768                       27875                          5575  
+     profiler/operator        *execute.aggregateTransformation                  count4                           1                       13318                       13318                       13318                         13318  
+     profiler/operator  *universe.schemaMutationTransformation                   drop2                           5                       20701                       32589                      122182                       24436.4
+
+#ADD SET + MAP to get more performance date
+import "profiler" option profiler.enabledProfilers = ["query", "operator"] from(bucket:"test_csv_ds") |> range(start:-1y) |> set(key: "_measurement",value: "kelvin") |> map(fn: (r) => ({ r with _value: r._value + 273.15}))|> drop(columns:["_start", "_stop"])

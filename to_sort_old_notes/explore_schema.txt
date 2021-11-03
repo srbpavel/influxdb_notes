@@ -1,0 +1,59 @@
+
+https://docs.influxdata.com/influxdb/v2.0/write-data/best-practices/resolve-high-cardinality/
+
+#GENERATE A LIST OF TAGS:
+#
+import "influxdata/influxdb/schema"
+
+bucket = "acestridium"
+
+schema.tagKeys(bucket: bucket)
+
+
+#COUNT UNIQUE TAG VALUES FOR EACH TAG:
+#
+#
+import "influxdata/influxdb/schema"
+
+bucket = "acestridium"
+//tag = "BatValid"
+tag = "TempUlId"
+
+schema.tagValues(bucket: bucket, tag: tag)
+  |> count()
+
+
+#NAJDE ZAZNAMY BEZ tagu
+//from(bucket:"acestridium") 
+//
+from(bucket:"hemichromis") 
+|> range(start: v.timeRangeStart)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc" ) 
+|> filter(fn: (r) => r["_field"] == "BatDecimal") 
+//|> filter(fn: (r) => r["_value"] == 7.71) 
+//|> filter(fn: (r) => r["_field"] == "BatKey")
+//|> filter(fn: (r) => r["_value"] == 1949)
+//
+|> filter(fn: (r) => not exists r["BatUlId"]) // r.BatUlId
+//|> filter(fn: (r) => exists r["BatUlId"] =~ /true/) // r.BatUlId
+//
+
+//|> sort(columns: ["_time"], desc:true) 
+//|> drop(columns:["_start", "_stop", "BatCarrier", "BatSenKey", "BatValid"])
+|> drop(columns:["_start", "_stop"])
+//|> group()
+//|> count()
+
+
+#NAJDE ZAZNAMY BEZ TAGU / v.bucket + v.measurement
+from(bucket: v.bucket) 
+|> range(start: v.timeRangeStart)
+|> filter(fn: (r) => r["_measurement"] == v.measurement ) 
+|> filter(fn: (r) => not exists r["host"])
+|> map(fn: (r) => ({ r with value: r._value}))
+|> sort(columns: ["_time"], desc:true) 
+//|> drop(columns:["_start", "_stop", "BatCarrier", "BatSenKey", "BatValid"])
+|> drop(columns:["_start", "_stop"])
+//
+|> group()
+//|> count()

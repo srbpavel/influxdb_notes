@@ -1,0 +1,183 @@
+#SMAZANI ZAZNAMU
+s = 'from(bucket:"hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" and r.esp_machine_id == "98f4ab6f6370") |> sort(columns: ["_time"], desc:true)'
+>>> sss = query_api.query(s)
+>>> len(sss)
+2
+>>> 
+>>> sss[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2020, 5, 17, 4, 15, 48, 924332, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 5, 17, 10, 15, 48, 924332, tzinfo=tzutc()), '_time': datetime.datetime(2021, 5, 11, 11, 24, 26, 216398, tzinfo=tzutc()), '_value': '002_gps_gps', '_field': 'desc', '_measurement': 'ttn_2_machines', 'active': 'false', 'esp_machine_id': '98f4ab6f6370', 'ttn_dev_addr': '260112E6', 'ttn_dev_eui': '004735B83468EB9F'}
+>>> 
+>>> 
+>>> predicate = '_measurement="ttn_2_machines" AND esp_machine_id = "98f4ab6f6370"'
+>>> 
+>>> 
+>>> del_start
+'1970-01-01T00:00:00Z'
+>>> del_stop
+'2021-05-17T12:18:00Z'
+>>> predicate
+'_measurement="ttn_2_machines" AND esp_machine_id = "98f4ab6f6370"'
+>>> delete_api.delete(del_start, del_stop, predicate, bucket=i_bucket_curl, org=i_org)
+>>> 
+>>> 
+>>> s = 'from(bucket:"hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" and r.esp_machine_id == "98f4ab6f6370") |> sort(columns: ["_time"], desc:true)'
+>>> sss = query_api.query(s)
+>>> len(sss)
+0
+
+
+#RAW ZAZNAM
+conan@ruth:~/soft/lora_payload_handler/backup/2021_05_05$ cat -n /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine_carka.csv|egrep 002
+    17  98f4ab6f6370,004735B83468EB9F,260112E6,false,002_gps_gps
+    18  98f4ab6f6370,0092E4799525249B,260131EE,false,002_sensor_gps
+
+#IMPORT noveho zaznamu / bud kompletne novy nebo jen zmena pro ACTIVE [pozor vse bez uvozovek, jen desc s uvozovkama]
+/usr/bin/docker container exec dck_influxdb influx write -c default --skip-verify -b hemichromis -o foookin_paavel 'ttn_2_machines,esp_machine_id=98f4ab6f6370,ttn_dev_eui=0092E4799525249B,ttn_dev_addr=260131EE,active=true desc="002_sensor_dvojka"' -t TOKEN
+
+
+#IMPORT DO BUCKETU BEZ PREDESLEHO _measurement -> s novym sloupcem type: sensor/gps
+
+cat -n /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine.csv
+     1  esp_machine_id,ttn_dev_eui,ttn_dev_addr,active,type,desc
+     2  4c11aef77e7c,00DF89403C6E2A08,260112DF,true,sensor,013_roj_visne
+     3  4c11aef78524,0077F43DD3D8C8EA,26011C82,true,sensor,014_paanda
+     4  2462abfcb718,00BB3F9D55D33EED,260118FC,true,sensor,015_red_sonya
+     5  f0x8d1c85d9c,007B9B1E686E38B9,26011E89,false,sensor,016_frydolyn
+     6  4c11aef78524,00AD2CAFAB92C037,260112DE,false,gps,014_paanda
+     7  50x29196abf8,00C035B36C854294,26011EDA,false,sensor,101_tagifugu_liligo
+     8  50x29196abf8,0070B9AA10115EC4,260139BD,false,gps,101_tagifugu
+     9  50x29196a980,007EAE3D003C2F1F,26011CDB,false,sensor,102_namazu_liligo
+    10  50x29196a980,00107E5CE32E1637,260118C2,false,gps,102_namazu
+    11  50x29196a980,001347CB76F767CB,26013D05,true,sensor,102_namazu
+    12  50x29196a858,00F464CBF233CC65,26011C26,true,sensor,103_loituma
+    13  24xac494d4f0,0088A8BF8390168D,26013B8E,false,sensor,301_housenka_wrover
+    14  2462abfcb718,00E120F7C123D850,260113CC,false,gps,015_red_sonya
+    15  24xac494d4f0,0041A33CFD27F6C5,26013852,true,gps,301_housenka_wrover
+    16  7c9ebdf1ff64,00D5D5410D29673E,260118C0,true,sensor,007_fookume
+    17  98f4ab6f6370,004735B83468EB9F,260112E6,false,gps,002_dvojka
+    18  98f4ab6f6370,0092E4799525249B,260131EE,false,sensor,002_dvojka
+    19  4c11aef7826c,00626E62F7F9FF9B,26013C0B,true,gps,011_female
+    20  24xac494d38c,0093E7E697E5CEB6,260116E5,true,gps,302_bobr
+
+#ZDE MAM UZ 6 SLOUPCU -> tag,tag,tag,tag,tag,string"
+$ /usr/bin/docker container exec -i -t dck_influxdb influx write --skip-verify -c default -b acestridium -f /var/lib/influxdb2/ttn_2_machine.csv --header "#constant measurement,ttn_2_machines" --header "#datatype tag,tag,tag,tag,tag,string"
+
+#SMAZANI
+$ /usr/bin/docker container exec -i -t dck_influxdb influx delete --skip-verify -c default --bucket acestridium --org foookin_paavel --start '1970-01-01T00:00:00Z' --stop '2021-05-25T09:37:00Z' --predicate '_measurement="ttn_2_machines"'
+
+#NAHRANI  / pozor jakej mas bucket a jestli jsou aktualni data jako ACTIVE
+$ /usr/bin/docker container exec -i -t dck_influxdb influx write --skip-verify -c default -b hemichromis -f /var/lib/influxdb2/ttn_2_machine.csv --header "#constant measurement,ttn_2_machines" --header "#datatype tag,tag,tag,tag,tag,string"
+
+
+###PRIDANI NOVYHO STROJE / jen jeden radek v CSV
+
+#git pull + copy/emacs edit
+$cp ttn_2_machine.csv /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume    
+
+$tail /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine.csv 
+
+50x29196a858,00F464CBF233CC65,26011C26,true,sensor,103_loituma
+24xac494d4f0,0088A8BF8390168D,26013B8E,false,sensor,301_housenka_wrover
+2462abfcb718,00E120F7C123D850,260113CC,false,gps,015_red_sonya
+24xac494d4f0,0041A33CFD27F6C5,26013852,true,gps,301_housenka_wrover
+7c9ebdf1ff64,00D5D5410D29673E,260118C0,true,sensor,007_fookume
+98f4ab6f6370,004735B83468EB9F,260112E6,false,gps,002_dvojka
+98f4ab6f6370,0092E4799525249B,260131EE,true,sensor,002_dvojka
+4c11aef7826c,00626E62F7F9FF9B,26013C0B,true,gps,011_female
+24xac494d38c,0093E7E697E5CEB6,260116E5,true,gps,302_bobr
+50x29196abf8,0047E954227D8069,26011051,true,sensor,101_tagifugu
+
+#EMACS EDIT
+$ cat -n /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine_tagifigu_sensor.csv
+1  esp_machine_id,ttn_dev_eui,ttn_dev_addr,active,type,desc
+2  50x29196abf8,0047E954227D8069,26011051,true,sensor,101_tagifugu
+
+#IMPORT
+/usr/bin/docker container exec -i -t dck_influxdb influx write --skip-verify -c default -b hemichromis -f /var/lib/influxdb2/ttn_2_machine_tagifigu_sensor.csv --header "#constant measurement,ttn_2_machines" --header "#datatype tag,tag,tag,tag,tag,string"
+
+#KONTROLA
+$ /usr/bin/docker container exec dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" ) |> drop(columns:["_start", "_stop"]) |> sort(columns: ["_time"], desc:true) ' --raw | egrep -i 'tagifugu'
+
+,,5,2021-05-25T07:46:19.387600437Z,101_tagifugu_liligo,desc,ttn_2_machines,false,50x29196abf8,26011EDA,00C035B36C854294,sensor
+,,6,2021-05-25T07:46:19.387600437Z,101_tagifugu,desc,ttn_2_machines,false,50x29196abf8,260139BD,0070B9AA10115EC4,gps
+,,17,2021-05-27T13:49:21.877286763Z,101_tagifugu,desc,ttn_2_machines,true,50x29196abf8,26011051,0047E954227D8069,sensor
+
+#NEW DEVICE pres single_record via CSV
+cp ttn_2_machine_tagifigu_sensor.csv ttn_2_machine_v3_009_neptun.csv
+emacs -nw ttn_2_machine_v3_009_neptun.csv
+cat ttn_2_machine_v3_009_neptun.csv
+
+esp_machine_id,ttn_dev_eui,ttn_dev_addr,active,type,desc
+7c9ebdf269b8,00097C9EBDF269B8,260BB374,true,sensor,009_neptun
+
+
+/usr/bin/docker container exec -i -t dck_influxdb influx write --skip-verify -c default -b hemichromis -f /var/lib/influxdb2/ttn_2_machine_v3_009_neptun.csv --header "#constant measurement,ttn_2_machines" --header "#datatype tag,tag,tag,tag,tag,string"
+
+
+/usr/bin/docker container exec dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" ) |> drop(columns:["_start", "_stop"]) |> sort(columns: ["_time"], desc:true) ' --raw
+
+#group,false,false,false,false,true,true,true,true,true,true,true
+#datatype,string,long,dateTime:RFC3339,string,string,string,string,string,string,string,string
+#default,_result,,,,,,,,,,
+,result,table,_time,_value,_field,_measurement,active,esp_machine_id,ttn_dev_addr,ttn_dev_eui,type
+,,0,2021-05-25T07:46:19.387600437Z,015_red_sonya,desc,ttn_2_machines,false,2462abfcb718,260113CC,00E120F7C123D850,gps
+,,1,2021-05-25T07:46:19.387600437Z,301_housenka_wrover,desc,ttn_2_machines,false,24xac494d4f0,26013B8E,0088A8BF8390168D,sensor
+,,2,2021-05-25T07:46:19.387600437Z,014_paanda,desc,ttn_2_machines,false,4c11aef78524,260112DE,00AD2CAFAB92C037,gps
+,,3,2021-05-25T07:46:19.387600437Z,102_namazu,desc,ttn_2_machines,false,50x29196a980,260118C2,00107E5CE32E1637,gps
+,,4,2021-05-25T07:46:19.387600437Z,102_namazu_liligo,desc,ttn_2_machines,false,50x29196a980,26011CDB,007EAE3D003C2F1F,sensor
+,,5,2021-05-25T07:46:19.387600437Z,101_tagifugu_liligo,desc,ttn_2_machines,false,50x29196abf8,26011EDA,00C035B36C854294,sensor
+,,6,2021-05-25T07:46:19.387600437Z,101_tagifugu,desc,ttn_2_machines,false,50x29196abf8,260139BD,0070B9AA10115EC4,gps
+,,7,2021-05-25T07:46:19.387600437Z,002_dvojka,desc,ttn_2_machines,false,98f4ab6f6370,260112E6,004735B83468EB9F,gps
+,,8,2021-05-25T07:46:19.387600437Z,016_frydolyn,desc,ttn_2_machines,false,f0x8d1c85d9c,26011E89,007B9B1E686E38B9,sensor
+,,9,2021-05-25T07:46:19.387600437Z,015_red_sonya,desc,ttn_2_machines,true,2462abfcb718,260118FC,00BB3F9D55D33EED,sensor
+,,10,2021-05-25T07:46:19.387600437Z,302_bobr,desc,ttn_2_machines,true,24xac494d38c,260116E5,0093E7E697E5CEB6,gps
+,,11,2021-05-25T07:46:19.387600437Z,301_housenka_wrover,desc,ttn_2_machines,true,24xac494d4f0,26013852,0041A33CFD27F6C5,gps
+,,12,2021-05-25T07:46:19.387600437Z,013_roj_visne,desc,ttn_2_machines,true,4c11aef77e7c,260112DF,00DF89403C6E2A08,sensor
+,,13,2021-05-25T07:46:19.387600437Z,011_female,desc,ttn_2_machines,true,4c11aef7826c,26013C0B,00626E62F7F9FF9B,gps
+,,14,2021-05-25T07:46:19.387600437Z,014_paanda,desc,ttn_2_machines,true,4c11aef78524,26011C82,0077F43DD3D8C8EA,sensor
+,,15,2021-05-25T07:46:19.387600437Z,103_loituma,desc,ttn_2_machines,true,50x29196a858,26011C26,00F464CBF233CC65,sensor
+,,16,2021-05-25T07:46:19.387600437Z,102_namazu,desc,ttn_2_machines,true,50x29196a980,26013D05,001347CB76F767CB,sensor
+,,17,2021-05-27T13:49:21.877286763Z,101_tagifugu,desc,ttn_2_machines,true,50x29196abf8,26011051,0047E954227D8069,sensor
+,,18,2021-05-25T07:46:19.387600437Z,007_fookume,desc,ttn_2_machines,true,7c9ebdf1ff64,260118C0,00D5D5410D29673E,sensor
+,,19,2021-06-16T07:08:38.381946138Z,009_neptun,desc,ttn_2_machines,true,7c9ebdf269b8,260BB374,00097C9EBDF269B8,sensor
+,,20,2021-05-25T07:46:19.387600437Z,002_dvojka,desc,ttn_2_machines,true,98f4ab6f6370,260131EE,0092E4799525249B,sensor
+
+#0008calibos
+conan@ruth:~$ /usr/bin/docker container exec dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" ) |> drop(columns:["_start", "_stop"]) |> sort(columns: ["_time"], desc:true) ' --raw
+#group,false,false,false,false,true,true,true,true,true,true,true
+#datatype,string,long,dateTime:RFC3339,string,string,string,string,string,string,string,string
+#default,_result,,,,,,,,,,
+,result,table,_time,_value,_field,_measurement,active,esp_machine_id,ttn_dev_addr,ttn_dev_eui,type
+,,0,2021-05-25T07:46:19.387600437Z,015_red_sonya,desc,ttn_2_machines,false,2462abfcb718,260113CC,00E120F7C123D850,gps
+,,1,2021-05-25T07:46:19.387600437Z,301_housenka_wrover,desc,ttn_2_machines,false,24xac494d4f0,26013B8E,0088A8BF8390168D,sensor
+,,2,2021-05-25T07:46:19.387600437Z,014_paanda,desc,ttn_2_machines,false,4c11aef78524,260112DE,00AD2CAFAB92C037,gps
+,,3,2021-05-25T07:46:19.387600437Z,102_namazu,desc,ttn_2_machines,false,50x29196a980,260118C2,00107E5CE32E1637,gps
+,,4,2021-05-25T07:46:19.387600437Z,102_namazu_liligo,desc,ttn_2_machines,false,50x29196a980,26011CDB,007EAE3D003C2F1F,sensor
+,,5,2021-05-25T07:46:19.387600437Z,101_tagifugu_liligo,desc,ttn_2_machines,false,50x29196abf8,26011EDA,00C035B36C854294,sensor
+,,6,2021-05-25T07:46:19.387600437Z,101_tagifugu,desc,ttn_2_machines,false,50x29196abf8,260139BD,0070B9AA10115EC4,gps
+,,7,2021-05-25T07:46:19.387600437Z,002_dvojka,desc,ttn_2_machines,false,98f4ab6f6370,260112E6,004735B83468EB9F,gps
+,,8,2021-05-25T07:46:19.387600437Z,016_frydolyn,desc,ttn_2_machines,false,f0x8d1c85d9c,26011E89,007B9B1E686E38B9,sensor
+,,9,2021-05-25T07:46:19.387600437Z,015_red_sonya,desc,ttn_2_machines,true,2462abfcb718,260118FC,00BB3F9D55D33EED,sensor
+,,10,2021-05-25T07:46:19.387600437Z,302_bobr,desc,ttn_2_machines,true,24xac494d38c,260116E5,0093E7E697E5CEB6,gps
+,,11,2021-05-25T07:46:19.387600437Z,301_housenka_wrover,desc,ttn_2_machines,true,24xac494d4f0,26013852,0041A33CFD27F6C5,gps
+,,12,2021-05-25T07:46:19.387600437Z,013_roj_visne,desc,ttn_2_machines,true,4c11aef77e7c,260112DF,00DF89403C6E2A08,sensor
+,,13,2021-05-25T07:46:19.387600437Z,011_female,desc,ttn_2_machines,true,4c11aef7826c,26013C0B,00626E62F7F9FF9B,gps
+,,14,2021-05-25T07:46:19.387600437Z,014_paanda,desc,ttn_2_machines,true,4c11aef78524,26011C82,0077F43DD3D8C8EA,sensor
+,,15,2021-05-25T07:46:19.387600437Z,103_loituma,desc,ttn_2_machines,true,50x29196a858,26011C26,00F464CBF233CC65,sensor
+,,16,2021-05-25T07:46:19.387600437Z,102_namazu,desc,ttn_2_machines,true,50x29196a980,26013D05,001347CB76F767CB,sensor
+,,17,2021-05-27T13:49:21.877286763Z,101_tagifugu,desc,ttn_2_machines,true,50x29196abf8,26011051,0047E954227D8069,sensor
+,,18,2021-05-25T07:46:19.387600437Z,007_fookume,desc,ttn_2_machines,true,7c9ebdf1ff64,260118C0,00D5D5410D29673E,sensor
+,,19,2021-06-16T07:08:38.381946138Z,009_neptun,desc,ttn_2_machines,true,7c9ebdf269b8,260BB374,00097C9EBDF269B8,sensor
+,,20,2021-05-25T07:46:19.387600437Z,002_dvojka,desc,ttn_2_machines,true,98f4ab6f6370,260131EE,0092E4799525249B,sensor
+
+conan@ruth:~$ 
+conan@ruth:~$ touch /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine_calibos_sensor.csv
+conan@ruth:~$ emacs -nw /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine_calibos_sensor.csv
+conan@ruth:~$ cat -n /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine_calibos_sensor.csv
+     1  esp_machine_id,ttn_dev_eui,ttn_dev_addr,active,type,desc
+     2  7c9ebdf21778,00087C9EBDF21778,260BB6C2,true,sensor,008_calibos
+conan@ruth:~$ /usr/bin/docker container exec -i -t dck_influxdb influx write --skip-verify -c default -b hemichromis -f /var/lib/influxdb2/ttn_2_machine_calibos_sensor.csv --header "#constant measurement,ttn_2_machines" --header "#datatype tag,tag,tag,tag,tag,string"
+conan@ruth:~$ 
+conan@ruth:~$ /usr/bin/docker container exec dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" ) |> drop(columns:["_start", "_stop"]) |> sort(columns: ["_time"], desc:true) ' --raw | egrep -i calibos
+,,19,2021-06-25T13:50:18.837228113Z,008_calibos,desc,ttn_2_machines,true,7c9ebdf21778,260BB6C2,00087C9EBDF21778,sensor
+conan@ruth:~$

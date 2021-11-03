@@ -1,0 +1,35 @@
+sensor_id =
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "scale")
+|> group(columns: ["ScaleUlId", "ScaleSenKey"])
+|> filter(fn: (r) => r.ScaleUlId == "4c11aef77e7c") //# roj_u_visne
+|> filter(fn: (r) => r["_field"] == "ScaleDecimal") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+//|> filter(fn: (r) => r["_field"] == "ScaleKey")
+
+ul_id = 
+from(bucket: "hemichromis") 
+|> range(start: -1y) 
+|> filter(fn: (r) => r["_measurement"] == "ttn_2_machines")
+|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))
+
+join(tables: {d1: sensor_id, d2: ul_id}, on: ["ScaleUlId"]) 
+//|> drop(columns:["ScaleSenKey_d1", "ScaleUlId_d1", "_measurement_d1", "_measurement_d2", "_start_d1", "_start_d2", "_stop_d1", "_stop_d2", "host_d1", "host_d2",]) 
+|> drop(columns:["_measurement_d1", "_measurement_d2", 
+                "_start_d1", "_start_d2", 
+                "_stop_d1", "_stop_d2", 
+                "host_d1", "host_d2",
+                "_time_d2", "host", 
+                "_field_d1", "_field_d2" , "_value_d2", "ttn_dev_addr", "ttn_dev_eui"
+                ]) 
+//|> map(fn: (r) => ({_time: r._time, _value: r._value_d2, id_inkrement: r._value_d1, ul: r.ScaleUlId_d2, sensor: r.ScaleSenKey_d2, }))
+//|> map(fn: (r) => ({_time: r._time_d1, 
+//                   _value: r._value_d1, 
+//ul: r._value_d2, 
+//                esp_machine_id: r.esp_machine_id, 
+//                    nickname: r._value_d2
+//                    }))
+
+//
+|> yield(name: "NickName")
+

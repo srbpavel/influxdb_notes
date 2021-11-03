@@ -1,0 +1,192 @@
+/usr/bin/docker container exec dck_influxdb influx bucket ls --skip-verify
+
+/usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'import "influxdata/influxdb/schema" schema.measurements(bucket: "hemichromis")'
+
+#zjistit jestli jde obejit abych nemusel menit ';' za ','
+head /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine_carka.csv esp_machine_id,ttn_dev_eui,ttn_dev_addr,desc
+4c11aef77e7c,00DF89403C6E2A08,260112DF,013_roj_visne
+4c11aef78524,0077F43DD3D8C8EA,26011C82,014_sensor_paanda
+2462abfcb718,00BB3F9D55D33EED,260118FC,015_sensor_red_sonya
+f0x8d1c85d9c,007B9B1E686E38B9,26011E89,016_sensor_frydolyn
+4c11aef78524,00AD2CAFAB92C037,260112DE,014_gps_paanda
+50x29196abf8,00C035B36C854294,26011EDA,101_tagifugu_liligo
+50x29196abf8,0070B9AA10115EC4,260139BD,101_gps_tagifugu
+50x29196a980,007EAE3D003C2F1F,26011CDB,102_namazu_liligo
+50x29196a980,00107E5CE32E1637,260118C2,102_gps_namazu
+
+#pro CSV write jsem musel rict kterej 'config' / asi tim ze tam mam dva jak jsme importoval mezi dvouma influx stojema JOZEFINA -> HEMICHROMIS
+#POZOR NA MEZERY jak pres TAG ale i MEASUREMENT jinak zalozi s mezerama
+/usr/bin/docker container exec -i -t dck_influxdb influx write --skip-verify -c default -b hemichromis -f /var/lib/influxdb2/ttn_2_machine_carka.csv --header "#constant measurement,ttn_2_machines" --header "#datatype tag,tag,tag,string"
+
+#kdyz to pustis znova uz bez mezery, tak ho to premaze a uz je bez mezery
+
+#nejde AGREGATE pac field neni decimal ale string
+/usr/bin/docker container exec dck_influxdb influx query -c default --skip-verify 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines") |> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) |> sort(columns: ["_time"], desc:true)'
+Result: _result
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          2462abfcb718                260113CC        00E120F7C123D850  2021-05-08T15:49:41.007789519Z       015_gps_red_sonya  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          2462abfcb718                260118FC        00BB3F9D55D33EED  2021-05-08T15:49:41.007789519Z    015_sensor_red_sonya  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          24xac494d38c                260116E5        0093E7E697E5CEB6  2021-05-08T15:49:41.007789519Z            302_gps_bobr  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time            _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  -----------------------  
+          24xac494d4f0                26013852        0041A33CFD27F6C5  2021-05-08T15:49:41.007789519Z  301_gps_housenka_wrover  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time               _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  --------------------------  
+          24xac494d4f0                26013B8E        0088A8BF8390168D  2021-05-08T15:49:41.007789519Z  301_sensor_housenka_wrover  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          4c11aef77e7c                260112DF        00DF89403C6E2A08  2021-05-08T15:49:41.007789519Z           013_roj_visne  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          4c11aef7826c                26013C0B        00626E62F7F9FF9B  2021-05-08T15:49:41.007789519Z          011_gps_female  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          4c11aef78524                260112DE        00AD2CAFAB92C037  2021-05-08T15:49:41.007789519Z          014_gps_paanda  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          4c11aef78524                26011C82        0077F43DD3D8C8EA  2021-05-08T15:49:41.007789519Z       014_sensor_paanda  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          50x29196a858                26011C26        00F464CBF233CC65  2021-05-08T15:49:41.007789519Z      103_sensor_loituma  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          50x29196a980                260118C2        00107E5CE32E1637  2021-05-08T15:49:41.007789519Z          102_gps_namazu  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          50x29196a980                26011CDB        007EAE3D003C2F1F  2021-05-08T15:49:41.007789519Z       102_namazu_liligo  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          50x29196a980                26013D05        001347CB76F767CB  2021-05-08T15:49:41.007789519Z       102_sensor_namazu  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          50x29196abf8                26011EDA        00C035B36C854294  2021-05-08T15:49:41.007789519Z     101_tagifugu_liligo  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          50x29196abf8                260139BD        0070B9AA10115EC4  2021-05-08T15:49:41.007789519Z        101_gps_tagifugu  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          7c9ebdf1ff64                260118C0        00D5D5410D29673E  2021-05-08T15:49:41.007789519Z      007_sensor_fookume  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          98f4ab6f6370                260112E6        004735B83468EB9F  2021-05-08T15:49:41.007789519Z             002_gps_gps  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          98f4ab6f6370                260131EE        0092E4799525249B  2021-05-08T15:49:41.007789519Z          002_sensor_gps  
+Table: keys: [esp_machine_id, ttn_dev_addr, ttn_dev_eui]
+ esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string                      _time:time           _value:string  
+----------------------  ----------------------  ----------------------  ------------------------------  ----------------------  
+          f0x8d1c85d9c                26011E89        007B9B1E686E38B9  2021-05-08T15:49:41.007789519Z     016_sensor_frydolyn  
+conan@ruth:~$
+
+#do jedne tabulky pres GROUP
+conan@ruth:~$ /usr/bin/docker container exec dck_influxdb influx query -c default --skip-verify 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines") |> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) |> group(columns: ["_time"])  |> sort(columns: ["_time"], desc:true)'
+Result: _result
+Table: keys: [_time]
+                    _time:time               _value:string   esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string  
+------------------------------  --------------------------  ----------------------  ----------------------  ----------------------  
+2021-05-08T15:49:41.007789519Z  301_sensor_housenka_wrover            24xac494d4f0                26013B8E        0088A8BF8390168D  
+2021-05-08T15:49:41.007789519Z     301_gps_housenka_wrover            24xac494d4f0                26013852        0041A33CFD27F6C5  
+2021-05-08T15:49:41.007789519Z                302_gps_bobr            24xac494d38c                260116E5        0093E7E697E5CEB6  
+2021-05-08T15:49:41.007789519Z        015_sensor_red_sonya            2462abfcb718                260118FC        00BB3F9D55D33EED  
+2021-05-08T15:49:41.007789519Z           102_namazu_liligo            50x29196a980                26011CDB        007EAE3D003C2F1F  
+2021-05-08T15:49:41.007789519Z               013_roj_visne            4c11aef77e7c                260112DF        00DF89403C6E2A08  
+2021-05-08T15:49:41.007789519Z              102_gps_namazu            50x29196a980                260118C2        00107E5CE32E1637  
+2021-05-08T15:49:41.007789519Z         016_sensor_frydolyn            f0x8d1c85d9c                26011E89        007B9B1E686E38B9  
+2021-05-08T15:49:41.007789519Z                 002_gps_gps            98f4ab6f6370                260112E6        004735B83468EB9F  
+2021-05-08T15:49:41.007789519Z            101_gps_tagifugu            50x29196abf8                260139BD        0070B9AA10115EC4  
+2021-05-08T15:49:41.007789519Z           102_sensor_namazu            50x29196a980                26013D05        001347CB76F767CB  
+2021-05-08T15:49:41.007789519Z         101_tagifugu_liligo            50x29196abf8                26011EDA        00C035B36C854294  
+2021-05-08T15:49:41.007789519Z              011_gps_female            4c11aef7826c                26013C0B        00626E62F7F9FF9B  
+2021-05-08T15:49:41.007789519Z          007_sensor_fookume            7c9ebdf1ff64                260118C0        00D5D5410D29673E  
+2021-05-08T15:49:41.007789519Z              014_gps_paanda            4c11aef78524                260112DE        00AD2CAFAB92C037  
+2021-05-08T15:49:41.007789519Z              002_sensor_gps            98f4ab6f6370                260131EE        0092E4799525249B  
+2021-05-08T15:49:41.007789519Z           014_sensor_paanda            4c11aef78524                26011C82        0077F43DD3D8C8EA  
+2021-05-08T15:49:41.007789519Z           015_gps_red_sonya            2462abfcb718                260113CC        00E120F7C123D850  
+2021-05-08T15:49:41.007789519Z          103_sensor_loituma            50x29196a858                26011C26        00F464CBF233CC65  
+conan@ruth:~$
+
+#SMAZE VSECHNY DATA Z measurement. pak neni dokonce measurement videt, ale podle me tam je akorat nema zadna data [byl to ten spatne s mezerou vpredu]
+influx delete --bucket hemichromis -c default --skip-verify --org foookin_paavel --start '1970-01-01T00:00:00Z' --stop '2021-05-14T00:00:00Z' --predicate '_measurement=" ttn_2_machines"'
+
+
+#KKK
+conan@kkk:~$ influx config create -n default -u https://kkk.srbpavel.cz:8086 -o foookin_paavel -t .....
+
+
+conan@komar:~$influx bucket list
+ID                      Name            Retention       Shard group duration    Organization ID
+d5b8dfbec14ad088        _monitoring     168h0m0s        24h0m0s                 d9be0e3f1a995752
+e4de34ab82e3215a        _tasks          72h0m0s         24h0m0s                 d9be0e3f1a995752
+39620adb7c50e737        panaque         infinite        168h0m0s                d9be0e3f1a995752
+
+
+conan@komar:~/soft/lora_payload_handler$ influx query -o foookin_paavel --skip-verify 'import "influxdata/influxdb/schema" schema.measurements(bucket: "panaque")' --raw
+#group,false,false,false
+#datatype,string,long,string
+#default,_result,,
+,result,table,_value
+,,0,battery_adc
+,,0,humidity
+,,0,scale
+,,0,temperature_external
+,,0,temperature_internal
+
+influx query -o foookin_paavel --skip-verify 'from(bucket: "panaque") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"]  sort(columns: ["_time"], desc:true) |> limit(n:1) |> group()' --raw
+#group,false,false,false,false,false,false,false,false,false,false,false
+#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string
+#default,_result,,,,,,,,,,
+,result,table,_start,_stop,_time,_value,BatSenKey,BatUlId,_field,_measurement,host
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:46:18.324Z,7.32,11,4c11aef77e7c,BatDecimal,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:46:18.324Z,12292,11,4c11aef77e7c,BatKey,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:44:11.05Z,7.96,14,50x29196a980,BatDecimal,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:44:11.05Z,19973,14,50x29196a980,BatKey,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:46:56.903Z,7.26,16,4c11aef78524,BatDecimal,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:46:56.903Z,9657,16,4c11aef78524,BatKey,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:43:58.786Z,7.09,17,50x29196a858,BatDecimal,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:43:58.786Z,18706,17,50x29196a858,BatKey,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:45:24.458Z,7.51,2,4c11aef7826c,BatDecimal,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:45:24.458Z,2785,2,4c11aef7826c,BatKey,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:25:27.91Z,7.89,23,24xac494d4f0,BatDecimal,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:25:27.91Z,3890,23,24xac494d4f0,BatKey,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:45:49.288Z,6.9,24,24xac494d38c,BatDecimal,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:45:49.288Z,8787,24,24xac494d38c,BatKey,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:45:07.947Z,3.41,5,7c9ebdf1ff64,BatDecimal,battery_adc,komar
+,,0,2021-05-18T20:47:41.532554266Z,2021-05-19T20:47:41.532554266Z,2021-05-19T20:45:07.947Z,14989,5,7c9ebdf1ff64,BatKey,battery_adc,komar
+
+#DELETE BUCKET
+conan@ruth:~/soft/lora_payload_handler/temp$ /usr/bin/docker container exec dck_influxdb influx bucket delete -n acestridium -o foookin_paavel -c default --skip-verify -t TOKEN
+ID                      Name            Retention       Organization ID         Deleted
+218895f186627117        acestridium     0s              8dde90f5a16c4519        true
+conan@ruth:~/soft/lora_payload_handler/temp$ /usr/bin/docker container exec dck_influxdb influx bucket list -o foookin_paavel -c default --skip-verify -t TOKEN
+ID                      Name            Retention       Organization ID
+9ad8415a403b95c7        _monitoring     168h0m0s        8dde90f5a16c4519
+2a87ac13d6553fb0        _tasks          72h0m0s         8dde90f5a16c4519
+5d9f6d539c5eb9be        hemichromis     0s              8dde90f5a16c4519
+3beaaa8f4d67603b        jozefina        0s              8dde90f5a16c4519
+47f238e44b8a9444        modrin          0s              8dde90f5a16c4519
+96d993b31a528130        otocinclus      0s              8dde90f5a16c4519
+df14f36f31878bb7        pogonopoma      0s              8dde90f5a16c4519
+7526e287923fac1b        pogonopoma_2    0s              8dde90f5a16c4519

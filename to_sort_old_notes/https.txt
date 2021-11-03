@@ -1,0 +1,34 @@
+#BEZ -k PARAMETRU HODI ERROR
+curl --request POST https://ruth:8086/api/v2/query?org=foookin_paavel --header "Authorization: Token ....." --header 'Accept:application/csv' --header 'Content-type:application/vnd.flux' --data 'from(bucket:"hemichromis") |> range(start:-12h) |> filter(fn:(r) => r._measurement == "battery_adc") |> sort(columns: ["_time"], desc:true) |> limit(n:1)'
+
+#S -k PARAMETREM VRATI ZAZNAM
+curl -k --request POST https://ruth:8086/api/v2/query?org=foookin_paavel --header "Authorization: Token ....." --header 'Accept:application/csv' --header 'Content-type:application/vnd.flux' --data 'from(bucket:"hemichromis") |> range(start:-12h) |> filter(fn:(r) => r._measurement == "battery_adc") |> sort(columns: ["_time"], desc:true) |> limit(n:1)' 2>/dev/null |cat -n
+     1  ,result,table,_start,_stop,_time,_value,BatSenKey,BatUlId,_field,_measurement,host
+     2  ,_result,0,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:49:00.162Z,8,14,50x29196a980,BatDecimal,battery_adc,spongebob
+     3  ,_result,1,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:49:00.162Z,15323,14,50x29196a980,BatKey,battery_adc,spongebob
+     4  ,_result,2,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:53:10.489Z,7.37,17,50x29196a858,BatDecimal,battery_adc,spongebob
+     5  ,_result,3,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:53:10.489Z,14164,17,50x29196a858,BatKey,battery_adc,spongebob
+     6  ,_result,4,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T07:53:05.936Z,8.02,2,4c11aef7826c,BatDecimal,battery_adc,spongebob
+     7  ,_result,5,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T07:53:05.936Z,1915,2,4c11aef7826c,BatKey,battery_adc,spongebob
+     8  ,_result,6,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:33:29.749Z,6.62,23,24xac494d4f0,BatDecimal,battery_adc,spongebob
+     9  ,_result,7,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:33:29.749Z,2962,23,24xac494d4f0,BatKey,battery_adc,spongebob
+    10  ,_result,8,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:49:36.905Z,7.18,24,24xac494d38c,BatDecimal,battery_adc,spongebob
+    11  ,_result,9,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:49:36.905Z,4735,24,24xac494d38c,BatKey,battery_adc,spongebob
+    12  ,_result,10,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:48:45.385Z,3.84,5,7c9ebdf1ff64,BatDecimal,battery_adc,spongebob
+    13  ,_result,11,2021-05-01T23:09:48.254083603Z,2021-05-02T11:09:48.254083603Z,2021-05-02T08:48:45.385Z,10408,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+
+#CACERT pouziti certifikatu
+curl --cacert /home/conan/.ssh/ruth/influxdb-selfsigned.crt --request POST https://ruth:8086/api/v2/query?org=foookin_paavel --header "Authorization: Token ..... --header 'Accept:application/csv' --header 'Content-type:application/vnd.flux' --data 'from(bucket:"hemichromis") |> range(start:-12h) |> filter(fn:(r) => r._measurement == "battery_adc") |> sort(columns: ["_time"], desc:true) |> limit(n:1)'
+,result,table,_start,_stop,_time,_value,BatSenKey,BatUlId,_field,_measurement,host
+,_result,0,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T10:04:29.438Z,7.99,14,50x29196a980,BatDecimal,battery_adc,spongebob
+,_result,1,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T10:04:29.438Z,15337,14,50x29196a980,BatKey,battery_adc,spongebob
+,_result,2,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T10:05:00.147Z,7.29,17,50x29196a858,BatDecimal,battery_adc,spongebob
+,_result,3,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T10:05:00.147Z,14177,17,50x29196a858,BatKey,battery_adc,spongebob
+,_result,4,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T07:53:05.936Z,8.02,2,4c11aef7826c,BatDecimal,battery_adc,spongebob
+,_result,5,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T07:53:05.936Z,1915,2,4c11aef7826c,BatKey,battery_adc,spongebob
+,_result,6,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T08:33:29.749Z,6.62,23,24xac494d4f0,BatDecimal,battery_adc,spongebob
+,_result,7,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T08:33:29.749Z,2962,23,24xac494d4f0,BatKey,battery_adc,spongebob
+,_result,8,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T10:03:12.381Z,7.15,24,24xac494d38c,BatDecimal,battery_adc,spongebob
+,_result,9,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T10:03:12.381Z,4748,24,24xac494d38c,BatKey,battery_adc,spongebob
+,_result,10,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T10:05:12.595Z,3.84,5,7c9ebdf1ff64,BatDecimal,battery_adc,spongebob
+,_result,11,2021-05-02T00:06:00.02389806Z,2021-05-02T12:06:00.02389806Z,2021-05-02T10:05:12.595Z,10422,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob

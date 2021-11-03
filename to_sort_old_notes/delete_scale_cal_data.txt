@@ -1,0 +1,63 @@
+influxdb_python conan@spongebob:~/soft/esptool/fookume/lora_payload_handler$ python3 -i import_influx.py 
+write_api.write(i_bucket, i_org, p)
+ScaleUlId='7c9ebdf1ff64'
+s = 'from(bucket:"panaque") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> sort(columns: ["_time"], desc:true)'
+sss = query_api.query(s)
+len(sss)
+sss[0].records[0].values
+
+
+>>> del_start
+'1970-01-01T00:00:00Z'
+>>> del_stop
+'1970-01-01T00:00:00Z'
+>>> predicate='_measurement="scale" AND ScaleUlId="2462abfcb718"'
+>>> 
+
+
+>>> s = 'from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "scale" and r.ScaleUlId == "2462abfcb718") |> sort(columns: ["_time"], desc:true)'
+>>> sss = query_api.query(s)
+/usr/lib/python3/dist-packages/urllib3/connection.py:362: SubjectAltNameWarning: Certificate for ruth has no `subjectAltName`, falling back to check for a `commonName` for now. This feature is being removed by major browsers and deprecated by RFC 2818. (See https://github.com/shazow/urllib3/issues/497 for details.)
+  SubjectAltNameWarning
+>>> 
+>>> 
+>>> len(sss)
+2
+>>> len(sss[0].records)
+2
+>>> 
+>>> 
+>>> sss[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 5, 10, 11, 47, 36, 798631, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 5, 11, 11, 47, 36, 798631, tzinfo=tzutc()), '_time': datetime.datetime(2021, 5, 11, 9, 43, 27, 369000, tzinfo=tzutc()), '_value': 22.098, 'ScaleSenKey': '4', 'ScaleUlId': '2462abfcb718', '_field': 'ScaleDecimal', '_measurement': 'scale', 'host': 'spongebob'}
+>>> sss[0].records[-1].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 5, 10, 11, 47, 36, 798631, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 5, 11, 11, 47, 36, 798631, tzinfo=tzutc()), '_time': datetime.datetime(2021, 5, 11, 9, 39, 39, 596000, tzinfo=tzutc()), '_value': 22.196, 'ScaleSenKey': '4', 'ScaleUlId': '2462abfcb718', '_field': 'ScaleDecimal', '_measurement': 'scale', 'host': 'spongebob'}
+>>> 
+>>> 
+
+
+>>> del_stop = '2021-05-11T13:48:01Z'
+>>> del_start
+'1970-01-01T00:00:00Z'
+>>> del_stop
+'2021-05-11T13:48:01Z'
+>>> predicate
+'_measurement="scale" AND ScaleUlId="2462abfcb718"'
+
+
+>>> delete_api.delete(del_start, del_stop, predicate, bucket=i_bucket_curl, org=i_org)
+
+
+>>> 
+>>> s = 'from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "scale" and r.ScaleUlId == "2462abfcb718") |> sort(columns: ["_time"], desc:true)'
+>>> sss = query_api.query(s)
+>>> len(sss)
+0
+
+
+>>> sss = query_api.query(s)
+>>> len(sss)
+2
+>>> sss[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 5, 10, 11, 49, 2, 58706, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 5, 11, 11, 49, 2, 58706, tzinfo=tzutc()), '_time': datetime.datetime(2021, 5, 11, 9, 48, 54, 212000, tzinfo=tzutc()), '_value': 10.048, 'ScaleSenKey': '4', 'ScaleUlId': '2462abfcb718', '_field': 'ScaleDecimal', '_measurement': 'scale', 'host': 'spongebob'}
+>>> sss[1].records[0].values
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 5, 10, 11, 49, 2, 58706, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 5, 11, 11, 49, 2, 58706, tzinfo=tzutc()), '_time': datetime.datetime(2021, 5, 11, 9, 48, 54, 212000, tzinfo=tzutc()), '_value': 7132.0, 'ScaleSenKey': '4', 'ScaleUlId': '2462abfcb718', '_field': 'ScaleKey', '_measurement': 'scale', 'host': 'spongebob'}

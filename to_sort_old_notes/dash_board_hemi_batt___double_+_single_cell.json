@@ -1,0 +1,286 @@
+{
+ "meta": {
+  "version": "1",
+  "type": "dashboard",
+  "name": "hemi_batt / double + single cell-Template",
+  "description": "template created from dashboard: hemi_batt / double + single cell"
+ },
+ "content": {
+  "data": {
+   "type": "dashboard",
+   "attributes": {
+    "name": "hemi_batt / double + single cell",
+    "description": "batt test"
+   },
+   "relationships": {
+    "label": {
+     "data": []
+    },
+    "cell": {
+     "data": [
+      {
+       "type": "cell",
+       "id": "076bc80c08560000"
+      },
+      {
+       "type": "cell",
+       "id": "076e59d78a560000"
+      }
+     ]
+    },
+    "variable": {
+     "data": []
+    }
+   }
+  },
+  "included": [
+   {
+    "id": "076bc80c08560000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 0,
+     "w": 12,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076bc80c08560000"
+      }
+     }
+    }
+   },
+   {
+    "id": "076e59d78a560000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 4,
+     "w": 12,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076e59d78a560000"
+      }
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076bc80c08560000",
+    "attributes": {
+     "name": "battery",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "//t1 = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n\n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n|> filter(fn: (r) => r[\"_value\"] > 4.5)\n\n|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n///|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n//\n|> yield(name: \"BatUlId\")\n//\n//|> group() //tohle da kazdymu stejnej _result coz je spatne\n///|> yield(name: \"TempUlId\")\n//|> group(columns: [\"TempUlId\"]) //ale ne kdyz mam temp_ext=\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "6bd1fb76-622d-40f3-a4dd-2efe17a4a706",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "82283e4f-44f1-428f-ac85-a8a8f7e8133f",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "455c73d1-b2c5-45fe-83df-4dc3eb50412c",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076e59d78a560000",
+    "attributes": {
+     "name": "battery (Clone)",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "//t1 = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n\n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n|> filter(fn: (r) => r[\"_value\"] < 4.5)\n\n|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n///|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n//\n|> yield(name: \"BatUlId\")\n//\n//|> group() //tohle da kazdymu stejnej _result coz je spatne\n///|> yield(name: \"TempUlId\")\n//|> group(columns: [\"TempUlId\"]) //ale ne kdyz mam temp_ext=\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "6bd1fb76-622d-40f3-a4dd-2efe17a4a706",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "82283e4f-44f1-428f-ac85-a8a8f7e8133f",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "455c73d1-b2c5-45fe-83df-4dc3eb50412c",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   }
+  ]
+ },
+ "labels": []
+}

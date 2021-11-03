@@ -1,0 +1,175 @@
+#RUTH docker odroid_ii <- JOZEFINA docker odroid_i
+#
+#trosku pohonit /etc/host na docker containeru
+###
+root@0fe79a4cab6f:/# influx config set --config-name 'default' -u 'https://localhost:8086'           
+Active  Name    URL                     Org
+        default https://localhost:8086
+
+
+root@0fe79a4cab6f:/# influx config set --config-name 'default' -u 'https://ruth:8086'              
+Active  Name    URL                     Org
+        default https://ruth:8086
+
+
+root@0fe79a4cab6f:/etc# influx config set --config-name 'default' -u 'https://ruth:8086' -o 'foookin_paavel' 
+Active  Name    URL                     Org
+        default https://ruth:8086       foookin_paavel
+
+
+root@0fe79a4cab6f:/etc# influx auth list --skip-verify
+ID                      Description                                                     Token              User Name        User ID                 Permissions
+075881d99ff51000        admin's Token                                                   riMI		   admin           075881d962751000        [read:authorizations wr
+
+
+root@0fe79a4cab6f:/etc# influx config create --config-name jozefina --host-url http://192.168.0.105:8086 --org influxdata --token ''
+Active  Name            URL                             Org
+        jozefina        http://192.168.0.105:8086       influxdata
+
+
+root@0fe79a4cab6f:/etc# influx config ls              
+Active  Name            URL                             Org
+        jozefina        http://192.168.0.105:8086       influxdata
+        default         https://ruth:8086               foookin_paavel
+
+
+root@0fe79a4cab6f:/var/lib/influxdb2# influx query -c jozefina 'from(bucket: "vcely") |> range(start: -24h)' --raw > vcely_bucket_24h.csv
+root@0fe79a4cab6f:/var/lib/influxdb2# head vcely_bucket_24h.csv 
+#group,false,false,true,true,false,false,true,true,true,true,true
+#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string
+#default,_result,,,,,,,,,,
+,result,table,_start,_stop,_time,_value,TempSenKey,TempUlId,_field,_measurement,host
+,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T09:20:04Z,3149.9,585,6972,TempDecimal,temperature,probee_srbp
+,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T09:50:04Z,3149.9,585,6972,TempDecimal,temperature,probee_srbp
+,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T10:20:05Z,3149.8,585,6972,TempDecimal,temperature,probee_srbp
+,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T10:50:05Z,3149.8,585,6972,TempDecimal,temperature,probee_srbp
+,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T11:20:05Z,3149.9,585,6972,TempDecimal,temperature,probee_srbp
+,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T11:50:06Z,3149.8,585,6972,TempDecimal,temperature,probee_srbp
+
+root@0fe79a4cab6f:/var/lib/influxdb2# influx query -c jozefina 'from(bucket: "vcely") |> range(start: -3y)' --raw > vcely_bucket_3y.csv
+root@0fe79a4cab6f:/var/lib/influxdb2# wc -l vcely_bucket_3y.csv
+1228537 vcely_bucket_3y.csv
+root@0fe79a4cab6f:/var/lib/influxdb2# du -sh vcely_bucket_3y.csv      
+165M    vcely_bucket_3y.csv
+
+root@0fe79a4cab6f:/var/lib/influxdb2# influx write -c default --skip-verify --format csv -b jozefina -f vcely_bucket_3y.csv -t ...
+
+#FLUX - weight
+from(bucket: "jozefina")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "weight")
+//
+|> filter(fn: (r) => r.WeiUlId == "7047")
+|> group(columns: ["WeiUlId", "WeiSenKey"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+|> filter(fn: (r) => r["_field"] == "WeiDecimal")
+//|> filter(fn: (r) => r["_field"] == "ScaleKey")
+|> filter(fn: (r) => r["_value"] < 100)
+|> filter(fn: (r) => r["_value"] > 30)
+
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+|> yield(name: "WeiUlId")
+
+#CRON_priprava
+#
+conan@ruth:~/soft/lora_payload_handler/influx/data$ /usr/bin/docker container exec -i -t dck_influxdb influx query -c jozefina 'from(bucket: "vcely") |> range(start: -1h)' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/vcely_bucket_1h.csv
+
+conan@ruth:~/soft/lora_payload_handler/influx/data$ ls -la /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/
+total 168896
+drwx------ 3 conan root       4096 May  6 12:25 .
+drwxr-xr-x 3 conan conan      4096 May  3 14:42 ..
+drwx------ 4 conan root       4096 Apr  8 17:31 engine
+-rw------- 1 conan conan    524288 May  6 12:01 influxd.bolt
+-rw-r--r-- 1 conan conan     22697 May  6 12:25 vcely_bucket_1h.csv
+-rw-r--r-- 1 root  root     200587 May  6 11:05 vcely_bucket_24h.csv
+-rw-r--r-- 1 root  root  172187811 May  6 11:06 vcely_bucket_3y.csv
+
+#HOUR ma prazdne radky
+conan@ruth:~/soft/lora_payload_handler/influx/data$ head /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/vcely_bucket_1h.csv|cat -n 
+     1  #group,false,false,true,true,false,false,true,true,true,true,true
+     2  #datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string
+     3  #default,_result,,,,,,,,,,
+     4  ,result,table,_start,_stop,_time,_value,TempSenKey,TempUlId,_field,_measurement,host
+     5  ,,0,2021-05-06T09:25:05.785194399Z,2021-05-06T10:25:05.785194399Z,2021-05-06T09:50:22Z,3149.8,585,6972,TempDecimal,temperature,probee_srbp
+     6
+     7  #group,false,false,true,true,false,false,true,true,true,true,true
+     8  #datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string
+     9  #default,_result,,,,,,,,,,
+    10  ,result,table,_start,_stop,_time,_value,TempSenKey,TempUlId,_field,_measurement,host
+
+#YEAR nemel prazdny radky
+conan@ruth:~/soft/lora_payload_handler/influx/data$ head /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/vcely_bucket_24h.csv|cat -n                   
+     1  #group,false,false,true,true,false,false,true,true,true,true,true
+     2  #datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string
+     3  #default,_result,,,,,,,,,,
+     4  ,result,table,_start,_stop,_time,_value,TempSenKey,TempUlId,_field,_measurement,host
+     5  ,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T09:20:04Z,3149.9,585,6972,TempDecimal,temperature,probee_srbp
+     6  ,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T09:50:04Z,3149.9,585,6972,TempDecimal,temperature,probee_srbp
+     7  ,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T10:20:05Z,3149.8,585,6972,TempDecimal,temperature,probee_srbp
+     8  ,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T10:50:05Z,3149.8,585,6972,TempDecimal,temperature,probee_srbp
+     9  ,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T11:20:05Z,3149.9,585,6972,TempDecimal,temperature,probee_srbp
+    10  ,,0,2021-05-05T09:05:45.009394506Z,2021-05-06T09:05:45.009394506Z,2021-05-05T11:50:06Z,3149.8,585,6972,TempDecimal,temperature,probee_srbp
+
+
+conan@ruth:~/soft/lora_payload_handler/influx/data$ /usr/bin/docker container exec -i -t dck_influxdb influx write -c default --skip-verify --skipRowOnError --format csv -b jozefina -f /var/lib/influxdb2/vcely_bucket_1h.csv -t ...
+2021-05-06T10:30:45.833569Z     info    line 6: column '_measurement': no measurement supplied
+2021-05-06T10:30:45.833768Z     info    line 12: column '_measurement': no measurement supplied
+
+#CRON
+conan@ruth:~/soft/docker/dck_influxdb_2_0/dck_influxdb_volume$ less /home/conan/soft/docker/jozefina_2_ruth.sh
+!/bin/sh                                                                                                                                                               
+
+/usr/bin/docker container exec dck_influxdb influx query -c jozefina 'from(bucket: "vcely") |> range(start: -1h)' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/vcely_bucket_1h.csv
+
+ls -la /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/
+
+head -n20 /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/vcely_bucket_1h.csv|cat -n
+
+tail -n20 /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/vcely_bucket_1h.csv|cat -n
+
+/usr/bin/docker container exec dck_influxdb influx write -c default --skip-verify --skipRowOnError --format csv -b jozefina -f /var/lib/influxdb2/vcely_bucket_1h.csv -t ...
+
+
+conan@ruth:~/soft/docker/dck_influxdb_2_0/dck_influxdb_volume$ crontab -l
+
+#CRONTAB
+#jozefina 2 ruth 
+*/5 * * * * /bin/bash /home/conan/soft/docker/jozefina_2_ruth.sh 1 > /home/conan/soft/docker/cron_1_joz2ruth.log 2 > /home/conan/soft/docker/cron_2_joz2ruth.log
+
+#LOG view
+ls -la /home/conan/soft/docker/ ; head -n5 /home/conan/soft/docker/cron_*_joz2ruth.log ; tail -n5 /home/conan/soft/docker/cron_*_joz2ruth.log
+
+#KONTROLA jestli to jede
+from(bucket: "jozefina")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "voltage_sensor")
+//|> filter(fn: (r) => r.WeiUlId == "7047")
+|> group(columns: ["VoltUlId", "VoltSenKey"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+|> filter(fn: (r) => r["_field"] == "VoltDecimal")
+//|> filter(fn: (r) => r["_field"] == "ScaleKey")
+|> filter(fn: (r) => r["_value"] < 100)
+|> filter(fn: (r) => r["_value"] > 6)
+
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+
+|> sort(columns: ["_time"], desc:true)
+
+|> yield(name: "VoltUlId")
+
+#FLUX python
+s = 'from(bucket:"jozefina") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "voltage_sensor") |> sort(columns: ["_time"], desc:true)'
+
+sss=query_api.query(s)
+/usr/lib/python3/dist-packages/urllib3/connection.py:362: SubjectAltNameWarning: Certificate for ruth has no `subjectAltName`, falling back to check for a `commonName` for now. This feature is being removed by major browsers and deprecated by RFC 2818. (See https://github.com/shazow/urllib3/issues/497 for details.)
+  SubjectAltNameWarning
+
+len(sss)
+48
+
+sss[0].records[0].values ; sss[1].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 5, 5, 11, 17, 31, 709953, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 5, 6, 11, 17, 31, 709953, tzinfo=tzutc()), '_time': datetime.datetime(2021, 5, 6, 10, 20, 22, tzinfo=tzutc()), '_value': 3.901, 'VoltSenKey': '585', 'VoltUlId': '6972', '_field': 'VoltDecimal', '_measurement': 'voltage_sensor'}
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 5, 5, 11, 17, 31, 709953, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 5, 6, 11, 17, 31, 709953, tzinfo=tzutc()), '_time': datetime.datetime(2021, 5, 6, 10, 50, 23, tzinfo=tzutc()), '_value': 3.901, 'VoltSenKey': '585', 'VoltUlId': '6972', '_field': 'VoltDecimal', '_measurement': 'voltage_sensor', 'host': 'probee_srbp'}
+
+

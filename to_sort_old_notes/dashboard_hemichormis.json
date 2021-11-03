@@ -1,0 +1,667 @@
+{
+ "meta": {
+  "version": "1",
+  "type": "dashboard",
+  "name": "hemichormis-Template",
+  "description": "template created from dashboard: hemichormis"
+ },
+ "content": {
+  "data": {
+   "type": "dashboard",
+   "attributes": {
+    "name": "hemichormis",
+    "description": "h"
+   },
+   "relationships": {
+    "label": {
+     "data": []
+    },
+    "cell": {
+     "data": [
+      {
+       "type": "cell",
+       "id": "076bb0a14e560000"
+      },
+      {
+       "type": "cell",
+       "id": "076bb619d5560000"
+      },
+      {
+       "type": "cell",
+       "id": "076bb6cb31160000"
+      },
+      {
+       "type": "cell",
+       "id": "076bb83061960000"
+      },
+      {
+       "type": "cell",
+       "id": "076df6eb2e560000"
+      }
+     ]
+    },
+    "variable": {
+     "data": []
+    }
+   }
+  },
+  "included": [
+   {
+    "id": "076bb0a14e560000",
+    "type": "cell",
+    "attributes": {
+     "x": 5,
+     "y": 4,
+     "w": 7,
+     "h": 5
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076bb0a14e560000"
+      }
+     }
+    }
+   },
+   {
+    "id": "076bb619d5560000",
+    "type": "cell",
+    "attributes": {
+     "x": 5,
+     "y": 0,
+     "w": 7,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076bb619d5560000"
+      }
+     }
+    }
+   },
+   {
+    "id": "076bb6cb31160000",
+    "type": "cell",
+    "attributes": {
+     "x": 3,
+     "y": 4,
+     "w": 2,
+     "h": 5
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076bb6cb31160000"
+      }
+     }
+    }
+   },
+   {
+    "id": "076bb83061960000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 4,
+     "w": 3,
+     "h": 5
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076bb83061960000"
+      }
+     }
+    }
+   },
+   {
+    "id": "076df6eb2e560000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 0,
+     "w": 5,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076df6eb2e560000"
+      }
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076bb0a14e560000",
+    "attributes": {
+     "name": "temperature_external_hemichromis",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "from(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\") \n//|> filter(fn: (r) => r[\"_value\"] < 50 )\n|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n///|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n//\n|> yield(name: \"TempUlId\")\n//|> group() //tohle da kazdymu stejnej _result coz je spatne\n\n\n\n\nt1 = \nfrom(bucket: \"hemichromis\")\n  //|> range(start: -24h)\n//\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\") \n//\n//\n|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n  //|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n//|> yield(name: \"TempUlId\")\n//\n|> group() //tohle da kazdymu stejnej _result coz je spatne\n\n  ///|> yield(name: \"TempUlId\")\n  //|> group(columns: [\"TempUlId\"]) //ale ne kdyz mam temp_ext=\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "ca22774a-8aa2-4a31-a466-d8ffa579cec7",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "81fd7ea6-b47a-42ec-8ec8-029b1da63cbd",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "c3786a25-befe-47ed-adbf-0f30f95f64d4",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076bb619d5560000",
+    "attributes": {
+     "name": "temp_external + temp_int / hemichromis",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "temp_ext = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\") \n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\")\n//|> filter(fn: (r) => r[\"_value\"] < 50 )\n//|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\ntemp_int = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_internal\") \n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\")\n//|> filter(fn: (r) => r[\"_value\"] < 50 )\n//|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\n//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])\nunion(tables: [temp_ext, temp_int])\n|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> yield(name: \"TempUlId\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "ca22774a-8aa2-4a31-a466-d8ffa579cec7",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "81fd7ea6-b47a-42ec-8ec8-029b1da63cbd",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "c3786a25-befe-47ed-adbf-0f30f95f64d4",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": false,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076bb6cb31160000",
+    "attributes": {
+     "name": "humidity_hemichromis",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "//t1 = \nfrom(bucket: \"hemichromis\")\n//|> range(start: -24h)\n//\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"humidity\") \n//\n|> group(columns: [\"HumUlId\", \"HumSenKey\"]) \n//\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n//\n|> yield(name: \"HumUlId\")\n//|> group() //tohle da kazdymu stejnej _result coz je spatne\n\n///|> yield(name: \"TempUlId\")\n//|> group(columns: [\"TempUlId\"]) //ale ne kdyz mam temp_ext=\n\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "ca22774a-8aa2-4a31-a466-d8ffa579cec7",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "81fd7ea6-b47a-42ec-8ec8-029b1da63cbd",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "c3786a25-befe-47ed-adbf-0f30f95f64d4",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076bb83061960000",
+    "attributes": {
+     "name": "scale_hemichromis",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "//decimal\n//=\nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"scale\")\n//\n|> group(columns: [\"ScaleUlId\", \"ScaleSenKey\"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze\n//|> filter(fn: (r) => r.ScaleUlId == \"7c9ebdf1ff64\")\n|> filter(fn: (r) => r[\"_field\"] == \"ScaleDecimal\")\n//|> filter(fn: (r) => r[\"_field\"] == \"ScaleKey\")\n\n\n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n|> yield(name: \"ScaleUlId\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "ca22774a-8aa2-4a31-a466-d8ffa579cec7",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "81fd7ea6-b47a-42ec-8ec8-029b1da63cbd",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "c3786a25-befe-47ed-adbf-0f30f95f64d4",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076df6eb2e560000",
+    "attributes": {
+     "name": "battery_hemichromis / single+double cell combo / JE TO TAM PANINKO",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "b_low = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n//|> filter(fn: (r) => r[\"_value\"] < low)\n//|> filter(fn: (r) => r[\"_value\"] > high)\n//|> filter(fn: (r) => r[\"_value\"] > 4.5)\n|> filter(fn: (r) => r[\"_value\"] < 4.5)\n|> map(fn: (r) => ({r with _value: r._value * 2.0 }))\n|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\nb_high = \nfrom(bucket: \"hemichromis\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n//|> filter(fn: (r) => r[\"_value\"] < low)\n//|> filter(fn: (r) => r[\"_value\"] > high)\n|> filter(fn: (r) => r[\"_value\"] > 4.5)\n\n//|> filter(fn: (r) => r[\"_value\"] < 4.5)\n|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\n//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])\nunion(tables: [b_low, b_high])\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n|> yield(name: \"BatUlId\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "bca46017-8dae-43af-893a-095060294d27",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "21f44327-463e-4ed3-8aca-5375dde628f3",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "fafd5d2e-8eae-4828-a64a-b17b17cb97d7",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "YYYY/MM/DD HH:mm:ss",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   }
+  ]
+ },
+ "labels": []
+}

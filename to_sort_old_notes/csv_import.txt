@@ -1,0 +1,144 @@
+#VIEW RAW csv / from GIT / RED SONYA TRUE
+conan@ruth:~/soft/lora_payload_handler$ cat ttn_2_machine.csv 
+esp_machine_id,ttn_dev_eui,ttn_dev_addr,active,desc
+4c11aef77e7c,00DF89403C6E2A08,260112DF,true,013_roj_visne
+4c11aef78524,0077F43DD3D8C8EA,26011C82,true,014_sensor_paanda
+2462abfcb718,00BB3F9D55D33EED,260118FC,true,015_sensor_red_sonya
+f0x8d1c85d9c,007B9B1E686E38B9,26011E89,false,016_sensor_frydolyn
+4c11aef78524,00AD2CAFAB92C037,260112DE,false,014_gps_paanda
+50x29196abf8,00C035B36C854294,26011EDA,false,101_tagifugu_liligo
+50x29196abf8,0070B9AA10115EC4,260139BD,false,101_gps_tagifugu
+50x29196a980,007EAE3D003C2F1F,26011CDB,false,102_namazu_liligo
+50x29196a980,00107E5CE32E1637,260118C2,false,102_gps_namazu
+50x29196a980,001347CB76F767CB,26013D05,true,102_sensor_namazu
+50x29196a858,00F464CBF233CC65,26011C26,true,103_sensor_loituma
+24xac494d4f0,0088A8BF8390168D,26013B8E,false,301_sensor_housenka_wrover
+2462abfcb718,00E120F7C123D850,260113CC,false,015_gps_red_sonya
+24xac494d4f0,0041A33CFD27F6C5,26013852,true,301_gps_housenka_wrover
+7c9ebdf1ff64,00D5D5410D29673E,260118C0,true,007_sensor_fookume
+98f4ab6f6370,004735B83468EB9F,260112E6,false,002_gps_gps
+98f4ab6f6370,0092E4799525249B,260131EE,false,002_sensor_gps
+4c11aef7826c,00626E62F7F9FF9B,26013C0B,true,011_gps_female
+24xac494d38c,0093E7E697E5CEB6,260116E5,true,302_gps_bobr
+
+#VIEW DOCKER VOLUME / red_sonya FALSE
+conan@ruth:~/soft/lora_payload_handler$ cat /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine_carka.csv       
+4c11aef77e7c,00DF89403C6E2A08,260112DF,true,013_sensor_roj_u_visne
+4c11aef78524,0077F43DD3D8C8EA,26011C82,true,014_sensor_paanda
+2462abfcb718,00BB3F9D55D33EED,260118FC,false,015_sensor_red_sonya
+f0x8d1c85d9c,007B9B1E686E38B9,26011E89,false,016_sensor_frydolyn
+4c11aef78524,00AD2CAFAB92C037,260112DE,false,014_gps_paanda
+50x29196abf8,00C035B36C854294,26011EDA,false,101_tagifugu_liligo
+50x29196abf8,0070B9AA10115EC4,260139BD,false,101_gps_tagifugu
+50x29196a980,007EAE3D003C2F1F,26011CDB,false,102_namazu_liligo
+50x29196a980,00107E5CE32E1637,260118C2,false,102_gps_namazu
+50x29196a980,001347CB76F767CB,26013D05,true,102_sensor_namazu
+50x29196a858,00F464CBF233CC65,26011C26,true,103_sensor_loituma
+24xac494d4f0,0088A8BF8390168D,26013B8E,false,301_sensor_housenka_wrover
+2462abfcb718,00E120F7C123D850,260113CC,false,015_gps_red_sonya
+24xac494d4f0,0041A33CFD27F6C5,26013852,true,301_gps_housenka_wrover
+7c9ebdf1ff64,00D5D5410D29673E,260118C0,true,007_sensor_fookume
+98f4ab6f6370,004735B83468EB9F,260112E6,false,002_gps_gps
+98f4ab6f6370,0092E4799525249B,260131EE,false,002_sensor_gps
+4c11aef7826c,00626E62F7F9FF9B,26013C0B,true,011_gps_female
+24xac494d38c,0093E7E697E5CEB6,260116E5,true,302_gps_bobr
+
+#CP git >>> docker
+conan@ruth:~/soft/lora_payload_handler$ cp ttn_2_machine.csv /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/ttn_2_machine_carka.csv
+
+#VIEW update / RED SONYA true
+   1  esp_machine_id,ttn_dev_eui,ttn_dev_addr,active,desc
+   2  4c11aef77e7c,00DF89403C6E2A08,260112DF,true,013_roj_visne
+   3  4c11aef78524,0077F43DD3D8C8EA,26011C82,true,014_sensor_paanda
+   4  2462abfcb718,00BB3F9D55D33EED,260118FC,true,015_sensor_red_sonya
+   5  f0x8d1c85d9c,007B9B1E686E38B9,26011E89,false,016_sensor_frydolyn
+   6  4c11aef78524,00AD2CAFAB92C037,260112DE,false,014_gps_paanda
+   7  50x29196abf8,00C035B36C854294,26011EDA,false,101_tagifugu_liligo
+   8  50x29196abf8,0070B9AA10115EC4,260139BD,false,101_gps_tagifugu
+   9  50x29196a980,007EAE3D003C2F1F,26011CDB,false,102_namazu_liligo
+  10  50x29196a980,00107E5CE32E1637,260118C2,false,102_gps_namazu
+  11  50x29196a980,001347CB76F767CB,26013D05,true,102_sensor_namazu
+  12  50x29196a858,00F464CBF233CC65,26011C26,true,103_sensor_loituma
+  13  24xac494d4f0,0088A8BF8390168D,26013B8E,false,301_sensor_housenka_wrover
+  14  2462abfcb718,00E120F7C123D850,260113CC,false,015_gps_red_sonya
+  15  24xac494d4f0,0041A33CFD27F6C5,26013852,true,301_gps_housenka_wrover
+  16  7c9ebdf1ff64,00D5D5410D29673E,260118C0,true,007_sensor_fookume
+  17  98f4ab6f6370,004735B83468EB9F,260112E6,false,002_gps_gps
+  18  98f4ab6f6370,0092E4799525249B,260131EE,false,002_sensor_gps
+  19  4c11aef7826c,00626E62F7F9FF9B,26013C0B,true,011_gps_female
+  20  24xac494d38c,0093E7E697E5CEB6,260116E5,true,302_gps_bobr
+
+
+#VIEW all BEFORE del
+conan@ruth:~/soft/lora_payload_handler$ /usr/bin/docker container exec dck_influxdb influx query -c default --skip-verify 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines") |> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) |> group(columns: ["_time"])  |> sort(columns: ["_time"], desc:true)'                        
+Result: _result
+Table: keys: [_time]
+                    _time:time               _value:string           active:string   esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string  
+------------------------------  --------------------------  ----------------------  ----------------------  ----------------------  ----------------------  
+2021-05-09T15:37:38.594885065Z              102_gps_namazu                   false            50x29196a980                260118C2        00107E5CE32E1637  
+2021-05-09T15:37:38.594885065Z              014_gps_paanda                   false            4c11aef78524                260112DE        00AD2CAFAB92C037  
+2021-05-09T15:37:38.594885065Z  301_sensor_housenka_wrover                   false            24xac494d4f0                26013B8E        0088A8BF8390168D  
+2021-05-09T15:37:38.594885065Z        015_sensor_red_sonya                   false            2462abfcb718                260118FC        00BB3F9D55D33EED  
+2021-05-09T15:37:38.594885065Z                302_gps_bobr                    true            24xac494d38c                260116E5        0093E7E697E5CEB6  
+2021-05-09T15:37:38.594885065Z           102_namazu_liligo                   false            50x29196a980                26011CDB        007EAE3D003C2F1F  
+2021-05-09T15:37:38.594885065Z         016_sensor_frydolyn                   false            f0x8d1c85d9c                26011E89        007B9B1E686E38B9  
+2021-05-09T15:37:38.594885065Z          007_sensor_fookume                    true            7c9ebdf1ff64                260118C0        00D5D5410D29673E  
+2021-05-09T15:37:38.594885065Z          103_sensor_loituma                    true            50x29196a858                26011C26        00F464CBF233CC65  
+2021-05-09T15:37:38.594885065Z              011_gps_female                    true            4c11aef7826c                26013C0B        00626E62F7F9FF9B  
+2021-05-09T15:37:38.594885065Z     301_gps_housenka_wrover                    true            24xac494d4f0                26013852        0041A33CFD27F6C5  
+2021-05-09T15:37:38.594885065Z      013_sensor_roj_u_visne                    true            4c11aef77e7c                260112DF        00DF89403C6E2A08  
+2021-05-09T15:37:38.594885065Z         101_tagifugu_liligo                   false            50x29196abf8                26011EDA        00C035B36C854294  
+2021-05-09T15:37:38.594885065Z           014_sensor_paanda                    true            4c11aef78524                26011C82        0077F43DD3D8C8EA  
+2021-05-09T15:37:38.594885065Z            101_gps_tagifugu                   false            50x29196abf8                260139BD        0070B9AA10115EC4  
+2021-05-09T15:37:38.594885065Z           102_sensor_namazu                    true            50x29196a980                26013D05        001347CB76F767CB  
+2021-05-09T15:37:38.594885065Z                 002_gps_gps                   false            98f4ab6f6370                260112E6        004735B83468EB9F  
+2021-05-09T15:37:38.594885065Z           015_gps_red_sonya                   false            2462abfcb718                260113CC        00E120F7C123D850  
+2021-05-09T15:37:38.594885065Z              002_sensor_gps                   false            98f4ab6f6370                260131EE        0092E4799525249B  
+
+
+#DELETE
+conan@ruth:~/soft/lora_payload_handler$ /usr/bin/docker container exec dck_influxdb influx delete -c default --skip-verify --bucket hemichromis --org foookin_paavel --start 1970-01-01T00:00:00Z --stop 2021-05-11T00:00:00Z --predicate '_measurement="ttn_2_machines" '
+
+
+#VERIFY EMPTY
+conan@ruth:~/soft/lora_payload_handler$ /usr/bin/docker container exec dck_influxdb influx query -c default --skip-verify 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" and r["active"] == "true") |> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) |> group(columns: ["_time"])  |> sort(columns: ["_time"], desc:true)'
+
+
+#IMPORT 
+conan@ruth:~/soft/lora_payload_handler$ /usr/bin/docker container exec -i -t dck_influxdb influx write --skip-verify -c default -b hemichromis -f /var/lib/influxdb2/ttn_2_machine_carka.csv --header "#constant measurement,ttn_2_machines" --header "#datatype tag,tag,tag,tag,string"
+
+
+#VERIFY_FILL / true
+conan@ruth:~/soft/lora_payload_handler$ /usr/bin/docker container exec dck_influxdb influx query -c default --skip-verify 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" and r["active"] == "true") |> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) |> group(columns: ["_time"])  |> sort(columns: ["_time"], desc:true)'
+Result: _result
+Table: keys: [_time]
+                    _time:time            _value:string           active:string   esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string  
+------------------------------  -----------------------  ----------------------  ----------------------  ----------------------  ----------------------  
+2021-05-11T11:24:26.216398595Z  301_gps_housenka_wrover                    true            24xac494d4f0                26013852        0041A33CFD27F6C5  
+2021-05-11T11:24:26.216398595Z             302_gps_bobr                    true            24xac494d38c                260116E5        0093E7E697E5CEB6  
+2021-05-11T11:24:26.216398595Z     015_sensor_red_sonya                    true            2462abfcb718                260118FC        00BB3F9D55D33EED  
+2021-05-11T11:24:26.216398595Z        014_sensor_paanda                    true            4c11aef78524                26011C82        0077F43DD3D8C8EA  
+2021-05-11T11:24:26.216398595Z           011_gps_female                    true            4c11aef7826c                26013C0B        00626E62F7F9FF9B  
+2021-05-11T11:24:26.216398595Z            013_roj_visne                    true            4c11aef77e7c                260112DF        00DF89403C6E2A08  
+2021-05-11T11:24:26.216398595Z       007_sensor_fookume                    true            7c9ebdf1ff64                260118C0        00D5D5410D29673E  
+2021-05-11T11:24:26.216398595Z        102_sensor_namazu                    true            50x29196a980                26013D05        001347CB76F767CB  
+2021-05-11T11:24:26.216398595Z       103_sensor_loituma                    true            50x29196a858                26011C26        00F464CBF233CC65  
+
+
+#VERIFY_FILL / false
+conan@ruth:~/soft/lora_payload_handler$ /usr/bin/docker container exec dck_influxdb influx query -c default --skip-verify 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "ttn_2_machines" and r["active"] == "false") |> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) |> group(columns: ["_time"])  |> sort(columns: ["_time"], desc:true)'
+Result: _result
+Table: keys: [_time]
+                    _time:time               _value:string           active:string   esp_machine_id:string     ttn_dev_addr:string      ttn_dev_eui:string  
+------------------------------  --------------------------  ----------------------  ----------------------  ----------------------  ----------------------  
+2021-05-11T11:24:26.216398595Z              102_gps_namazu                   false            50x29196a980                260118C2        00107E5CE32E1637  
+2021-05-11T11:24:26.216398595Z              014_gps_paanda                   false            4c11aef78524                260112DE        00AD2CAFAB92C037  
+2021-05-11T11:24:26.216398595Z  301_sensor_housenka_wrover                   false            24xac494d4f0                26013B8E        0088A8BF8390168D  
+2021-05-11T11:24:26.216398595Z           015_gps_red_sonya                   false            2462abfcb718                260113CC        00E120F7C123D850  
+2021-05-11T11:24:26.216398595Z         101_tagifugu_liligo                   false            50x29196abf8                26011EDA        00C035B36C854294  
+2021-05-11T11:24:26.216398595Z           102_namazu_liligo                   false            50x29196a980                26011CDB        007EAE3D003C2F1F  
+2021-05-11T11:24:26.216398595Z         016_sensor_frydolyn                   false            f0x8d1c85d9c                26011E89        007B9B1E686E38B9  
+2021-05-11T11:24:26.216398595Z              002_sensor_gps                   false            98f4ab6f6370                260131EE        0092E4799525249B  
+2021-05-11T11:24:26.216398595Z                 002_gps_gps                   false            98f4ab6f6370                260112E6        004735B83468EB9F  
+2021-05-11T11:24:26.216398595Z            101_gps_tagifugu                   false            50x29196abf8                260139BD        0070B9AA10115EC4  
+

@@ -1,0 +1,413 @@
+{
+ "meta": {
+  "version": "1",
+  "type": "dashboard",
+  "name": "kurnicek / BUCKET - modrin-Template",
+  "description": "template created from dashboard: kurnicek / BUCKET - modrin"
+ },
+ "content": {
+  "data": {
+   "type": "dashboard",
+   "attributes": {
+    "name": "kurnicek / BUCKET - modrin",
+    "description": "k"
+   },
+   "relationships": {
+    "label": {
+     "data": []
+    },
+    "cell": {
+     "data": [
+      {
+       "type": "cell",
+       "id": "076bb9f2aa560000"
+      },
+      {
+       "type": "cell",
+       "id": "076f962c0f560000"
+      },
+      {
+       "type": "cell",
+       "id": "076f966675160000"
+      }
+     ]
+    },
+    "variable": {
+     "data": []
+    }
+   }
+  },
+  "included": [
+   {
+    "id": "076bb9f2aa560000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 0,
+     "w": 12,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076bb9f2aa560000"
+      }
+     }
+    }
+   },
+   {
+    "id": "076f962c0f560000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 9,
+     "w": 12,
+     "h": 4
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076f962c0f560000"
+      }
+     }
+    }
+   },
+   {
+    "id": "076f966675160000",
+    "type": "cell",
+    "attributes": {
+     "x": 0,
+     "y": 4,
+     "w": 12,
+     "h": 5
+    },
+    "relationships": {
+     "view": {
+      "data": {
+       "type": "view",
+       "id": "076f966675160000"
+      }
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076bb9f2aa560000",
+    "attributes": {
+     "name": "temperature_external_modrin // ONLINE via NODE_RED",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "//t1 = \nfrom(bucket: \"modrin\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_external\") \n\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\")\n|> filter(fn: (r) => r[\"_value\"] < 50 )\n\n|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n///|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n//\n|> yield(name: \"TempUlId\")\n//|> group() //tohle da kazdymu stejnej _result coz je spatne\n///|> yield(name: \"TempUlId\")\n//|> group(columns: [\"TempUlId\"]) //ale ne kdyz mam temp_ext=\n\n//n2 =\n//from(bucket: \"modrin\") \n//|> range(start: -1d) \n//|> filter(fn: (r) => r._measurement==\"uly\") \n\n//join(tables: {k1: t1, k2: n2}, on: [\"TempUlId\"])\n//|> drop(columns:[\"_start_k1\", \"_stop_k1\", \"_start_k2\", \"_stop_k2\", \"host_k1\", \"host_k2\", \"_field_k1\", \"_field_k2\", \"_measurement_k1\", \"_measurement_k2\"])\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "f2674e04-c83b-4fc1-bd21-9b026a1614aa",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "f8011dea-21c1-4398-af5f-4647c2fe69b0",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "fb3f06dd-49fd-4477-abaf-8ed8d441353e",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076f962c0f560000",
+    "attributes": {
+     "name": "temperature_internal // OFFLINE",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "//t1 = \nfrom(bucket: \"modrin\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"temperature_internal\") \n\n|> filter(fn: (r) => r[\"_field\"] == \"TempDecimal\")\n|> filter(fn: (r) => r[\"_value\"] < 50 )\n\n|> group(columns: [\"TempUlId\", \"TempSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n///|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n//\n|> yield(name: \"TempUlId\")\n//|> group() //tohle da kazdymu stejnej _result coz je spatne\n///|> yield(name: \"TempUlId\")\n//|> group(columns: [\"TempUlId\"]) //ale ne kdyz mam temp_ext=\n\n//n2 =\n//from(bucket: \"modrin\") \n//|> range(start: -1d) \n//|> filter(fn: (r) => r._measurement==\"uly\") \n\n//join(tables: {k1: t1, k2: n2}, on: [\"TempUlId\"])\n//|> drop(columns:[\"_start_k1\", \"_stop_k1\", \"_start_k2\", \"_stop_k2\", \"host_k1\", \"host_k2\", \"_field_k1\", \"_field_k2\", \"_measurement_k1\", \"_measurement_k2\"])\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "f2674e04-c83b-4fc1-bd21-9b026a1614aa",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "f8011dea-21c1-4398-af5f-4647c2fe69b0",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "fb3f06dd-49fd-4477-abaf-8ed8d441353e",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   },
+   {
+    "type": "view",
+    "id": "076f966675160000",
+    "attributes": {
+     "name": "battery // OFFLINE",
+     "properties": {
+      "shape": "chronograf-v2",
+      "queries": [
+       {
+        "text": "b_low = \nfrom(bucket: \"modrin\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n//|> filter(fn: (r) => r[\"_value\"] < low)\n//|> filter(fn: (r) => r[\"_value\"] > high)\n//|> filter(fn: (r) => r[\"_value\"] > 4.5)\n|> filter(fn: (r) => r[\"_value\"] > 3.5)\n|> filter(fn: (r) => r[\"_value\"] < 4.5)\n|> map(fn: (r) => ({r with _value: r._value * 2.0 }))\n|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\nb_high = \nfrom(bucket: \"modrin\")\n|> range(start: v.timeRangeStart, stop: v.timeRangeStop)\n|> filter(fn: (r) => r[\"_measurement\"] == \"battery_adc\") \n|> filter(fn: (r) => r[\"_field\"] == \"BatDecimal\")\n//|> filter(fn: (r) => r[\"_value\"] < low)\n//|> filter(fn: (r) => r[\"_value\"] > high)\n|> filter(fn: (r) => r[\"_value\"] > 4.5)\n\n//|> filter(fn: (r) => r[\"_value\"] < 4.5)\n|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n\n//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])\nunion(tables: [b_low, b_high])\n\n//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)\n//|> drop(columns:[\"_start\", \"_stop\", \"host\", \"_field\", \"_measurement\"]) \n\n//|> group(columns: [\"BatUlId\", \"BatSenKey\"]) \n|> yield(name: \"BatUlId\")\n",
+        "editMode": "advanced",
+        "name": "",
+        "builderConfig": {
+         "buckets": [],
+         "tags": [
+          {
+           "key": "_measurement",
+           "values": [],
+           "aggregateFunctionType": "filter"
+          }
+         ],
+         "functions": [
+          {
+           "name": "mean"
+          }
+         ],
+         "aggregateWindow": {
+          "period": "auto",
+          "fillValues": false
+         }
+        }
+       }
+      ],
+      "axes": {
+       "x": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "10",
+        "scale": "linear"
+       },
+       "y": {
+        "bounds": [
+         "",
+         ""
+        ],
+        "label": "",
+        "prefix": "",
+        "suffix": "",
+        "base": "",
+        "scale": "linear"
+       }
+      },
+      "type": "xy",
+      "legend": {},
+      "geom": "line",
+      "colors": [
+       {
+        "id": "f2674e04-c83b-4fc1-bd21-9b026a1614aa",
+        "type": "scale",
+        "hex": "#31C0F6",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "f8011dea-21c1-4398-af5f-4647c2fe69b0",
+        "type": "scale",
+        "hex": "#A500A5",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       },
+       {
+        "id": "fb3f06dd-49fd-4477-abaf-8ed8d441353e",
+        "type": "scale",
+        "hex": "#FF7E27",
+        "name": "Nineteen Eighty Four",
+        "value": 0
+       }
+      ],
+      "note": "",
+      "showNoteWhenEmpty": false,
+      "xColumn": "_time",
+      "generateXAxisTicks": null,
+      "xTotalTicks": 0,
+      "xTickStart": 0,
+      "xTickStep": 0,
+      "yColumn": "_value",
+      "generateYAxisTicks": null,
+      "yTotalTicks": 0,
+      "yTickStart": 0,
+      "yTickStep": 0,
+      "shadeBelow": true,
+      "position": "overlaid",
+      "timeFormat": "",
+      "hoverDimension": "auto",
+      "legendColorizeRows": false,
+      "legendOpacity": 0,
+      "legendOrientationThreshold": 0
+     }
+    }
+   }
+  ]
+ },
+ "labels": []
+}

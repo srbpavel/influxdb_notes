@@ -1,0 +1,125 @@
+root@0fe79a4cab6f:/# influx bucket ls --skip-verify
+
+conan@ruth:~/soft/docker$ docker container exec dck_influxdb influx bucket ls --skip-verify
+ID                      Name            Retention       Organization ID
+9ad8415a403b95c7        _monitoring     168h0m0s        8dde90f5a16c4519
+2a87ac13d6553fb0        _tasks          72h0m0s         8dde90f5a16c4519
+5d9f6d539c5eb9be        hemichromis     0s              8dde90f5a16c4519
+3beaaa8f4d67603b        jozefina        0s              8dde90f5a16c4519
+47f238e44b8a9444        modrin          0s              8dde90f5a16c4519
+96d993b31a528130        otocinclus      0s              8dde90f5a16c4519
+df14f36f31878bb7        pogonopoma      0s              8dde90f5a16c4519
+7526e287923fac1b        pogonopoma_2    0s              8dde90f5a16c4519
+
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query -c default 'from(bucket: "hemichromis") |> range(start: -24h)' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_24h.csv
+
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query -c default 'from(bucket: "hemichromis") |> range(start: -1d)' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_1d.csv
+
+#DIFF 24h vs 1d / protoze _start _stop
+conan@ruth:~/soft/docker$ ls -la /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/                                                                          total 3968
+drwx------ 3 conan root     4096 May  6 14:39 .
+drwxr-xr-x 3 conan conan    4096 May  3 14:42 ..
+drwx------ 4 conan root     4096 Apr  8 17:31 engine
+-rw-r--r-- 1 conan conan 1693402 May  6 14:40 hemichromis_1d.csv
+-rw-r--r-- 1 conan conan 1712244 May  6 14:41 hemichromis_24h.csv
+-rw------- 1 conan conan  524288 May  6 14:32 influxd.bolt
+-rw-r--r-- 1 conan conan   23772 May  6 13:20 vcely_bucket_1h.csv
+-rw-r--r-- 1 conan conan   28964 May  6 13:55 vcely_bucket_2h.csv
+-rw-r--r-- 1 conan conan   63553 May  6 14:40 vcely_bucket_6h.csv
+
+
+#DROP _start _stop / NO_DIFF -24h vs -1d
+/usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1d) |> drop(columns:["_start", "_stop"])' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/drop_hemichromis_1d.csv
+
+/usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -24h) |> drop(columns:["_start", "_stop"])' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/drop_hemichromis_24h.csv
+
+conan@ruth:~/soft/docker$ ls -la /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/total 6000
+drwx------ 3 conan root     4096 May  6 14:44 .
+drwxr-xr-x 3 conan conan    4096 May  3 14:42 ..
+-rw-r--r-- 1 conan conan 1038101 May  6 14:44 drop_hemichromis_1d.csv
+-rw-r--r-- 1 conan conan 1038101 May  6 14:44 drop_hemichromis_24h.csv
+drwx------ 4 conan root     4096 Apr  8 17:31 engine
+-rw-r--r-- 1 conan conan 1693402 May  6 14:40 hemichromis_1d.csv
+-rw-r--r-- 1 conan conan 1712244 May  6 14:41 hemichromis_24h.csv
+-rw------- 1 conan conan  524288 May  6 14:32 influxd.bolt
+-rw-r--r-- 1 conan conan   23772 May  6 13:20 vcely_bucket_1h.csv
+-rw-r--r-- 1 conan conan   28964 May  6 13:55 vcely_bucket_2h.csv
+-rw-r--r-- 1 conan conan   63553 May  6 14:40 vcely_bucket_6h.csv
+
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -3y) |> drop(columns:["_start", "_stop"])' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/drop_hemichromis_3y.csv
+
+#-1y / -3y se sralo nevim proc? jako ze to vytuhlo
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y)' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_1y.csv
+
+#LIST measurements
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'import "influxdata/influxdb/schema" schema.measurements(bucket: "hemichromis")' 
+Result: _result
+Table: keys: []
+         _value:string  
+----------------------  
+           battery_adc  
+              humidity  
+                 scale  
+  temperature_external  
+  temperature_internal
+
+#EXPORT measurement
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1d) |> filter(fn: (r) => r["_measurement"] == "battery_adc")' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_battery_adc_1d.csv      
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ ls -la /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/                                                                          total 46928
+drwx------ 3 conan root      4096 May  6 15:07 .
+drwxr-xr-x 3 conan conan     4096 May  3 14:42 ..
+-rw-r--r-- 1 conan conan  1038101 May  6 14:44 drop_hemichromis_1d.csv
+-rw-r--r-- 1 conan conan  1038101 May  6 14:44 drop_hemichromis_24h.csv
+-rw-r--r-- 1 conan conan 15604687 May  6 14:47 drop_hemichromis_3y.csv
+drwx------ 4 conan root      4096 Apr  8 17:31 engine
+-rw-r--r-- 1 conan conan  1693402 May  6 14:40 hemichromis_1d.csv
+-rw-r--r-- 1 conan conan 25862011 May  6 14:54 hemichromis_1y.csv
+-rw-r--r-- 1 conan conan  1712244 May  6 14:41 hemichromis_24h.csv
+-rw-r--r-- 1 conan conan   439847 May  6 15:07 hemichromis_battery_adc_1d.csv
+-rw------- 1 conan conan   524288 May  6 14:32 influxd.bolt
+-rw-r--r-- 1 conan conan    23772 May  6 13:20 vcely_bucket_1h.csv
+-rw-r--r-- 1 conan conan    28964 May  6 13:55 vcely_bucket_2h.csv
+-rw-r--r-- 1 conan conan    64259 May  6 15:05 vcely_bucket_6h.csv
+
+
+conan@ruth:~/soft/docker$ head -n10 /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_battery_adc_1d.csv
+#group,false,false,true,true,false,false,true,true,true,true,true
+#datatype,string,long,dateTime:RFC3339,dateTime:RFC3339,dateTime:RFC3339,double,string,string,string,string,string
+#default,_result,,,,,,,,,,
+,result,table,_start,_stop,_time,_value,BatSenKey,BatUlId,_field,_measurement,host
+,,0,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-05T13:09:48.474Z,8.13,11,4c11aef77e7c,BatDecimal,battery_adc,spongebob
+,,0,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-05T13:15:18.304Z,8.13,11,4c11aef77e7c,BatDecimal,battery_adc,spongebob
+,,0,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-05T13:20:47.88Z,8.13,11,4c11aef77e7c,BatDecimal,battery_adc,spongebob
+,,0,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-05T13:26:17.09Z,8.13,11,4c11aef77e7c,BatDecimal,battery_adc,spongebob
+,,0,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-05T13:31:46.688Z,8.12,11,4c11aef77e7c,BatDecimal,battery_adc,spongebob
+,,0,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-05T13:37:17.089Z,8.13,11,4c11aef77e7c,BatDecimal,battery_adc,spongebob
+
+
+conan@ruth:~/soft/docker$ tail -n10 /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_battery_adc_1d.csv
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T10:22:49.137Z,11481,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T10:28:15.891Z,11482,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T10:33:42.586Z,11483,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T10:39:09.461Z,11484,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T10:44:35.961Z,11485,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T10:50:02.974Z,11486,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T10:55:30.052Z,11487,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T11:00:56.909Z,11488,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+,,15,2021-05-05T13:07:14.698319441Z,2021-05-06T13:07:14.698319441Z,2021-05-06T11:06:24.552Z,11489,5,7c9ebdf1ff64,BatKey,battery_adc,spongebob
+
+#ALL measuremetns / stejne si ale neco napisu 
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "battery_adc")' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_battery_adc_1y.csv
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "humidity")' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_humidity_1y.csv
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "scale")' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_scale_1y.csv
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "temperature_external")' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_temperature_external_1y.csv
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ 
+conan@ruth:~/soft/docker$ /usr/bin/docker container exec -i -t dck_influxdb influx query --skip-verify -c default 'from(bucket: "hemichromis") |> range(start: -1y) |> filter(fn: (r) => r["_measurement"] == "temperature_internal")' --raw > /home/conan/soft/docker/dck_influxdb_2_0/dck_influxdb_volume/hemichromis_temperature_internal_1y.csv
+conan@ruth:~/soft/docker$ 

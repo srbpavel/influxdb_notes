@@ -1,0 +1,905 @@
+#NEMAM DUPLICITU ZAZNAMU
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "temperature_external") 
+|> group(columns: ["TempUlId", "TempSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+///|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+//
+|> yield(name: "TempUlId")
+//|> group() //tohle da kazdymu stejnej _result coz je spatne
+
+#MAM DUPLICITU ZAZNAMU: TempUlId=7c9ebdf1ff64 a _result
+from(bucket: "hemichromis")
+  //|> range(start: -24h)
+//
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "temperature_external") 
+//
+//
+|> group(columns: ["TempUlId", "TempSenKey"]) 
+//
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+  //|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+//
+|> yield(name: "TempUlId")
+//
+|> group() //tohle da kazdymu stejnej _result coz je spatne
+
+  ///|> yield(name: "TempUlId")
+  //|> group(columns: ["TempUlId"]) //ale ne kdyz mam temp_ext=
+
+#BATERKA
+//t1 = 
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc") 
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+///|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+//
+|> yield(name: "BatUlId")
+//
+//|> group() //tohle da kazdymu stejnej _result coz je spatne
+///|> yield(name: "TempUlId")
+//|> group(columns: ["TempUlId"]) //ale ne kdyz mam temp_ext=
+
+#BATERKA PRIPRAVA NA: if < 4.5 tak * 2 else pass
+//t1 = 
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc") 
+
+//|> filter(fn: (r) => r["_value"] > 4.5) //potrebuju ale if <  tak * 2 else pass
+//|> filter(fn: (r) => r["_value"] < 4.5) 
+
+//|> map(fn: (r) => ({ _value: r._value * 2 })) //zatim nedre jak ma, jako ze vlastne vubec
+
+//
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+//|> group(columns: ["BatSenKey"]) 
+
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+///|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+//|> yield(name: "BatUlId")
+//
+|> yield(name: "BatSenKey")
+//|> group() //tohle da kazdymu stejnej _result coz je spatne
+///|> yield(name: "TempUlId")
+//|> group(columns: ["TempUlId"]) //ale ne kdyz mam temp_ext=
+
+#BATERKA z klikatka pridan filtr na ><
+from(bucket: "otocinclus")
+  |> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+  |> filter(fn: (r) => r["_measurement"] == "battery_adc")
+  |> filter(fn: (r) => r["BatUlId"] == "50x29196a858" or r["BatUlId"] == "50x29196a980" or r["BatUlId"] == "7c9ebdf1ff64")
+  |> filter(fn: (r) => r["_field"] == "BatDecimal")
+  |> filter(fn: (r) => r["_value"] > 4.5)
+  |> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: true)
+  |> yield(name: "min")
+
+#BATERKA tak a pouzito pro flux dotaz vlastni, chyba byla ze jsem nepouzival identifikaci _field
+//t1 = 
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc")
+
+ |> filter(fn: (r) => r["_field"] == "BatDecimal")
+|> filter(fn: (r) => r["_value"] > 4.5)
+
+//|> filter(fn: (r) => r["_measurement"] == "battery_adc" and r["_value"] > 4.5)
+//|> filter(fn: (r) => r["_value"] > 4.5) 
+|> group(columns: ["BatUlId", "BatSenKey"])
+//|> filter(fn: (r) => r["_value"] > 4.5) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+///|> drop(columns:["_start", "_stop", "host", "_measurement"]) //"_field",
+//|> yield(name: "BatUlId")
+|> yield(name: "min")
+
+#PYTHON
+>>>query='from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> filter(fn: (r) => r["_field"] == "BatDecimal") |> filter(fn: (r) => r["_value"] < 4.5)'
+
+>>>tables = query_api.query(query)
+r=tables[0].records[0]
+
+>>>r.values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 10, 55, 43, 364728, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 10, 55, 43, 364728, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 14, 39, 43, 758000, tzinfo=tzutc()), '_value': 4.07, 'BatSenKey': '5', 'BatUlId': '7c9ebdf1ff64', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'komar'}
+
+>>> dir(r)
+['__class__', '__delattr__', '__dict__', '__dir__', '__doc__', '__eq__', '__format__', '__ge__', '__getattribute__', '__getitem__', '__gt__', '__hash__', '__init__', '__init_subclass__', '__le__', '__lt__', '__module__', '__ne__', '__new__', '__reduce__', '__reduce_ex__', '__repr__', '__setattr__', '__setitem__', '__sizeof__', '__str__', '__subclasshook__', '__weakref__', 'get_field', 'get_measurement', 'get_start', 'get_stop', 'get_time', 'get_value', 'table', 'values']
+
+>>> r.get_field()
+'BatDecimal'
+>>> r.get_value()
+4.07
+
+>>> r.get_measurement()
+'battery_adc'
+
+http://ruth:8086/orgs/8dde90f5a16c4519/dashboards/076e0ab948d60000?lower=now() - 30d
+http://ruth:8086/orgs/8dde90f5a16c4519/dashboards/076e0ab948d60000?lower=2021-02-01T11%3A10%3A28.000Z&upper=2021-04-26T11%3A10%3A28.000Z
+INFLUX_2 JDE MENIT URL TREBA NA: now() -60d / TOHLE INFLUX_1 ZAHAZOVAL
+http://ruth:8086/orgs/8dde90f5a16c4519/dashboards/076e0ab948d60000?lower=now() - 60d
+http://ruth:8086/orgs/8dde90f5a16c4519/dashboards/076bc80bb9960000?lower=now() - 72h
+
+
+#BACHA Z POKUSU MAM PAR ZAZNAMU 'komar'
+>>>query='from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["host"] == "spongebob") |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> filter(fn: (r) => r["_field"] == "BatDecimal") |> filter(fn: (r) => r["_value"] < 4.5) |> limit(n:3)'
+
+>>>query='from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["host"] == "spongebob") |> filter(fn: (r) => r["_measurement"] == "scale") |> filter(fn: (r) => r["_field"] == "ScaleDecimal") |> limit(n:5)'
+>>> tables=query_api.query(query)
+
+>>> len(tables)
+1
+>>> len(tables[0].records)
+5
+
+for in tables[0].records:
+ print('{}\n{}: {} {} {} '.format(record.values, record.get_field, record.get_value, record.values['ScaleUlId'], record.values['ScaleSenKey']))
+
+
+query='from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["host"] == "spongebob") |> filter(fn: (r) => r["_measurement"] == "scale") |> limit(n:5)'                                                    
+tables=query_api.query(query)
+
+len(tables)                  
+2
+
+for table in tables:         
+ for record in table:
+ print('{}\n{}: {} {} {} '.format(record.values, record.get_field(), record.get_value(), record.values['ScaleUlId'], record.values['ScaleSenKey']))
+ 
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 12, 45, 21, 217000, tzinfo=tzutc()), '_value': 19.828, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleDecimal', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleDecimal: 19.828 7c9ebdf1ff64 1 
+
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 12, 50, 48, 113000, tzinfo=tzutc()), '_value': 19.827, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleDecimal', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleDecimal: 19.827 7c9ebdf1ff64 1 
+
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 12, 56, 14, 575000, tzinfo=tzutc()), '_value': 19.827, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleDecimal', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleDecimal: 19.827 7c9ebdf1ff64 1 
+
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 13, 1, 41, 90000, tzinfo=tzutc()), '_value': 19.828, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleDecimal', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleDecimal: 19.828 7c9ebdf1ff64 1 
+
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 13, 7, 7, 621000, tzinfo=tzutc()), '_value': 19.827, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleDecimal', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleDecimal: 19.827 7c9ebdf1ff64 1 
+
+
+
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 12, 45, 21, 217000, tzinfo=tzutc()), '_value': 8340.0, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleKey', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleKey: 8340.0 7c9ebdf1ff64 1 
+
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 12, 50, 48, 113000, tzinfo=tzutc()), '_value': 8341.0, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleKey', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleKey: 8341.0 7c9ebdf1ff64 1 
+
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 12, 56, 14, 575000, tzinfo=tzutc()), '_value': 8342.0, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleKey', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleKey: 8342.0 7c9ebdf1ff64 1 
+
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 13, 1, 41, 90000, tzinfo=tzutc()), '_value': 8343.0, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleKey', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleKey: 8343.0 7c9ebdf1ff64 1 
+
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 12, 43, 8, 975911, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 12, 43, 8, 975911, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 13, 7, 7, 621000, tzinfo=tzutc()), '_value': 8344.0, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleKey', '_measurement': 'scale', 'host': 'spongebob'}
+ScaleKey: 8344.0 7c9ebdf1ff64 1
+
+
+###PRO TEST curl_template
+>>> query='from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["host"] == "spongebob") |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> limit(n:1)'
+>>> 
+>>> tables=query_api.query(query)
+>>> 
+>>> tables[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 14, 34, 18, 954627, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 14, 34, 18, 954627, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 15, 22, 33, 570000, tzinfo=tzutc()), '_value': 7.14, 'BatSenKey': '14', 'BatUlId': '50x29196a980', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+>>> tables[1].records[0].values
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 14, 34, 18, 954627, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 14, 34, 18, 954627, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 15, 22, 33, 570000, tzinfo=tzutc()), '_value': 13260.0, 'BatSenKey': '14', 'BatUlId': '50x29196a980', '_field': 'BatKey', '_measurement': 'battery_adc', 'host': 'spongebob'}
+>>> 
+>>> 
+>>> tables[2].records[0].values
+{'result': '_result', 'table': 2, '_start': datetime.datetime(2021, 4, 24, 14, 34, 18, 954627, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 14, 34, 18, 954627, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 14, 35, 19, 893000, tzinfo=tzutc()), '_value': 6.76, 'BatSenKey': '17', 'BatUlId': '50x29196a858', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+>>> tables[3].records[0].values
+{'result': '_result', 'table': 3, '_start': datetime.datetime(2021, 4, 24, 14, 34, 18, 954627, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 14, 34, 18, 954627, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 14, 35, 19, 893000, tzinfo=tzutc()), '_value': 12139.0, 'BatSenKey': '17', 'BatUlId': '50x29196a858', '_field': 'BatKey', '_measurement': 'battery_adc', 'host': 'spongebob'}
+>>> 
+>>> 
+>>> len(tables[0].records)
+1
+>>> len(tables[-1].records)
+1
+>>>
+
+for t in tables: print('{}\n\n'.format(t.records[0].values))
+
+def last_record(tabs):
+ #tabs=query_api.query(query)
+ for t in tabs:
+    ttt=t.records[0].values
+    field=ttt['_field']
+    value=ttt['_value']
+    if 'Key' in field:
+     value=int(ttt['_value'])
+    print('{} {} {}: {}'.format(ttt['BatUlId'],
+  		                ttt['BatSenKey'], 
+                                field,
+				value))
+
+#TO NAHORE PORAD VRACELO STEJNEJ VYSLEDEK PAC TO NEBYLO SETRIDENI ZE JO VOLE
+>>> query='from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["host"] == "spongebob") |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> sort(desc:true) |> limit(n:1)'  
+>>> tables=query_api.query(query)
+>>> for t in tables: print('{}\n\n'.format(t.records[0].values))
+
+tables=query_api.query(query)
+def last_record(tabs):
+ for t in tabs:
+    ttt=t.records[0].values
+    field=ttt['_field']
+    value=ttt['_value']
+    if 'Key' in field:
+     value=int(ttt['_value'])
+    print('{} {} {}: {}'.format(ttt['BatUlId'],
+  		                ttt['BatSenKey'], 
+                                field,
+				value))
+
+last_record(tables)
+
+#POGONOPOMA NA TESTY / predelam TEMPLATE a bude jen jeden FIELD: Decimal / SenKey bude jako dalsi TAG
+>>> start
+'1970-01-01T00:00:00Z'
+>>> stop
+'2021-04-26T00:00:00Z'
+>>> delete_api.delete(start, stop, '_measurement="battery_adc"', bucket='pogonopoma', org=i_org)
+>>> delete_api.delete(start, stop, '_measurement="temperature_external"', bucket='pogonopoma', org=i_org)
+
+#POZOR BEZ GROUP() TO VRACI STOVKY/TISICE TABULEK !!!
+query_pogonopoma='from(bucket:"pogonopoma") |> range(start: -24h) |> filter(fn: (r) => r["host"] == "spongebob") |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> filter(fn: (r) => r["_field"] == "BatDecimal") |> filter(fn: (r) => r["_value"] > 4.5) |> group(columns: ["BatUlId", "BatSenKey"]) |> sort(desc:true) |> limit(n:3)'
+
+
+tables_pogonopoma=query_api.query(query_pogonopoma)
+
+
+len(tables_pogonopoma)
+5
+
+
+len(tables_pogonopoma[0].records)
+3
+
+
+tables_pogonopoma[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 17, 5, 6, 588702, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 5, 6, 588702, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 17, 31, 50, 65000, tzinfo=tzutc()), '_value': 7.14, 'BatKey': '13284', 'BatSenKey': '14', 'BatUlId': '50x29196a980', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+ 
+
+tables_pogonopoma[1].records[0].values
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 17, 5, 6, 588702, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 5, 6, 588702, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 3, 39, 13, 730000, tzinfo=tzutc()), '_value': 6.97, 'BatKey': '12281', 'BatSenKey': '17', 'BatUlId': '50x29196a858', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+
+
+tables_pogonopoma[2].records[0].values
+{'result': '_result', 'table': 2, '_start': datetime.datetime(2021, 4, 24, 17, 5, 6, 588702, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 5, 6, 588702, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 17, 25, 5, 277000, tzinfo=tzutc()), '_value': 7.34, 'BatKey': '1550', 'BatSenKey': '2', 'BatUlId': '4c11aef7826c', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+
+
+tables_pogonopoma[3].records[0].values
+{'result': '_result', 'table': 3, '_start': datetime.datetime(2021, 4, 24, 17, 5, 6, 588702, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 5, 6, 588702, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 17, 13, 16, 931000, tzinfo=tzutc()), '_value': 8.1, 'BatKey': '2583', 'BatSenKey': '23', 'BatUlId': '24xac494d4f0', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+
+
+tables_pogonopoma[4].records[0].values
+{'result': '_result', 'table': 4, '_start': datetime.datetime(2021, 4, 24, 17, 5, 6, 588702, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 5, 6, 588702, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 17, 16, 5, 181000, tzinfo=tzutc()), '_value': 8.24, 'BatKey': '2794', 'BatSenKey': '24', 'BatUlId': '24xac494d38c', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+
+#BATTERY porad hledam jak rozdelit tabulky podle hodnoty a jednu vynasobit/podelit a pak obe sloucit at mam lepsi rozliseni
+#https://community.grafana.com/t/how-to-merge-join-two-tables-in-a-specific-way-in-grafana-using-influxdb-flux-query/36989
+#
+sum_over_range = (marker) =>
+from(bucket: "pogonopoma")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc") 
+|> filter(fn: (r) => r["_field"] == "BatDecimal")
+|> filter(fn: (r) => r["_value"] > marker)
+//|> filter(fn: (r) => r["_value"] > 4.5)
+//|> filter(fn: (r) => r["_value"] < 4.5)
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+
+union(tables: [sum_over_range(marker: 4.5), sum_over_range(marker: 3)])
+
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+
+|> yield(name: "BatUlId")
+
+#LOW / HIGH
+sum_over_range = (low, high) =>
+from(bucket: "pogonopoma")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc") 
+|> filter(fn: (r) => r["_field"] == "BatDecimal")
+|> filter(fn: (r) => r["_value"] < low)
+|> filter(fn: (r) => r["_value"] > high)
+//|> filter(fn: (r) => r["_value"] > 4.5)
+//|> filter(fn: (r) => r["_value"] < 4.5)
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+
+union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])
+
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+
+|> yield(name: "BatUlId")
+
+#POMALU, JESTE TO VYNASOBIT/VYDELIT
+b_low = 
+from(bucket: "pogonopoma")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc") 
+|> filter(fn: (r) => r["_field"] == "BatDecimal")
+//|> filter(fn: (r) => r["_value"] < low)
+//|> filter(fn: (r) => r["_value"] > high)
+//|> filter(fn: (r) => r["_value"] > 4.5)
+|> filter(fn: (r) => r["_value"] < 4.5)
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+
+b_high = 
+from(bucket: "pogonopoma")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc") 
+|> filter(fn: (r) => r["_field"] == "BatDecimal")
+//|> filter(fn: (r) => r["_value"] < low)
+//|> filter(fn: (r) => r["_value"] > high)
+|> filter(fn: (r) => r["_value"] > 4.5)
+
+//|> filter(fn: (r) => r["_value"] < 4.5)
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])
+union(tables: [b_low, b_high])
+
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+
+//|> group(columns: ["BatUlId", "BatSenKey"]) 
+|> yield(name: "BatUlId")
+
+#OH YEAH: union(tables: [aaa, bbb])
+b_low = 
+from(bucket: "pogonopoma")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc") 
+|> filter(fn: (r) => r["_field"] == "BatDecimal")
+//|> filter(fn: (r) => r["_value"] < low)
+//|> filter(fn: (r) => r["_value"] > high)
+//|> filter(fn: (r) => r["_value"] > 4.5)
+|> filter(fn: (r) => r["_value"] < 4.5)
+|> map(fn: (r) => ({r with _value: r._value * 2.0 }))
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+b_high = 
+from(bucket: "pogonopoma")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc") 
+|> filter(fn: (r) => r["_field"] == "BatDecimal")
+//|> filter(fn: (r) => r["_value"] < low)
+//|> filter(fn: (r) => r["_value"] > high)
+|> filter(fn: (r) => r["_value"] > 4.5)
+
+//|> filter(fn: (r) => r["_value"] < 4.5)
+|> group(columns: ["BatUlId", "BatSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])
+union(tables: [b_low, b_high])
+
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+
+//|> group(columns: ["BatUlId", "BatSenKey"]) 
+|> yield(name: "BatUlId")
+
+#POKUS O SPOJENI TEMP_INT+TEMP_EXT / vraci 15k zaznamu a je haribo jak spongebob tak ruth
+//data = from(bucket: "hemichromis")
+t1 = from(bucket: "hemichromis") //data
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "temperature_internal") 
+//
+|> group(columns: ["TempUlId", "TempSenKey"]) 
+//
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+
+n2 = from(bucket: "hemichromis") //data
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "temperature_external") 
+//
+|> group(columns: ["TempUlId", "TempSenKey"]) 
+//
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+join(tables: {k1:t1, k2:n2}, on:["TempUlId"])
+//
+|>drop(columns:["host_k1", "host_k2", "_start_k1", "_start_k2", "_stop_k1", "_stop_k2", "_measurement_k1", "_measurement_k2", "_time_k1", "_time_k2"])
+//
+//> map(fn:(r) => {_time: r._time})
+//|> group(columns: ["TempUlId", "TempSenKey"]) 
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)    
+//
+//|> yield()
+
+//internal 
+//|> group(columns: ["TempUlId", "TempSenKey"]) 
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> yield(name: "TempUlId")
+
+#TAK JE MAM SNAD SPOJENY 9_temp_ext+1_temp_int=10
+temp_ext = 
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "temperature_external") 
+|> filter(fn: (r) => r["_field"] == "TempDecimal")
+|> group(columns: ["TempUlId", "TempSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+temp_int = 
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "temperature_internal") 
+|> filter(fn: (r) => r["_field"] == "TempDecimal")
+|> group(columns: ["TempUlId", "TempSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])
+union(tables: [temp_ext, temp_int])
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+//
+|> group(columns: ["TempUlId", "TempSenKey"]) 
+//|> yield(name: "TempUlId")
+
+#PROMAZANEJ COMMENT Z HOREJSKU / ale uz nevidim info barevnou tabulku na krivce, jen jeden bod pokazdy?
+#YEAH foookin_paavel >> GRAPH > CUSTOMIZE > HOVER_DIMENSION: auto
+temp_ext = 
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "temperature_external") 
+|> filter(fn: (r) => r["_field"] == "TempDecimal")
+//|> group(columns: ["TempUlId", "TempSenKey"]) 
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+temp_int = 
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "temperature_internal") 
+|> filter(fn: (r) => r["_field"] == "TempDecimal")
+//|> group(columns: ["TempUlId", "TempSenKey"]) 
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+
+//union(tables: [sum_over_range(low: 4.5, high: 0), sum_over_range(low: 10, high: 4.5)])
+union(tables: [temp_ext, temp_int])
+|> group(columns: ["TempUlId", "TempSenKey"]) 
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+|> yield(name: "TempUlId")
+
+#DELETE PRIPRAVA
+###ROZMEZI CASU BEZ DALSIHO OMEZENI
+query='from(bucket:"pogonopoma") |> range(start: 2021-04-25T17:14:00Z, stop: 2021-04-25T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> group(columns: ["BatUlId", "BatSenKey"]) |> limit(n:3)'
+
+tables=query_api.query(query)
+1
+
+tables[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 25, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 17, 15, 50, 28000, tzinfo=tzutc()), '_value': 7.1, 'BatKey': '13548', 'BatSenKey': '14', 'BatUlId': '50x29196a980', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+
+>>>>>
+
+###ROZMEZI CASU S FILTREM NA: BatKey / pozor zde BUCKET pogonopoma takze BatKey je TAG / blby ze to podle me nepujde kdyz to bude FIELD / testnu na BUCKET hemichromis
+query='from(bucket:"pogonopoma") |> range(start: 2021-04-25T17:14:00Z, stop: 2021-04-25T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> filter(fn: (r) => r.BatKey == "13548") |> group(columns: ["BatUlId", "BatSenKey"]) |> limit(n:3)'
+
+tables=query_api.query(query)
+
+len(tables)
+1
+
+tables[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 25, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 17, 15, 50, 28000, tzinfo=tzutc()), '_value': 7.1, 'BatKey': '13548', 'BatSenKey': '14', 'BatUlId': '50x29196a980', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+
+###BatKey je FIELD / dotaz vraci 2x records
+query='from(bucket:"hemichromis") |> range(start: 2021-04-25T17:14:00Z, stop: 2021-04-25T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "battery_adc") |> group(columns: ["BatUlId", "BatSenKey"]) |> limit(n:3)'
+tables=query_api.query(query)
+len(tables)
+1
+
+tables[0]
+<influxdb_client.client.flux_table.FluxTable object at 0x7f910678f5f8>
+
+tables[0].records
+[<influxdb_client.client.flux_table.FluxRecord object at 0x7f910688eda0>, <influxdb_client.client.flux_table.FluxRecord object at 0x7f910688ef28>]
+
+
+#record[0] >>> _FIELDS: BatDecimal
+tables[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 25, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 17, 15, 50, 28000, tzinfo=tzutc()), '_value': 7.1, 'BatSenKey': '14', 'BatUlId': '50x29196a980', '_field': 'BatDecimal', '_measurement': 'battery_adc', 'host': 'spongebob'}
+
+
+#record[1] >>> _FIELDS: BatKey
+tables[0].records[1].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 25, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 17, 15, 50, 28000, tzinfo=tzutc()), '_value': 13548.0, 'BatSenKey': '14', 'BatUlId': '50x29196a980', '_field': 'BatKey', '_measurement': 'battery_adc', 'host': 'spongebob'}
+
+###TAK ALE delete ZKUSIM NA temp_ext PAC MAM 6x ZAZNAMU PRO JEDEN CAS PRO 6x SENZORU / TempSenKey
+#ZDE MAM 3 ZAZNAMY PO JEDEN SENZON PRI KOMBINACI >>> TempSenKey + TempUlId
+#ALE MEL JSEM SPATNY DATA TAKZE JSEM ZALOZIL pogonopoma_2 kde je ...Key FAKT UZ tag
+query='from(bucket:"pogonopoma") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "temperature_external") |> filter(fn: (r) => r.TempSenKey == "9760f824201c3") |> filter(fn: (r) => r.TempUlId == "50x29196a980") |> group(columns: ["BatUlId", "BatSenKey"]) |> limit(n:3)'>>> tables=query_api.query(query)
+
+len(tables)
+1
+
+
+len(tables[0].records)
+3
+
+
+tables[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 25, 15, 30, 18, 372160, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 26, 15, 30, 18, 372160, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 15, 33, 17, 19000, tzinfo=tzutc()), '_value': 9.0625, 'TempSenKey': '9760f824201c3', 'TempUlId': '50x29196a980', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+ 
+ 
+tables[0].records[1].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 25, 15, 30, 18, 372160, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 26, 15, 30, 18, 372160, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 15, 38, 41, 316000, tzinfo=tzutc()), '_value': 9.0, 'TempSenKey': '9760f824201c3', 'TempUlId': '50x29196a980', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+ 
+ 
+tables[0].records[2].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 25, 15, 30, 18, 372160, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 26, 15, 30, 18, 372160, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 15, 44, 5, 585000, tzinfo=tzutc()), '_value': 8.8125, 'TempSenKey': '9760f824201c3', 'TempUlId': '50x29196a980', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+###POGONOPOMA_2 / ...Key KONECNE TAG I PRO OLD_IMPORT_CONFIG
+query_2='from(bucket:"pogonopoma_2") |> range(start: 2021-04-24T17:14:00Z, stop: 2021-04-25T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "temperature_external") |> group(columns: ["TempUlId", "TempSenKey"]) |> limit(n:3)'
+
+tables_2=query_api.query(query_2)
+
+len(tables_2)
+9
+
+len(tables_2[0].records)
+3
+ 
+tables_2[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 13, 18, 43, 561000, tzinfo=tzutc()), '_value': 11.9375, 'TempKey': '12386', 'TempSenKey': '832a333191a3', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+tables_2[0].records[1].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 9, 10, 22, 128000, tzinfo=tzutc()), '_value': 11.9375, 'TempKey': '12341', 'TempSenKey': '832a333191a3', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+ 
+ 
+tables_2[1].records[0].values
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 1, 10, 9, 733000, tzinfo=tzutc()), '_value': 3.25, 'TempKey': '12254', 'TempSenKey': '95efa133191ed', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+tables_2[1].records[1].values
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 24, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 25, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 25, 1, 15, 41, 472000, tzinfo=tzutc()), '_value': 3.1875, 'TempKey': '12255', 'TempSenKey': '95efa133191ed', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+#PRIPRAVA NA DEL / POZOR PRI KONTROLE TERMINAL vs UI JE V UI TIME +2h / nemam to posunty
+
+    del_start='2021-04-24T17:14:00Z'
+    del_stop='2021-04-24T17:16:00Z'
+
+    i_org='foookin_paavel'
+    i_bucket='pogonopoma_2'
+
+    value1='50x29196a980'
+    tag2='TempSenKey'
+    value2='9760f824201c3'
+    tag3='TempKey'
+    value3='13281'
+    
+    predicate='_measurement="{}" AND {}="{}" AND {}="{}" AND {}="{}"'.format('temperature_external', tag1, value1, tag2, value2, tag3, value3)
+    predicate
+    '_measurement="temperature_external" AND TempUlId="50x29196a980" AND TempSenKey="9760f824201c3" AND TempKey="13281"'
+
+    query_2='from(bucket:"pogonopoma_2") |> range(start: 2021-04-24T17:14:00Z, stop: 2021-04-24T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "temperature_external") |> filter(fn: (r) => r["_field"] == "TempDecimal") |> group(columns: ["TempUlId", "TempSenKey"]) |> sort(desc:true)'
+    [t.records[0]['TempSenKey'] for t in tables_2]
+    ['832a333191a3', '95efa133191ed', '9760f824201c3', 'ac5773320166', 'adbdf124201c0', 'c840902520116', 'd787de3e191fb', 'dc585b252017e', 'ff1ecd6718395']
+    [t.records[0]['TempKey'] for t in tables_2]
+    ['12168', '12168', '13281', '13281', '13281', '13281', '12168', '13281', '13281']
+
+    delete_api.delete(del_start, del_stop, predicate, bucket=i_bucket, org=i_org)
+
+    query_2='from(bucket:"pogonopoma_2") |> range(start: 2021-04-24T17:14:00Z, stop: 2021-04-24T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "temperature_external") |> filter(fn: (r) => r["_field"] == "TempDecimal") |> group(columns: ["TempUlId", "TempSenKey"]) |> sort(desc:true)'
+    tables_2=query_api.query(query_2)
+    [t.records[0]['TempSenKey'] for t in tables_2]
+    ['832a333191a3', '95efa133191ed', 'ac5773320166', 'adbdf124201c0', 'c840902520116', 'd787de3e191fb', 'dc585b252017e', 'ff1ecd6718395']
+    [t.records[0]['TempKey'] for t in tables_2]
+    ['12168', '12168', '13281', '13281', '13281', '12168', '13281', '13281']
+
+#TIME / PRO QUERY time BEZ UVOZOVEK "" !!!
+q='from(bucket:"pogonopoma_2") |> range(start: 2021-04-24T17:14:00Z, stop: 2021-04-24T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "temperature_external") |> filter(fn: (r) => r.TempUlId == "50x29196a858") |> filter(fn: (r) => r.TempSenKey == "832a333191a3") |> filter(fn: (r) => r["_time"] > 2021-04-24T17:15:00Z) |> group(columns: ["TempUlId", "TempSenKey"]) |> sort(desc:true)'
+>>> ttt=query_api.query(q)
+>>> len(ttt)
+1
+>>> ttt
+[<influxdb_client.client.flux_table.FluxTable object at 0x7f91068a4390>]
+>>> ttt[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 24, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 17, 15, 34, 867000, tzinfo=tzutc()), '_value': 8.375, 'TempKey': '12168', 'TempSenKey': '832a333191a3', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+#TIME SE NESMI RVAT DO predicate
+q='from(bucket:"pogonopoma_2") |> range(start: 2021-04-24T17:14:00Z, stop: 2021-04-24T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "temperature_external") |> filter(fn: (r) => r.TempUlId == "50x29196a858") |> filter(fn: (r) => r.TempSenKey == "832a333191a3") |> filter(fn: (r) => r._time == 2021-04-24T17:15:34.867000Z) |> group(columns: ["TempUlId", "TempSenKey"]) |> sort(desc:true)'
+>>> ttt=query_api.query(q)
+>>> len(ttt)
+1
+>>> ttt[0].records[0].values
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 24, 17, 14, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 24, 17, 16, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 24, 17, 15, 34, 867000, tzinfo=tzutc()), '_value': 8.375, 'TempKey': '12168', 'TempSenKey': '832a333191a3', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+>>> 
+>>> predicate='_measurement="temperature_external" AND TempUlId="50x29196a858" AND TempSenKey="832a333191a3" AND _time="2021-04-24T17:15:34.867000Z"'>>> delete_api.delete(del_start, del_stop, predicate, bucket=i_bucket, org=i_org)>>> 
+>>> 
+>>> 
+>>> predicate='_measurement="temperature_external" AND TempUlId="50x29196a858" AND TempSenKey="832a333191a3"'
+>>> del_start='2021-04-24T17:15:34.867Z'
+>>> del_stop='2021-04-24T17:15:34.867Z'
+>>> 
+>>> delete_api.delete(del_start, del_stop, predicate, bucket=i_bucket, org=i_org)
+>>> 
+>>> 
+>>> q='from(bucket:"pogonopoma_2") |> range(start: 2021-04-24T17:14:00Z, stop: 2021-04-24T17:16:00Z) |> filter(fn: (r) => r["_measurement"] == "temperature_external") |> filter(fn: (r) => r.TempUlId == "50x29196a858") |> filter(fn: (r) => r.TempSenKey == "832a333191a3") |> filter(fn: (r) => r._time == 2021-04-24T17:15:34.867000Z) |> group(columns: ["TempUlId", "TempSenKey"]) |> sort(desc:true)'
+>>> ttt=query_api.query(q)
+>>> len(ttt)
+0
+
+#MRAZ / pro UI odstran SORT()
+q='from(bucket:"hemichromis") |> range(start: -12h) |> filter(fn: (r) => r["_measurement"] == "temperature_external") |> filter(fn: (r) => r["_field"] == "TempDecimal") |> filter(fn: (r) => r["_value"] < 0 ) |> group(columns: ["TempUlId", "TempSenKey"]) |> sort(desc:true)'
+
+mraz=query_api.query(q)
+
+all_tables_records(mraz, limit=1)
+
+len_tables: 6
+
+len_records: 29
+{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 26, 19, 47, 45, 452680, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 27, 7, 47, 45, 452680, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 26, 23, 54, 20, 782000, tzinfo=tzutc()), '_value': -0.0625, 'TempSenKey': '832a333191a3', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+len_records: 22
+{'result': '_result', 'table': 1, '_start': datetime.datetime(2021, 4, 26, 19, 47, 45, 452680, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 27, 7, 47, 45, 452680, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 27, 0, 32, 58, 227000, tzinfo=tzutc()), '_value': -0.0625, 'TempSenKey': '95efa133191ed', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+len_records: 7
+{'result': '_result', 'table': 2, '_start': datetime.datetime(2021, 4, 26, 19, 47, 45, 452680, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 27, 7, 47, 45, 452680, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 27, 1, 42, 57, 601000, tzinfo=tzutc()), '_value': -0.0625, 'TempSenKey': '9760f824201c3', 'TempUlId': '50x29196a980', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+len_records: 13
+{'result': '_result', 'table': 3, '_start': datetime.datetime(2021, 4, 26, 19, 47, 45, 452680, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 27, 7, 47, 45, 452680, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 27, 0, 59, 41, 792000, tzinfo=tzutc()), '_value': -0.0625, 'TempSenKey': 'ac5773320166', 'TempUlId': '50x29196a980', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+len_records: 18
+{'result': '_result', 'table': 4, '_start': datetime.datetime(2021, 4, 26, 19, 47, 45, 452680, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 27, 7, 47, 45, 452680, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 27, 0, 32, 40, 867000, tzinfo=tzutc()), '_value': -0.0625, 'TempSenKey': 'c840902520116', 'TempUlId': '50x29196a980', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+len_records: 15
+{'result': '_result', 'table': 5, '_start': datetime.datetime(2021, 4, 26, 19, 47, 45, 452680, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 27, 7, 47, 45, 452680, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 27, 1, 11, 35, 816000, tzinfo=tzutc()), '_value': -0.0625, 'TempSenKey': 'd787de3e191fb', 'TempUlId': '50x29196a858', '_field': 'TempDecimal', '_measurement': 'temperature_external', 'host': 'spongebob'}
+
+#POZNAMKA
+>>> s='from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "scale") |> filter(fn: (r) => r.ScaleUlId == "{ul}") |> drop(columns:["_start", "_stop", "host", "_field", "_measurement", "ScaleSenKey", "ScaleUlId"]) |>  sort(columns: ["_time"], desc:true)'.format(ul='7c9ebdf1ff64')
+>>> vaha=query_api.query(s)
+>>> vaha[0].records[0].values
+{'result': '_result', 'table': 0, '_time': datetime.datetime(2021, 4, 27, 7, 35, 52, 316000, tzinfo=tzutc()), '_value': 9075.0}
+>>> vaha[0].records[1].values
+{'result': '_result', 'table': 0, '_time': datetime.datetime(2021, 4, 27, 7, 35, 52, 316000, tzinfo=tzutc()), '_value': 19.84}
+>>> s
+'from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "scale") |> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64") |> drop(columns:["_start", "_stop", "host", "_field", "_measurement", "ScaleSenKey", "ScaleUlId"]) |>  sort(columns: ["_time"], desc:true)'
+
+#JOIN 2x FIELD
+sen_key = from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "scale")
+//|> group(columns: ["ScaleUlId", "ScaleSenKey"])  //pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+|> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64" and  r._field == "ScaleKey")
+//|> filter(fn: (r) => r["_field"] == "ScaleKey")
+
+decimal = from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "scale")
+//|> group(columns: ["ScaleUlId", "ScaleSenKey"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+|> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64" and  r._field == "ScaleDecimal")
+//|> filter(fn: (r) => r["_field"] == "ScaleDecimal")
+
+join(tables: {d1: sen_key, d2: decimal}, on: ["_time"]) //, "_field"])
+//|> group(columns: ["_time", "_field_d1", "_field_d2"])
+//|> group(columns: ["_time", "_field"])
+//group(columns: ["ScaleUlId", "ScaleSenKey"])
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+//|> yield(name: "ScaleUlId")
+
+
+###DROP
+sen_key = from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "scale")
+//|> group(columns: ["ScaleUlId", "ScaleSenKey"])  //pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+|> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64" and  r._field == "ScaleKey")
+//|> filter(fn: (r) => r["_field"] == "ScaleKey")
+
+decimal = from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "scale")
+//|> group(columns: ["ScaleUlId", "ScaleSenKey"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+|> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64" and  r._field == "ScaleDecimal")
+//|> filter(fn: (r) => r["_field"] == "ScaleDecimal")
+
+join(tables: {d1: sen_key, d2: decimal}, on: ["_time"]) //, "_field"])
+|> drop(columns:["ScaleSenKey_d1", "ScaleSenKey_d2", "ScaleUlId_d1", "ScaleUlId_d2", 
+    "_measurement_d1", "_measurement_d2", "_start_d1", "_start_d2", "_stop_d1", "_stop_d2", 
+    "host_d1", "host_d2",]) 
+//|> group(columns: ["_time", "_field_d1", "_field_d2"])
+//|> group(columns: ["_time", "_field"])
+//group(columns: ["ScaleUlId", "ScaleSenKey"])
+//|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+//|> drop(columns:["_start", "_stop", "host", "_field", "_measurement"]) 
+//|> yield(name: "ScaleUlId")
+
+#JESTE POTREBUJU ABYCH V GRAFU VIDEL inkrement_id
+sen_key = from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "scale")
+//|> group(columns: ["ScaleUlId", "ScaleSenKey"])  //pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+|> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64" and  r._field == "ScaleKey")
+//|> filter(fn: (r) => r["_field"] == "ScaleKey")
+
+decimal = from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "scale")
+//|> group(columns: ["ScaleUlId", "ScaleSenKey"])  //poud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+|> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64" and  r._field == "ScaleDecimal")
+//|> filter(fn: (r) => r["_field"] == "ScaleDecimal")
+
+join(tables: {d1: sen_key, d2: decimal}, on: ["_time"]) //, "_field"])
+|> drop(columns:["ScaleSenKey_d1", "ScaleUlId_d1", //"ScaleSenKey_d2",  "ScaleUlId_d2", 
+    "_measurement_d1", "_measurement_d2", "_start_d1", "_start_d2", "_stop_d1", "_stop_d2", 
+    "host_d1", "host_d2",]) 
+|> map(fn: (r) => ({_time: r._time, 
+                    _value: r._value_d2, 
+                    id_inkrement: r._value_d1,
+                    ul: r.ScaleUlId_d2, 
+                    sensor: r.ScaleSenKey_d2, 
+                    }))
+|> group(columns: ["ul", "sensor"])
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+|> drop (columns: ["_start", "_stop"])
+|> yield()
+//|> yield(name: ["ul", "id_inkrement"])
+
+#PRO VICE KRIVEk / battery_adc
+sen_key = from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc")
+|> filter(fn: (r) => r._field == "BatKey")
+
+decimal = from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "battery_adc")
+|> filter(fn: (r) => r._field == "BatDecimal")
+
+join(tables: {d1: sen_key, d2: decimal}, on: ["_time"])
+|> drop(columns:["BatSenKey_d1", "BatUlId_d1",
+    "_measurement_d1", "_measurement_d2", "_start_d1", "_start_d2", "_stop_d1", "_stop_d2", 
+    "host_d1", "host_d2",]) 
+|> map(fn: (r) => ({_time: r._time, 
+                    _value: r._value_d2, 
+                    id_inkrement: r._value_d1,
+                    ul: r.BatUlId_d2, 
+                    sensor: r.BatSenKey_d2, 
+                    }))
+|> group(columns: ["ul", "sensor"])
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+|> drop (columns: ["_start", "_stop"])
+
+#PRIPRAVA PRO SCALE Z PYTHONA
+s='sen_key = from(bucket: "hemichromis") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r["_measurement"] == "scale") |> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64" and  r._field == "ScaleKey") decimal = from(bucket: "hemichromis") |> range(start: v.timeRangeStart, stop: v.timeRangeStop) |> filter(fn: (r) => r["_measurement"] == "scale") |> filter(fn: (r) => r.ScaleUlId == "7c9ebdf1ff64" and  r._field == "ScaleDecimal") join(tables: {d1: sen_key, d2: decimal}, on: ["_time"]) |> drop(columns:["ScaleSenKey_d1", "ScaleUlId_d1", "_measurement_d1", "_measurement_d2", "_start_d1", "_start_d2", "_stop_d1", "_stop_d2", "host_d1", "host_d2",]) |> map(fn: (r) => ({_time: r._time, _value: r._value_d2, id_inkrement: r._value_d1, ul: r.ScaleUlId_d2, sensor: r.ScaleSenKey_d2, }))'
+
+|> group(columns: ["ul", "sensor"])
+|> aggregateWindow(every: v.windowPeriod, fn: min, createEmpty: false)
+|> drop (columns: ["_start", "_stop"])
+
+#ZJISTOVANI EXISTENCE ID_INKREMENTU
+>>> s='from(bucket:"{bucket}") |> range(start: {date_range}) |> filter(fn: (r) => r["_measurement"] == "{measurement}" and r.{tag_1} == "{value_1}" and r.{tag_2} == "{value_2}") |> filter(fn: (r) => r["_field"] == "{field_name}") |> filter(fn: (r) => r["_value"] == {id_inkrement}) |> sort(columns: ["_time"], desc:true)'.format(bucket="hemichromis", date_range="-24h", measurement="scale", tag_1="ScaleUlId", value_1="7c9ebdf1ff64", tag_2="ScaleSenKey", value_2="1", field_name="ScaleKey", id_inkrement=9655)
+>>> bbb=query_api.query(s)
+>>> len(bbb)
+1
+>>> [b.values for b in bbb[0].records]
+[{'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 28, 16, 3, 22, 792236, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 29, 16, 3, 22, 792236, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 29, 14, 20, 17, 791000, tzinfo=tzutc()), '_value': 9655.0, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleKey', '_measurement': 'scale', 'host': 'spongebob'}, {'result': '_result', 'table': 0, '_start': datetime.datetime(2021, 4, 28, 16, 3, 22, 792236, tzinfo=tzutc()), '_stop': datetime.datetime(2021, 4, 29, 16, 3, 22, 792236, tzinfo=tzutc()), '_time': datetime.datetime(2021, 4, 29, 12, 20, 17, 797000, tzinfo=tzutc()), '_value': 9655.0, 'ScaleSenKey': '1', 'ScaleUlId': '7c9ebdf1ff64', '_field': 'ScaleKey', '_measurement': 'scale', 'host': 'spongebob'}]
+>>> 
+>>>
+
+#UI > NICKNAME / mozna ale zmenim vstupni csv a 013_roj_uvisne[field] zmenim na >> 013[field] a roj_visne_tag
+sensor_id =
+from(bucket: "hemichromis")
+|> range(start: v.timeRangeStart, stop: v.timeRangeStop)
+|> filter(fn: (r) => r["_measurement"] == "scale")
+|> group(columns: ["ScaleUlId", "ScaleSenKey"])
+|> filter(fn: (r) => r.ScaleUlId == "4c11aef77e7c") //# roj_u_visne
+|> filter(fn: (r) => r["_field"] == "ScaleDecimal") //#pokud mam toto zobrazi pouze jednu tabulku s _field ScaleDecimal // druha je nekde v mindze
+//|> filter(fn: (r) => r["_field"] == "ScaleKey")
+
+ul_id = 
+from(bucket: "hemichromis") 
+|> range(start: -1y) 
+|> filter(fn: (r) => r["_measurement"] == "ttn_2_machines")
+|> map(fn: (r) => ({ r with  ScaleUlId: r.esp_machine_id, NickName: r._value}))
+
+join(tables: {d1: sensor_id, d2: ul_id}, on: ["ScaleUlId"]) 
+//|> drop(columns:["ScaleSenKey_d1", "ScaleUlId_d1", "_measurement_d1", "_measurement_d2", "_start_d1", "_start_d2", "_stop_d1", "_stop_d2", "host_d1", "host_d2",]) 
+|> drop(columns:["_measurement_d1", "_measurement_d2", 
+                "_start_d1", "_start_d2", 
+                "_stop_d1", "_stop_d2", 
+                "host_d1", "host_d2",
+                "_time_d2", "host", 
+                "_field_d1", "_field_d2", "ttn_dev_addr", "ttn_dev_eui"
+                ]) 
+|> map(fn: (r) => ({_time: r._time_d1, _value: r._value_d1, esp_machine_id: r.esp_machine_id, nick_name: r._value_d2 }))
+|> group(columns: ["nick_name"])
+|> yield(name: "nick_name")
+
+
+#DATE HARDCODED / nesmi chybet Z
+from(bucket: "acestridium")
+  |> range(start: 2021-05-22T00:00:00Z, stop: 2021-05-22T01:00:00Z)
+  |> filter(fn: (r) => r._measurement == "battery_adc")
+
+#DENNI SOUCET ZAZNAKU PRO KAZDY ESP
+from(bucket: "acestridium")
+|> range(start: 2021-05-21T00:00:00Z, stop: 2021-05-22T00:00:00Z)
+|> filter(fn: (r) => r._measurement == "battery_adc")
+|> count()
+
+
+#DENNI SOUCET ZAZNAKU CELKEM / pozor toto neni spravne cislo protoze pro napr. 250 zaznamu pro BatDecimal a take pro BatKey
+from(bucket: "acestridium")
+|> range(start: 2021-05-21T00:00:00Z, stop: 2021-05-22T00:00:00Z)
+|> filter(fn: (r) => r._measurement == "battery_adc")
+|> group()
+|> count()
+
+
+#JE POTREBA PROFILTROVAT PAK SPRAVNY SOUSET
+from(bucket: "acestridium")
+|> range(start: 2021-05-21T00:00:00Z, stop: 2021-05-22T00:00:00Z)
+|> filter(fn: (r) => r._measurement == "battery_adc")
+|> filter(fn: (r) => r._field =~ /Decimal/ )
+|> drop(columns:["_start", "_stop", "host", "BatCarrier", "BatSenKey", "BatValid"])
+|> count()
+
+#NA TESTY
+from(bucket: "acestridium")
+|> range(start: 2021-05-21T00:00:00Z, stop: 2021-05-22T00:00:00Z)
+|> filter(fn: (r) => r._measurement == "battery_adc")
+//
+|> filter(fn: (r) => r._field =~ /Decimal/ )
+|> drop(columns:["_start", "_stop", "host", "BatCarrier", "BatSenKey", "BatValid"])
+//|> group(columns: ["BatUlId"])
+//
+|> group()
+//
+|> count()
+
+
+#PRIPRAVA NA KONTROLU PRED ZAPISEM / verify [hlavne at namam dva zanamy CRA+TTN]
+#
+/usr/bin/docker container exec dck_influxdb influx query --skip-verify -c default 'from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "scale" and r.ScaleUlId == "4c11aef77e7c" and r.ScaleSenKey == "2") |> filter(fn: (r) => r["_field"] == "ScaleKey") |> filter(fn: (r) => r["_value"] == 14025) |> drop(columns: ["_start", "_stop", "_field", "_measurement", "host"]) |> sort(columns: ["_time"], desc:true)'
+
+Result: _result
+Table: keys: [ScaleSenKey, ScaleUlId]
+    ScaleSenKey:string        ScaleUlId:string                      _time:time                  _value:float  
+----------------------  ----------------------  ------------------------------  ----------------------------  
+                     2            4c11aef77e7c  2021-05-26T11:17:35.483000000Z                         14025
+
+# --raw
+#group,false,false,false,false,true,true
+#datatype,string,long,dateTime:RFC3339,double,string,string
+#default,_result,,,,,
+,result,table,_time,_value,ScaleSenKey,ScaleUlId
+,,0,2021-05-26T11:17:35.483Z,14025,2,4c11aef77e7c
+
+
+s = 'from(bucket:"hemichromis") |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "scale" and r.ScaleUlId == "4c11aef77e7c" and r.ScaleSenKey == "2") |> filter(fn: (r) => r["_field"] == "ScaleKey") |> filter(fn: (r) => r["_value"] == 14025) |> drop(columns: ["_start", "_stop", "_field", "_measurement", "host"]) |> sort(columns: ["_time"], desc:true)'
+>>> sss = query_api.query(s)
+>>> len(sss)
+1
+>>> 
+>>> len(sss[len(sss) - 1].records)
+1
+>>> sss[len(sss) - 1].records[0].values
+{'result': '_result', 'table': 0, '_time': datetime.datetime(2021, 5, 26, 11, 17, 35, 483000, tzinfo=tzutc()), '_value': 14025.0, 'ScaleSenKey': '2', 'ScaleUlId': '4c11aef77e7c'}
+>>> 
+>>> 
+>>> sss[len(sss) - 1].records[0]['_value']
+14025.0

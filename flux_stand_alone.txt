@@ -65,3 +65,18 @@ Table: keys: []
 #output each record/write to stdout !!! 
 #
 > water |> influxdb.to(bucket:"noaa_flux", host: "http://192.168.0.105:8086", org: "foookin_paavel", token: "TOKEN")
+
+
+#ERROR TIMEZONE
+#bez timezone OK / takze maj zase nekde chybu pac to nejde ani v poslednim influxdb / cli
+> import "timezone"
+> import "influxdata/influxdb"
+> 
+> data = influxdb.from(bucket:"backup_ds_test", host: "http://192.168.0.105:8086", org: "foookin_paavel", token: "aDcDlaEIzcJkj-jgaLDcb0rboVDpNtqWYx8_MH4a02Rgyr_Rl6sh1-p-IZ5gb5TvZbfj2l_1v8cKKf4LYJkdPw==")
+> 
+> data |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "dallas") |> drop(columns: ["_start", "_stop"]) |> sort(columns: ["_time"], desc:true) |> limit(n: 3)
+Result: _result
+Error: error @5:1-5:27: invalid import path timezone
+> data |> range(start: -24h) |> filter(fn: (r) => r["_measurement"] == "dallas") |> drop(columns: ["_start", "_stop"]) |> sort(columns: ["_time"], desc:true) |> limit(n: 3) |> timezone.location(name: "Europe/Prague") |> yield()
+Error: error @1:175-1:215: missing pipe argument
+> 

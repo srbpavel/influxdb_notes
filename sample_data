@@ -125,3 +125,60 @@ $ influx query 'from(bucket: "noaa_sample") |> range(start: -24h) |> filter(fn: 
 ,result,table,_start,_stop,_time,_value,_field,_measurement,station_id,station_name,station_owner,station_pgm,station_type
 ,,0,2021-11-02T20:32:46.263414344Z,2021-11-03T20:32:46.263414344Z,2021-11-03T20:00:00Z,-1.4,air_temp_degc,ndbc,41004,"EDISTO - 41 NM Southeast of Charleston, SC",NDBC,NDBC Meteorological/Ocean,other
 
+
+#MULTIPLE i.
+data = from(bucket:"noaa_flux") |> range(start: -3y) |> drop(columns:["_start", "_stop"])
+
+|> filter(fn: (r) => r["_measurement"] == "average_temperature")
+|> filter(fn: (r) => r["location"] == "coyote_creek" or r["location"] == "santa_monica")
+
+|> filter(fn: (r) => if r["location"] == "coyote_creek" then r._value > 80.0 else r._value < 80.0)
+
+|> sort(columns: ["_time"], desc: true) // 2021_09_17
+
+|> limit(n: 5)
+
+data 
+|> mean() //odstrani _time protoze udela vypocet a vrati pro kazdou hodnotu jednu tabulku
+|> yield(name: "each")
+
+data
+|> group(columns:["_measurement"])
+|> mean() //odstrani _time protoze udela vypocet a vrati pro kazdou hodnotu jednu tabulku
+|> yield(name: "both")
+
+
+#MULTIPLE ii.
+data = from(bucket:"noaa_flux") |> range(start: -3y) |> drop(columns:["_start", "_stop"])
+
+|> filter(fn: (r) => r["_measurement"] == "average_temperature")
+|> filter(fn: (r) => r["_field"] == "degrees")
+|> filter(fn: (r) => r["location"] == "coyote_creek")
+|> limit(n: 5)
+
+data
+|> min()
+|> yield(name: "min")
+
+data
+|> max()
+|> yield(name: "max")
+
+data
+|> mean()
+|> yield(name: "mean")
+
+#WINDOW / not group by _time
+data = from(bucket:"noaa_flux") |> range(start: -3y) |> drop(columns:["_start", "_stop"])
+
+|> filter(fn: (r) => r["_measurement"] == "average_temperature")
+|> filter(fn: (r) => r["_field"] == "degrees")
+|> filter(fn: (r) => r["location"] == "coyote_creek" or r["location"] == "santa_monica")
+|> limit(n: 3)
+//|> group(columns: ["_time"]) //for same time, not very often
+|> group()
+|> window(every: 6m)
+
+//|> yield(name: "group on _time")
+|> difference()
+|> yield(name: "window difference")

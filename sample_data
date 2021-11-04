@@ -168,6 +168,7 @@ data
 |> mean()
 |> yield(name: "mean")
 
+
 #WINDOW / not group by _time
 data = from(bucket:"noaa_flux") |> range(start: -3y) |> drop(columns:["_start", "_stop"])
 

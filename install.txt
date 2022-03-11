@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 @@@BRANCH<inside[#########333]>TEST +@@@ +@@@
+=======
+@@@BRANCH<inside<more222>>TEST +@@@ +@@@
+>>>>>>> inside2
 
 # wget -c https://dl.influxdata.com/influxdb/releases/influxdb2-2.0.9-amd64.deb
 
